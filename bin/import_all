@@ -99,7 +99,7 @@ import_shapefile $MARMOT_DATA/공공데이터포털/개별주택가격 -dataset 
 hadoop fs -mkdir data/주택/실거래
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트매매 data/주택/실거래/아파트매매
 mc_bind_dataset -type csv data/주택/실거래/아파트매매 -dataset 주택/실거래/아파트매매
-hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트전월세 data/주택/실거래/아파트전월세
+hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트전월세 data/주택/실거래
 mc_bind_dataset -type csv data/주택/실거래/아파트전월세 -dataset 주택/실거래/아파트전월세
 mc_run_module apttrx.GeocodeApartments
 
@@ -122,11 +122,11 @@ hadoop fs -mkdir data/주민/유동인구
 # 2015
 hadoop fs -mkdir data/주민/유동인구/2015
 hadoop fs -mkdir data/주민/유동인구/2015/시간대
-hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구_2015/시간대 data/주민/유동인구/2015
+hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015
 mc_bind_dataset data/주민/유동인구/2015/시간대 -dataset 주민/유동인구/월별_시간대/2015 -type csv -geom_col the_geom -srid EPSG:5186
 cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
 # 2014
-import_shapefile $MARMOT_DATA/사업단자료/지오비전/유동인구_2014 -dataset 주민/유동인구/월별_시간대/2014 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/사업단자료/지오비전/유동인구/2014 -dataset 주민/유동인구/월별_시간대/2014 -srid EPSG:5186 -charset euc-kr
 hadoop fs -mkdir data/주민/유동인구/2015/성연령
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구_2015/성연령 data/주민/유동인구/2015
 mc_bind_dataset data/주민/유동인구/2015/성연령 -dataset 주민/유동인구/월별_성연령/2015 -type csv -geom_col the_geom -srid EPSG:5186
