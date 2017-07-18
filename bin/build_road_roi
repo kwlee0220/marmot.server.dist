@@ -1,0 +1,5 @@
+#!	/bin/bash
+
+yarn jar marmot.jar	\
+marmot.geo.command.BuildRoadAddressROI	\
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml "$@"

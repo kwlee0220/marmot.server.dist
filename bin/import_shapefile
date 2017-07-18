@@ -1,0 +1,8 @@
+#!	/bin/bash
+
+#import_shapefile -shp <input_shp_file_path> -layer <layer_name> [-srid <epsg_code>]
+#				[-charset <charset>] [-block_size <block_size>]
+
+yarn jar $MARMOT_HOME/bin/marmot.jar	\
+marmot.geo.command.ImportShapefile	\
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml $@

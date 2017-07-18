@@ -1,0 +1,7 @@
+#!	/bin/bash
+
+#format_catalog
+
+yarn jar $MARMOT_HOME/bin/marmot.jar	\
+marmot.geo.command.FormatCatalog	\
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml $@
