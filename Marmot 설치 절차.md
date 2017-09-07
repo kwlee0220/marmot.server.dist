@@ -7,8 +7,10 @@
 
 ### 2. 설치 절차
 1. Home 디렉토리 아래에 'marmot'이라는 디렉토리를 생성한다.
-> `$ cd`
-> `$ mkdir marmot`
+<pre><code>
+`$ cd`
+`$ mkdir marmot`
+</code></pre>
 
 2. 압축을 풀어 생성된 디렉토리를 생성된 곳을 이동시킨다.
 >`$ cd marmot`
