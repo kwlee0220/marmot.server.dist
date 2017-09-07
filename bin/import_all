@@ -74,6 +74,7 @@ hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/개별공시지가 d
 mc_bind_dataset data/토지/개별공시지가 -dataset 토지/개별공시지가 -type csv
 ##### 용도지역지구
 import_shapefile $MARMOT_DATA/사업단자료/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -charset euc-kr
+#import_shapefile $MARMOT_DATA/공공데이터포털/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -shp_srid EPSG:5174 -charset euc-kr
 ##### 토지이용계획
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/토지이용계획 data/토지
 mc_bind_dataset data/토지/토지이용계획 -dataset 토지/토지이용계획_누적 -type csv
@@ -116,6 +117,12 @@ hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/주민등록인구_2015 da
 mc_bind_dataset data/주민/주민등록인구 -dataset 주민/주민등록인구 -type csv
 ##### 직장인구
 import_shapefile $MARMOT_DATA/포스웨이브/전국직장인구 -dataset 주민/직장인구 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/BizGis/직장인구_100M_5181 -dataset 주민/직장인구100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 주거인구
+import_shapefile $MARMOT_DATA/BizGis/주거인구_100M_5181 -dataset 주민/주거인구100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+cluster_dataset 주민/주거인구100m
+##### 추정소득분위
+import_shapefile $MARMOT_DATA/BizGis/추정소득분위_100M_5181 -dataset 주민/추정소득분위100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
 ##### 지오비전 유동인구
 hadoop fs -rm -r -skipTrash data/주민/유동인구
 hadoop fs -mkdir data/주민/유동인구
@@ -128,7 +135,7 @@ cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
 # 2014
 import_shapefile $MARMOT_DATA/사업단자료/지오비전/유동인구/2014 -dataset 주민/유동인구/월별_시간대/2014 -srid EPSG:5186 -charset euc-kr
 hadoop fs -mkdir data/주민/유동인구/2015/성연령
-hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구_2015/성연령 data/주민/유동인구/2015
+hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/성연령 data/주민/유동인구/2015
 mc_bind_dataset data/주민/유동인구/2015/성연령 -dataset 주민/유동인구/월별_성연령/2015 -type csv -geom_col the_geom -srid EPSG:5186
 mc_run_module people.AverageFlowPopByAge
 ##### 지오비전 카드매출
@@ -148,7 +155,7 @@ mc_bind_dataset -type csv data/주민/카드매출/2015/시간대 -dataset 주�
 hadoop fs -mkdir data/교통
 ##### 도로망
 import_shapefile $MARMOT_DATA/사업단자료/도로망_2013/링크 -dataset 교통/도로/링크 -srid EPSG:5186 -charset euc-kr
-cluster_dataset 교통/도로망/링크
+cluster_dataset 교통/도로/링크
 import_shapefile $MARMOT_DATA/사업단자료/도로망_2013/노드 -dataset 교통/도로/노드 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/행자부/도로구간_5179 -dataset 교통/도로/도로구간 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/행자부/기초구간_5179 -dataset 교통/도로/기초구간 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
@@ -189,6 +196,7 @@ hadoop fs -rm -r -skipTrash data/교통/경기도버스/노선_구간
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/경기도버스/노선_구간 data/교통/경기도버스/노선_구간
 mc_bind_dataset -type csv data/교통/경기도버스/노선_구간 -dataset 교통/버스/경기도버스/노선_구간  -geom_col the_geom -srid EPSG:5186
 ##### 나비콜 택시 운행 로그
+hadoop fs -rm -r -skipTrash data/로그/나비콜
 hadoop fs -mkdir data/로그
 hadoop fs -copyFromLocal $MARMOT_DATA/나비콜-택시 data/로그/나비콜
 mc_bind_dataset data/로그/나비콜 -dataset 로그/나비콜/택시로그 -type csv -srid EPSG:5186 -geom_col the_geom
@@ -283,6 +291,30 @@ mc_bind_dataset data/POI/지구대_파출소 -dataset POI/지구대_파출소 -t
 import_shapefile $MARMOT_DATA/사업단자료/사회보장시설 -dataset POI/사회보장시설 -srid EPSG:5186
 ##### 어린이보호구역
 import_shapefile $MARMOT_DATA/사업단자료/전국어린이보호구역 -dataset POI/어린이보호구역 -srid EPSG:5186
+##### 리테일
+import_shapefile $MARMOT_DATA/BizGis/리테일_POI_5181 -dataset POI/리테일 -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 1000대기업
+import_shapefile $MARMOT_DATA/BizGis/1000대기업_POI_5181 -dataset POI/1000대기업 -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+
+
+
+############################################################################################
+############################################################################################
+##### 주요 Grid들
+############################################################################################
+############################################################################################
+##### 편의점
+import_shapefile $MARMOT_DATA/BizGis/편의점_100M_5181 -dataset Grid/편의점100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 외국인투자기업
+import_shapefile $MARMOT_DATA/BizGis/외국인투자기업_100M_5181 -dataset Grid/외국인투자기업100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 벤처기업
+import_shapefile $MARMOT_DATA/BizGis/벤처기업_100M_5181 -dataset Grid/벤처기업100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 수출입기업
+import_shapefile $MARMOT_DATA/BizGis/수출입기업_100M_5181 -dataset Grid/수출입기업100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 외부감사기업
+import_shapefile $MARMOT_DATA/BizGis/외부감사기업_100M_5181 -dataset Grid/외부감사기업100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+##### 코스닥상장기업
+import_shapefile $MARMOT_DATA/BizGis/코스닥상장기업_100M_5181 -dataset Grid/코스닥상장기업100m -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
 
 
 ############################################################################################
@@ -326,12 +358,12 @@ import_shapefile $MARMOT_DATA/기타/연세대시연/부산_70세인구수 -data
 
 
 ############################################################################################
-##### 연세대연동
+##### 포도데이터 import
 ############################################################################################
-import_shapefile $MARMOT_DATA/기타/포도데이터/선거구 -dataset 구역/선거구 -charset euc-kr -srid EPSG:5186
-import_shapefile $MARMOT_DATA/기타/포도데이터/전력사용량 -dataset 주민/전력사용량 -charset euc-kr -srid EPSG:5186
-import_shapefile $MARMOT_DATA/기타/포도데이터/도시가스사용량 -dataset 주민/도시가스사용량 -charset euc-kr -srid EPSG:5186
-
+import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도/1987 -dataset 토지/토지피복도/1987 -charset utf-8 -srid EPSG:5186
+cluster_dataset 토지/토지피복도/1987
+import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도/2007 -dataset 토지/토지피복도/2007 -charset utf-8 -srid EPSG:5186
+cluster_dataset 토지/토지피복도/2007
 
 
 
@@ -344,7 +376,12 @@ import_shapefile $MARMOT_DATA/기타/포도데이터/도시가스사용량 -data
 #import_shapefile $MARMOT_DATA/사업단자료/건축물대장/전유_공용_면적_1_2014 -dataset admin/land/registry/area/heap -srid EPSG:5186 
 #cluster_layer -dataset admin/land/registry/area/heap -output admin/land/registry/area/clusters
 
-############################################################################################
-##### 민간 POI들
-############################################################################################
-import_shapefile $MARMOT_DATA/BizGis/리테일_POI_5181 -dataset 민간/POI/리테일/heap -shp_srid EPSG:5181 -srid EPSG:5186 -charset euc-kr
+
+
+mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 0 -stop 1000000 -output ~/tmp/2007S_1.shp
+mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 1000000 -output ~/tmp/2007S_2.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 0 -stop 1000000 -output ~/tmp/1987S_1.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 1000000 -stop 2000000 -output ~/tmp/1987S_2.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 2000000 -stop 3000000 -output ~/tmp/1987S_3.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 3000000 -stop 4000000 -output ~/tmp/1987S_4.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 4000000 -output ~/tmp/1987S_5.shp
