@@ -15,7 +15,7 @@ $ mkdir marmot
 <pre><code>$ cd marmot</code></pre>
 
 3. GitHub에서 Marmot server 배포판을 download한다.
-* URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
+	* URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
 
 4. Download받은 zip 파일 (`marmot.server.master.dist.zip`)의 압축을 풀고, 디렉토리 이름을 `marmot.server.dist`로 변경한다.
 <pre><code>$ unzip marmot.server.dist.master.zip
@@ -38,37 +38,17 @@ $ mv marmot.server.dist-master marmot.server.dist
 
 6. 환경변수를 설정한다. 로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을
 	`.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
-	<pre><code>export MARMOT_HOME=$HOME/marmot/marmot.server.dist
-	export PATH=$PATH:$HOME/bin:$MARMOT_HOME/bin
-	</code></pre>
+<pre><code>export MARMOT_HOME=$HOME/marmot/marmot.server.dist
+export PATH=$PATH:$HOME/bin:$MARMOT_HOME/bin
+</code></pre>
 
 7. '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
-	>`$ cd $HOME/marmot/marmot.server.dist/bin` </br>
-	>`$ ln -s marmot-1.1-all.jar marmot.jar`
+<pre><code>$ cd $HOME/marmot/marmot.server.dist/bin
+$ ln -s marmot-1.1-all.jar marmot.jar
+</code></pre>
 
 
+### 3. Marmot 서버 구동
 
-
-
-
-* GitHub에서 Marmot client 배포판을 download한다.
-	- https://github.com/kwlee0220/marmot.client.dist
-* Download받은 zip 파일의 압축을 푼다.
-	- unzip marmot.client.dist-master.zip
-* home 디렉토리 아래에 'marmot'이라는 디렉토리를 생성하고, 압축을 풀어 생성된 디렉토리를 생성된 곳을 이동시킨다.
-	이때, 편의상 디렉토리 이름을 marmot.client.dist로 변경시킨다.
-	$ cd
-	$ mkdir marmot
-	$ mv marmot.client.dist-master marmot.client.dist
-* '~/marmot/marmot.client.dist' 디렉토리로 이동한다.
-	- 'MARMOT_CLIENT_HOME' 환경변수 설정하고, 'PATH' 경로에 추가한다.
-		MARMOT_CLIENT_HOME=$HOME/marmot/marmot.client.dist
-		PATH=$PATH:$MARMOT_CLIENT_HOME/bin
-	- 'MARMOT_HOST'와 'MARMOT_PORT' 환경변수를 각각 설정한다.
-		MARMOT_HOST는 marmot server가 수행되고 있는 IP 주소로 설정
-		MARMOT_PORT는 marmot server가 사용하는 포트 번호로 설정
-* '~/marmot/marmot.client.dist/bin' 디렉토리에 있는 여러 script들을 실행시킨다.
-
-
-
-
+1. 데이터베이스 포맷 및 시스템 내부 카다로그 생성
+>`$ format_catalog`
