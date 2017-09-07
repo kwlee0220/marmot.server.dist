@@ -2,8 +2,6 @@
 
 ### 1. 설치 사전 조건
 * Oracle Java를 (Java8 이상) 설치되어 있어야 한다.
-* Gradle이 설치되어 있어야 한다.
-	- 참고:  http://sdkman.io/install.html
 
 ### 2. 설치 절차
 1. Home 디렉토리 아래에 'marmot'이라는 디렉토리를 생성한다.
