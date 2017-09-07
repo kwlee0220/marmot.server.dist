@@ -52,3 +52,6 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 
 1. 데이터베이스 포맷 및 시스템 내부 카다로그 생성
 >`$ format_catalog`
+
+2.서버 구동
+> `$ remote_marmot`
