@@ -22,24 +22,17 @@
 
 5. `marmot.server.dist/hadoo-conf` 디렉토리로 이동하여 `hadoop-cluster.xml`을 수정한다.
 	- 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다. 안양대 서버를 사용하는
-	경우는 'hdfs://node00.gsbd.anyang.ac.kr:8020'이다. </br>
-	설정 예)
->`<property>`
->`    <name>fs.defaultFS</name>`
-    &ltvalue>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
-&lt/property>
-	- 'yarn.resourcemanager.address'과 'yarn.resourcemanager.webapp.address' 각각의 속성 값을 설정한다.
+	경우는 'hdfs://node00.gsbd.anyang.ac.kr:8020'이다. 
+	- `yarn.resourcemanager.address`과 `yarn.resourcemanager.webapp.address` 각각의 속성 값을 설정한다.
 		일반적으로 YARN 서버가 운용되는 서버 IP주소에 각각 8050 포트와 8088 포트를 설정한다.
-		안양대 서버를 사용하는 경우는 YARN 서버의 IP주소는 node00.gsbd.anyang.ac.kr 이다. </br>
-		설정 예)
->`<property>`
->`    name>yarn.resourcemanager.address</name>
-    &ltvalue>node00.gsbd.anyang.ac.kr:8050</value>
-&lt/property>
-&ltproperty>
-    &ltname>yarn.resourcemanager.webapp.address</name>
-    &ltvalue>node00.gsbd.anyang.ac.kr:8088</value>
-&lt/property>
+		안양대 서버를 사용하는 경우는 YARN 서버의 IP주소는 node00.gsbd.anyang.ac.kr 이다.
+	- 카다로그 DB 접속을 위한 JDBC 접속정보를 설정한다.
+		* `marmot.catalog.jdbc.url`: JDBC driver URL, 접속 Url를 설정하는 속성
+			(예: `jdbc:postgresql://node00.gsbd.anyang.ac.kr:5432/<DB 이름>`)
+		*  `marmot.catalog.jdbc.user`: 데이터베이스 사용자 이름
+		*  `marmot.catalog.jdbc.passwd: 데이터베이스 사용자 패스워드
+		*  `marmot.catalog.jdbc.driver`: JDBC driver 클래스 이름
+			(예를들어 Postgresql인 경우는 `org.postgresql.Driver`)
 
 
 
