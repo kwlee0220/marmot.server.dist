@@ -15,8 +15,8 @@ $ mkdir marmot
 3. GitHub에서 Marmot server 배포판을 download한다.
 	* URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
 
-4. Download받은 zip 파일 (`marmot.server.master.dist.zip`)의 압축을 풀고, 디렉토리 이름을 `marmot.server.dist`로 변경한다.
-<pre><code>$ unzip marmot.server.dist.master.zip
+4. Download받은 zip 파일 (`marmot.server.dist-master.zip`)의 압축을 풀고, 디렉토리 이름을 `marmot.server.dist`로 변경한다.
+<pre><code>$ unzip marmot.server.dist-master.zip
 $ mv marmot.server.dist-master marmot.server.dist
 </code></pre>
 
