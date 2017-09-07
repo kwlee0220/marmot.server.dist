@@ -23,10 +23,12 @@
 5. `marmot.server.dist/hadoo-conf` 디렉토리로 이동하여 `hadoop-cluster.xml`을 수정한다.
 	- 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다. 안양대 서버를 사용하는 경우는 'hdfs://node00.gsbd.anyang.ac.kr:8020'이다.
 
+<pre><code>
 <property>
 	<name>fs.defaultFS</name>
 	<value>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
 </property>
+</code></pre>
 
 
 
