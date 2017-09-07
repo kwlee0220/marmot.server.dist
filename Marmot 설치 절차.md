@@ -34,12 +34,13 @@
 		*  `marmot.catalog.jdbc.driver`: JDBC driver 클래스 이름
 			(예를들어 Postgresql인 경우는 `org.postgresql.Driver`)
 
-6. 환경변수를 설정한다.
-	> `export MARMOT_HOME=$HOME/marmot/marmot.server.dist`
+6. 환경변수를 설정한다. 로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을
+	`.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
+	> `export MARMOT_HOME=$HOME/marmot/marmot.server.dist` </br>
 	> `export PATH=$PATH:$HOME/bin:$MARMOT_HOME/bin`
 
 7. '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
-	>`$ cd $HOME/marmot/marmot.server.dist/bin`
+	>`$ cd $HOME/marmot/marmot.server.dist/bin` </br>
 	>`$ ln -s marmot-1.1-all.jar marmot.jar`
 
 
