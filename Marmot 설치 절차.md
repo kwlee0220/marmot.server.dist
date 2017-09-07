@@ -24,10 +24,10 @@
 	- 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다. 안양대 서버를 사용하는 경우는 'hdfs://node00.gsbd.anyang.ac.kr:8020'이다.
 
 <pre><code>
-<property>
-    <name>fs.defaultFS</name>
-    <value>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
-</property>
+&ltproperty>
+    &ltname>fs.defaultFS</name>
+    &ltvalue>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
+&lt/property>
 </code></pre>
 
 
