@@ -7,20 +7,20 @@
 
 ### 2. 설치 절차
 1. Home 디렉토리 아래에 'marmot'이라는 디렉토리를 생성한다.
-<pre><code>
-`$ cd`
-`$ mkdir marmot`
+<pre><code>$ cd
+$ mkdir marmot
 </code></pre>
 
 2. 압축을 풀어 생성된 디렉토리를 생성된 곳을 이동시킨다.
->`$ cd marmot`
+<pre><code>$ cd marmot</code></pre>
 
 3. GitHub에서 Marmot server 배포판을 download한다.
 * URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
 
 4. Download받은 zip 파일 (`marmot.server.master.dist.zip`)의 압축을 풀고, 디렉토리 이름을 `marmot.server.dist`로 변경한다.
->`$ unzip marmot.server.dist.master.zip`
->`$ mv marmot.server.dist-master marmot.server.dist`
+<pre><code>$ unzip marmot.server.dist.master.zip
+$ mv marmot.server.dist-master marmot.server.dist
+</code></pre>
 
 5. `marmot.server.dist/hadoo-conf` 디렉토리로 이동하여 `hadoop-cluster.xml`을 수정한다.
 	- 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다. 안양대 서버를 사용하는
@@ -38,8 +38,9 @@
 
 6. 환경변수를 설정한다. 로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을
 	`.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
-	> `export MARMOT_HOME=$HOME/marmot/marmot.server.dist` </br>
-	> `export PATH=$PATH:$HOME/bin:$MARMOT_HOME/bin`
+	<pre><code>export MARMOT_HOME=$HOME/marmot/marmot.server.dist
+	export PATH=$PATH:$HOME/bin:$MARMOT_HOME/bin
+	</code></pre>
 
 7. '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
 	>`$ cd $HOME/marmot/marmot.server.dist/bin` </br>
