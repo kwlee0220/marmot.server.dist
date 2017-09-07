@@ -25,8 +25,8 @@
 
 <pre><code>
 <property>
-	<name>fs.defaultFS</name>
-	<value>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
+    <name>fs.defaultFS</name>
+    <value>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
 </property>
 </code></pre>
 
