@@ -24,16 +24,16 @@
 	- 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다. 안양대 서버를 사용하는
 	경우는 'hdfs://node00.gsbd.anyang.ac.kr:8020'이다. </br>
 	설정 예)
-<pre><code>&ltproperty>
-    &lt name>fs.defaultFS</name>
-    &lt value>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
-&lt /property>
+>&ltproperty>
+>    &ltname>fs.defaultFS</name>
+    &ltvalue>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
+&lt/property>
 </code></pre>
 	- 'yarn.resourcemanager.address'과 'yarn.resourcemanager.webapp.address' 각각의 속성 값을 설정한다.
 		일반적으로 YARN 서버가 운용되는 서버 IP주소에 각각 8050 포트와 8088 포트를 설정한다.
 		안양대 서버를 사용하는 경우는 YARN 서버의 IP주소는 node00.gsbd.anyang.ac.kr 이다. </br>
 		설정 예)
-<pre><code>&ltproperty>
+>&ltproperty>
     &ltname>yarn.resourcemanager.address</name>
     &ltvalue>node00.gsbd.anyang.ac.kr:8050</value>
 &lt/property>
