@@ -63,3 +63,14 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 
 2.서버 구동
 > `$ remote_marmot`
+
+### 4. 샘플 공간 빅데이터 적재
+다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
+제공되는 테스트용 공간 빅데이터 목록이다.
+* [서울시내 지하철 역사](https://drive.google.com/open?id=0B91zOnJKcETKbzdNQjItVmd6T0U)
+* [전국 주유소 유류 가격](https://drive.google.com/open?id=0B91zOnJKcETKRGtZbjBIUG5HYkk)
+* [서울시내 버스 정류소](https://drive.google.com/open?id=0B91zOnJKcETKSUpBUkVsbjVLVWc)
+* [전국 법정구역](https://drive.google.com/open?id=0B91zOnJKcETKQ1hGT2pDOUdDU28)
+* [전국 건물주소 및 위치](https://drive.google.com/open?id=0B91zOnJKcETKc3ctR0poVURCUUk)
+
+다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만든다.
