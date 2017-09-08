@@ -66,20 +66,25 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 
 ### 4. 샘플 공간 빅데이터 적재
 다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
-제공되는 테스트용 공간 빅데이터 목록이다.
-* [서울시내 지하철 역사](https://drive.google.com/open?id=0B91zOnJKcETKbzdNQjItVmd6T0U)
+제공되는 테스트용 공간 빅데이터 목록이다. 아래 데이터들을 적재하기 위해서는 marmot 서버 뿐만 아니라
+[marmot client 배포판](https://github.com/kwlee0220/marmot.client.dist)도 설치되어야 한다.
+* [서울시내 지하철 역사](http://gofile.me/2wzSJ/2ODDNCSG8) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
-* [전국 주유소 유류 가격](https://drive.google.com/open?id=0B91zOnJKcETKRGtZbjBIUG5HYkk)
+* [전국 주유소 유류 가격](http://gofile.me/2wzSJ/OyrZSdLR6) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
-* [서울시내 버스 정류소](https://drive.google.com/open?id=0B91zOnJKcETKSUpBUkVsbjVLVWc)
+* [서울시내 버스 정류소](http://gofile.me/2wzSJ/qyaAYuBiJ) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/정류소
-* [전국 법정구역](https://www.dropbox.com/s/r2io5hcjjykls3d/%EB%B2%95%EC%A0%95%EA%B5%AC%EC%97%AD_5179.zip?dl=0)
+* [전국 법정구역](http://gofile.me/2wzSJ/MJrdNKsNR) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/법정구역_5179
-* [전국 건물주소 및 위치](https://drive.google.com/open?id=0B91zOnJKcETKc3ctR0poVURCUUk)
+* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/8hoT3yYPb)  (출처: 도로명 주소)
+	- 저장위치: $HOME/marmot/data/건물_위치정보
 
 다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 편의상 환경변수 `$MARMOT_DATA`에
 이 디렉토리를 가리키게 한다.
 > `$ export MARMOT_DATA=$HOME/marmot/data`
+
+Marmot 서버를 시작시킨다.
+> `$ marmot_server`
 
 Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 내의 디렉토리 `data` 및 관련 하위 디렉토리들을 생성한다.
 이때, 사용할 HDFS 사용자 계정은 이미 있다고 가정하고, 계정 이름은 Linux 사용자 계정과 동일하다고 가정한다.
@@ -101,3 +106,22 @@ hadoop fs -mkdir data/교통/버스/서울
 hadoop fs -copyFromLocal $MARMOT_DATA/정류소 data/교통/버스/서울/정류소
 mc_bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
 </code></pre>
+* 전국 법정구역
+<pre><code>import_shapefile $MARMOT_DATA/법정구역_5179/시도 -dataset 구역/시도 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/법정구역_5179/시군구 -dataset 구역/시군구 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+cluster_dataset 구역/시군구
+import_shapefile $MARMOT_DATA/법정구역_5179/읍면동 -dataset 구역/읍면동 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+cluster_dataset 구역/읍면동
+import_shapefile $MARMOT_DATA/법정구역_5179/리 -dataset 구역/리 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+
+import_shapefile $MARMOT_DATA/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+</code></pre>
+* 전국 건물주소 및 위치
+<pre><code>hadoop fs -mkdir data/도로명주소
+hadoop fs -copyFromLocal $MARMOT_DATA/건물_위치정보 data/도로명주소
+mc_bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
+cluster_dataset 주소/건물POI
+</code></pre>
+
+Marmot client의 `mc_explorer' 명령을 수행시켜 적재된 데이터를 확인한다.
+> `$ mc_explorer`
