@@ -16,59 +16,54 @@ PostgreSQL를 활용하여 개발되었기 때문에 가능하면 PostgreSQL를 
 	- 데이터베이스 이름
 
 ### 2. 설치 절차
-1. Home 디렉토리 아래에 'marmot'이라는 디렉토리를 생성한다.
+
+Home 디렉토리 아래에 'marmot'이라는 디렉토리를 생성한다.
 <pre><code>$ cd
 $ mkdir marmot
+$ cd marmot
 </code></pre>
 
-2. 압축을 풀어 생성된 디렉토리를 생성된 곳을 이동시킨다.
-<pre><code>$ cd marmot</code></pre>
+GitHub에서 Marmot server 배포판을 download한다.
+* URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
 
-3. GitHub에서 Marmot server 배포판을 download한다.
-	* URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
-
-4. Download받은 zip 파일 (`marmot.server.dist-master.zip`)의 압축을 풀고, 디렉토리 이름을 `marmot.server.dist`로 변경한다.
+Download받은 zip 파일 (`marmot.server.dist-master.zip`)의 압축을 `$HOME/marmot` 디렉토리에 풀고,
+생성된 디렉토리 이름을 `marmot.server.dist`로 변경한다.
 <pre><code>$ unzip marmot.server.dist-master.zip
 $ mv marmot.server.dist-master marmot.server.dist
 </code></pre>
 
-5. `marmot.server.dist/hadoo-conf` 디렉토리로 이동하여 `hadoop-cluster.xml`을 수정한다.
-	- 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다. 안양대 서버를 사용하는
-	경우는 'hdfs://node00.gsbd.anyang.ac.kr:8020'이다. 
-	- `yarn.resourcemanager.address`과 `yarn.resourcemanager.webapp.address` 각각의 속성 값을 설정한다.
-		일반적으로 YARN 서버가 운용되는 서버 IP주소에 각각 8050 포트와 8088 포트를 설정한다.
-		안양대 서버를 사용하는 경우는 YARN 서버의 IP주소는 node00.gsbd.anyang.ac.kr 이다.
-	- 카다로그 DB 접속을 위한 JDBC 접속정보를 설정한다.
-		* `marmot.catalog.jdbc.url`: JDBC 접속 URL.
-			(예: `jdbc:postgresql://node00.gsbd.anyang.ac.kr:5432/<DB 이름>`)
-		*  `marmot.catalog.jdbc.user`: 데이터베이스 사용자 이름
-		*  `marmot.catalog.jdbc.passwd`: 데이터베이스 사용자 패스워드
-		*  `marmot.catalog.jdbc.driver`: JDBC driver 클래스 이름
-			(예를들어 Postgresql인 경우는 `org.postgresql.Driver`)
+`hadoop-conf` 디렉토리(전체 경로명: `$HOME/marmot/marmot.server.dist/hadoo-conf`)로 이동하여
+`hadoop-cluster.xml`을 수정한다.
+* 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다.
+* `yarn.resourcemanager.address`과 `yarn.resourcemanager.webapp.address` 각각의 속성 값을 설정한다.
+	일반적으로 YARN 서버가 운용되는 서버 IP주소에 각각 8050 포트와 8088 포트를 설정한다.
+* 카다로그 DB 접속을 위한 JDBC 접속정보를 설정한다.
+	- `marmot.catalog.jdbc.url`: JDBC 접속 URL (형식: `jdbc:postgresql://<db-server-ip>:<jdbc-port>/<db-name>`)
+	- `marmot.catalog.jdbc.user`: 데이터베이스 사용자 이름
+	- `marmot.catalog.jdbc.passwd`: 데이터베이스 사용자 패스워드
+	- `marmot.catalog.jdbc.driver`: JDBC driver 클래스 이름
+		(예를들어 Postgresql인 경우는 `org.postgresql.Driver`)
 
-6. 환경변수를 설정한다. 로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을
-	`.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
+서버 구동에 필요한 환경변수를 아래와 같이 설정한다.
+로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을 `.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
 <pre><code>export MARMOT_HOME=$HOME/marmot/marmot.server.dist
-export PATH=$PATH:$HOME/bin:$MARMOT_HOME/bin
+export PATH=$PATH:$MARMOT_HOME/bin
 </code></pre>
 
-7. '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
+'$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
 <pre><code>$ cd $HOME/marmot/marmot.server.dist/bin
 $ ln -s marmot-1.1-all.jar marmot.jar
 </code></pre>
 
-
-### 3. Marmot 서버 구동
-
-1. 데이터베이스 포맷 및 시스템 내부 카다로그 생성
+데이터베이스 포맷 및 시스템 내부 카다로그 생성한다.
 >`$ format_catalog`
 
-2.서버 구동
-> `$ remote_marmot`
+원격 접속용 서버 구동시켜서 서버 설정 완료 여부를 확인한다.
+> `$ marmot_server`
 
-### 4. 샘플 공간 빅데이터 적재
+### 3. 샘플 공간 빅데이터 적재
 다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
-제공되는 테스트용 공간 빅데이터 목록이다. 아래 데이터들을 적재하기 위해서는 marmot 서버 뿐만 아니라
+제공되는 테스트용 공간 데이터 목록이다. 아래 데이터들을 적재하기 위해서는 marmot 서버 뿐만 아니라
 [marmot client 배포판](https://github.com/kwlee0220/marmot.client.dist)도 설치되어야 한다.
 * [서울시내 지하철 역사](http://gofile.me/2wzSJ/2ODDNCSG8) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
@@ -82,7 +77,7 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 	- 저장위치: $HOME/marmot/data/건물_위치정보
 
 다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 환경변수 `$MARMOT_DATA`에
-이 디렉토리를 설정한다.
+해당 디렉토리를 설정한다.
 > `$ export MARMOT_DATA=$HOME/marmot/data`
 
 Marmot 서버를 시작시킨다.
