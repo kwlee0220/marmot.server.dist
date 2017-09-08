@@ -93,7 +93,7 @@ Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 �
 
 다운로드 받은 지도 정보를 다음과 같은 과정으로 marmot 서버에 적재시킨다.
 * 서울시내 지하철 역사
-<pre><code>import_shapefile $MARMOT_DATA/서울지하철역사 -dataset 교통/지하철/서울역사 -srid EPSG:5186 -charset euc-kr
+<pre><code>import_shapefile $MARMOT_DATA/서울지하철역사 -dataset 교통/지하철/서울역사 -charset euc-kr
 cluster_dataset 교통/지하철/서울역사</code></pre>
 * 전국 주유소 유류 가격
 <pre><code>hadoop fs -copyFromLocal $MARMOT_DATA/주유소_가격 data/POI
@@ -107,14 +107,14 @@ hadoop fs -copyFromLocal $MARMOT_DATA/정류소 data/교통/버스/서울/정류
 mc_bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
 </code></pre>
 * 전국 법정구역
-<pre><code>import_shapefile $MARMOT_DATA/법정구역_5179/시도 -dataset 구역/시도 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
-import_shapefile $MARMOT_DATA/법정구역_5179/시군구 -dataset 구역/시군구 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+<pre><code>import_shapefile $MARMOT_DATA/법정구역_5179/시도 -dataset 구역/시도 -charset euc-kr
+import_shapefile $MARMOT_DATA/법정구역_5179/시군구 -dataset 구역/시군구 -charset euc-kr
 cluster_dataset 구역/시군구
-import_shapefile $MARMOT_DATA/법정구역_5179/읍면동 -dataset 구역/읍면동 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/법정구역_5179/읍면동 -dataset 구역/읍면동 -charset euc-kr
 cluster_dataset 구역/읍면동
-import_shapefile $MARMOT_DATA/법정구역_5179/리 -dataset 구역/리 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/법정구역_5179/리 -dataset 구역/리 -charset euc-kr
 
-import_shapefile $MARMOT_DATA/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -charset euc-kr
 </code></pre>
 * 전국 건물주소 및 위치
 <pre><code>hadoop fs -mkdir data/도로명주소
