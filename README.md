@@ -8,7 +8,8 @@
 	- HDFS
 	- Yarn
 	- MapReduce
-* DBMS를 사용할 수 있어야 하고, 이를 JDBC를 통해 연결할 수 있어야 한다.
+* DBMS를 사용할 수 있어야 하고, 이를 JDBC를 통해 연결할 수 있어야 한다. 현재 marmot 서버는
+PostgreSQL를 활용하여 개발되었기 때문에 가능하면 PostgreSQL를 사용하는 것을 권장한다.
 	- DBMS 사용자 계정
 	- 데이터베이스 이름
 
