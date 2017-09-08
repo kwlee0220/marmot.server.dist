@@ -8,6 +8,8 @@
 	- HDFS
 	- Yarn
 	- MapReduce
+* HDFS를 사용할 수 있는 사용자 계정이 있다고 가정하고, HDFS 계정이름과 OS 사용자 계정이름이
+동일해야 한다.
 * DBMS를 사용할 수 있어야 하고, 이를 JDBC를 통해 연결할 수 있어야 한다. 현재 marmot 서버는
 PostgreSQL를 활용하여 개발되었기 때문에 가능하면 PostgreSQL를 사용하는 것을 권장한다.
 	- DBMS 사용자 계정
@@ -79,15 +81,14 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 * [전국 건물주소 및 위치](http://gofile.me/2wzSJ/8hoT3yYPb)  (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/건물_위치정보
 
-다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 편의상 환경변수 `$MARMOT_DATA`에
-이 디렉토리를 가리키게 한다.
+다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 환경변수 `$MARMOT_DATA`에
+이 디렉토리를 설정한다.
 > `$ export MARMOT_DATA=$HOME/marmot/data`
 
 Marmot 서버를 시작시킨다.
 > `$ marmot_server`
 
 Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 내의 디렉토리 `data` 및 관련 하위 디렉토리들을 생성한다.
-이때, 사용할 HDFS 사용자 계정은 이미 있다고 가정하고, 계정 이름은 Linux 사용자 계정과 동일하다고 가정한다.
 > `$ hadoop fs -mkdir data`
 > `$ hadoop fs -mkdir data/POI`
 
