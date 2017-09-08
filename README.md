@@ -68,9 +68,36 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
 제공되는 테스트용 공간 빅데이터 목록이다.
 * [서울시내 지하철 역사](https://drive.google.com/open?id=0B91zOnJKcETKbzdNQjItVmd6T0U)
+	- 저장위치: $HOME/marmot/data/서울지하철역사
 * [전국 주유소 유류 가격](https://drive.google.com/open?id=0B91zOnJKcETKRGtZbjBIUG5HYkk)
+	- 저장위치: $HOME/marmot/data/주유소_가격
 * [서울시내 버스 정류소](https://drive.google.com/open?id=0B91zOnJKcETKSUpBUkVsbjVLVWc)
-* [전국 법정구역](https://drive.google.com/open?id=0B91zOnJKcETKQ1hGT2pDOUdDU28)
+	- 저장위치: $HOME/marmot/data/정류소
+* [전국 법정구역](https://www.dropbox.com/s/r2io5hcjjykls3d/%EB%B2%95%EC%A0%95%EA%B5%AC%EC%97%AD_5179.zip?dl=0)
+	- 저장위치: $HOME/marmot/data/법정구역_5179
 * [전국 건물주소 및 위치](https://drive.google.com/open?id=0B91zOnJKcETKc3ctR0poVURCUUk)
 
-다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만든다.
+다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 편의상 환경변수 `$MARMOT_DATA`에
+이 디렉토리를 가리키게 한다.
+> `$ export MARMOT_DATA=$HOME/marmot/data`
+
+Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 내의 디렉토리 `data` 및 관련 하위 디렉토리들을 생성한다.
+이때, 사용할 HDFS 사용자 계정은 이미 있다고 가정하고, 계정 이름은 Linux 사용자 계정과 동일하다고 가정한다.
+> `$ hadoop fs -mkdir data`
+> `$ hadoop fs -mkdir data/POI`
+
+다운로드 받은 지도 정보를 다음과 같은 과정으로 marmot 서버에 적재시킨다.
+* 서울시내 지하철 역사
+<pre><code>import_shapefile $MARMOT_DATA/서울지하철역사 -dataset 교통/지하철/서울역사 -srid EPSG:5186 -charset euc-kr
+cluster_dataset 교통/지하철/서울역사</code></pre>
+* 전국 주유소 유류 가격
+<pre><code>hadoop fs -copyFromLocal $MARMOT_DATA/주유소_가격 data/POI
+mc_bind_dataset -type csv data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
+</code></pre>
+* 서울시내 버스 정류소
+<pre><code>hadoop fs -mkdir data/교통
+hadoop fs -mkdir data/교통/버스
+hadoop fs -mkdir data/교통/버스/서울
+hadoop fs -copyFromLocal $MARMOT_DATA/정류소 data/교통/버스/서울/정류소
+mc_bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
+</code></pre>
