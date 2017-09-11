@@ -52,7 +52,7 @@ export PATH=$PATH:$MARMOT_HOME/bin
 
 '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
 <pre><code>$ cd $HOME/marmot/marmot.server.dist/bin
-$ ln -s marmot-1.1-all.jar marmot.jar
+$ ln -s marmot-<버전번호>-all.jar marmot.jar
 </code></pre>
 
 데이터베이스 포맷 및 시스템 내부 카다로그 생성한다.
@@ -83,7 +83,7 @@ Marmot 서버를 시작시킨다.
 > `$ marmot_server`
 
 Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 내의 디렉토리 `data` 및 관련 하위 디렉토리들을 생성한다.
-> `$ hadoop fs -mkdir data`
+> `$ hadoop fs -mkdir data`</br>
 > `$ hadoop fs -mkdir data/POI`
 
 다운로드 받은 지도 정보를 다음과 같은 과정으로 marmot 서버에 적재시킨다.
