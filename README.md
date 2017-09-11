@@ -47,12 +47,15 @@ $ mv marmot.server.dist-master marmot.server.dist
 서버 구동에 필요한 환경변수를 아래와 같이 설정한다.
 로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을 `.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
 <pre><code>export MARMOT_HOME=$HOME/marmot/marmot.server.dist
+export MARMOT_PORT=[marmot 포트 번호]
 export PATH=$PATH:$MARMOT_HOME/bin
 </code></pre>
+여기서 `MARMOT_PORT` 환경변수는 Marmot 서버가 구동될 때 사용할 TCP 포트 번호를 의미한다.
+만일 `MARMOT_PORT` 환경변수가 지정되지 않은 경우는 포트번호로 8080이 사용된다
 
 '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
 <pre><code>$ cd $HOME/marmot/marmot.server.dist/bin
-$ ln -s marmot-<버전번호>-all.jar marmot.jar
+$ ln -s marmot-[버전번호]-all.jar marmot.jar
 </code></pre>
 
 데이터베이스 포맷 및 시스템 내부 카다로그 생성한다.
