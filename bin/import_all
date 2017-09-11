@@ -40,22 +40,22 @@ import_shapefile $MARMOT_DATA/사업단자료/주요상권 -dataset 구역/주�
 ############################################################################################
 hadoop fs -mkdir data/도로명주소
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/주소 data/도로명주소/주소
-mc_bind_dataset -type csv data/도로명주소/주소 -dataset 주소/주소
+bind_dataset -type csv data/도로명주소/주소 -dataset 주소/주소
 
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/도로명코드 data/도로명주소
-mc_bind_dataset -type csv data/도로명주소/도로명코드 -dataset 주소/도로명코드
+bind_dataset -type csv data/도로명주소/도로명코드 -dataset 주소/도로명코드
 
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/지번 data/도로명주소
-mc_bind_dataset -type csv data/도로명주소/지번 -dataset 주소/지번
+bind_dataset -type csv data/도로명주소/지번 -dataset 주소/지번
 
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/부가정보 data/도로명주소
-mc_bind_dataset -type csv data/도로명주소/부가정보 -dataset 주소/부가정보
+bind_dataset -type csv data/도로명주소/부가정보 -dataset 주소/부가정보
 
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/건물 data/도로명주소
-mc_bind_dataset -type csv data/도로명주소/건물 -dataset 주소/건물
+bind_dataset -type csv data/도로명주소/건물 -dataset 주소/건물
 
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/건물_위치정보 data/도로명주소
-mc_bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
 cluster_dataset 주소/건물POI
 mc_run_module address.BuildJibunPOI
 
@@ -69,15 +69,15 @@ mc_run_module address.BuildJibunPOI
 hadoop fs -mkdir data/토지
 ##### 공시지가: 개별, 표준
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/표준공시지가 data/토지
-mc_bind_dataset data/토지/표준공시지가 -dataset 토지/표준공시지가 -type csv
+bind_dataset data/토지/표준공시지가 -dataset 토지/표준공시지가 -type csv
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/개별공시지가 data/토지
-mc_bind_dataset data/토지/개별공시지가 -dataset 토지/개별공시지가 -type csv
+bind_dataset data/토지/개별공시지가 -dataset 토지/개별공시지가 -type csv
 ##### 용도지역지구
 import_shapefile $MARMOT_DATA/사업단자료/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -charset euc-kr
 #import_shapefile $MARMOT_DATA/공공데이터포털/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -charset euc-kr
 ##### 토지이용계획
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/토지이용계획 data/토지
-mc_bind_dataset data/토지/토지이용계획 -dataset 토지/토지이용계획_누적 -type csv
+bind_dataset data/토지/토지이용계획 -dataset 토지/토지이용계획_누적 -type csv
 ##### 도시지역
 import_shapefile $MARMOT_DATA/포스웨이브/전국도시 -dataset 토지/도시지역 -srid EPSG:5186 -charset euc-kr
 
@@ -99,9 +99,9 @@ import_shapefile $MARMOT_DATA/공공데이터포털/개별주택가격 -dataset 
 ##### 부동산실거래
 hadoop fs -mkdir data/주택/실거래
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트매매 data/주택/실거래/아파트매매
-mc_bind_dataset -type csv data/주택/실거래/아파트매매 -dataset 주택/실거래/아파트매매
+bind_dataset -type csv data/주택/실거래/아파트매매 -dataset 주택/실거래/아파트매매
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트전월세 data/주택/실거래
-mc_bind_dataset -type csv data/주택/실거래/아파트전월세 -dataset 주택/실거래/아파트전월세
+bind_dataset -type csv data/주택/실거래/아파트전월세 -dataset 주택/실거래/아파트전월세
 mc_run_module apttrx.GeocodeApartments
 
 
@@ -114,7 +114,7 @@ hadoop fs -mkdir data/주민
 ##### 주민등록인구_2015
 hadoop fs -rm -r -skipTrash data/주민/주민등록인구
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/주민등록인구_2015 data/주민/주민등록인구
-mc_bind_dataset data/주민/주민등록인구 -dataset 주민/주민등록인구 -type csv
+bind_dataset data/주민/주민등록인구 -dataset 주민/주민등록인구 -type csv
 ##### 직장인구
 import_shapefile $MARMOT_DATA/포스웨이브/전국직장인구 -dataset 주민/직장인구 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/BizGis/직장인구_100M_5181 -dataset 주민/직장인구100m -srid EPSG:5186 -charset euc-kr
@@ -130,13 +130,13 @@ hadoop fs -mkdir data/주민/유동인구
 hadoop fs -mkdir data/주민/유동인구/2015
 hadoop fs -mkdir data/주민/유동인구/2015/시간대
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015
-mc_bind_dataset data/주민/유동인구/2015/시간대 -dataset 주민/유동인구/월별_시간대/2015 -type csv -geom_col the_geom -srid EPSG:5186
+bind_dataset data/주민/유동인구/2015/시간대 -dataset 주민/유동인구/월별_시간대/2015 -type csv -geom_col the_geom -srid EPSG:5186
 cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
 # 2014
 import_shapefile $MARMOT_DATA/사업단자료/지오비전/유동인구/2014 -dataset 주민/유동인구/월별_시간대/2014 -srid EPSG:5186 -charset euc-kr
 hadoop fs -mkdir data/주민/유동인구/2015/성연령
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/성연령 data/주민/유동인구/2015
-mc_bind_dataset data/주민/유동인구/2015/성연령 -dataset 주민/유동인구/월별_성연령/2015 -type csv -geom_col the_geom -srid EPSG:5186
+bind_dataset data/주민/유동인구/2015/성연령 -dataset 주민/유동인구/월별_성연령/2015 -type csv -geom_col the_geom -srid EPSG:5186
 mc_run_module people.AverageFlowPopByAge
 ##### 지오비전 카드매출
 hadoop fs -rm -r -skipTrash data/주민/카드매출
@@ -144,7 +144,7 @@ hadoop fs -mkdir data/주민/카드매출
 hadoop fs -mkdir data/주민/카드매출/2015
 hadoop fs -mkdir data/주민/카드매출/2015/시간대
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015
-mc_bind_dataset -type csv data/주민/카드매출/2015/시간대 -dataset 주민/카드매출/월별_시간대/2015
+bind_dataset -type csv data/주민/카드매출/2015/시간대 -dataset 주민/카드매출/월별_시간대/2015
 
 
 ############################################################################################
@@ -177,29 +177,29 @@ import_shapefile $MARMOT_DATA/BizGis/버스정류장_POI_5181 -dataset 교통/�
 hadoop fs -rm -r -skipTrash data/교통/버스/서울
 hadoop fs -mkdir data/교통/버스/서울
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/서울버스/정류소 data/교통/버스/서울/정류소
-mc_bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
 ##### 경기도 버스
 hadoop fs -rm -r -skipTrash data/교통/경기도버스
 hadoop fs -mkdir data/교통/경기도버스
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/경기도버스/정류소 data/교통/경기도버스/정류소
-mc_bind_dataset -type csv data/교통/경기도버스/정류소 -dataset 교통/버스/경기도버스/정류소  -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/교통/경기도버스/정류소 -dataset 교통/버스/경기도버스/정류소  -geom_col the_geom -srid EPSG:5186
 # 노선기반정보
 hadoop fs -rm -r -skipTrash data/교통/경기도버스/노선_기반정보
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/경기도버스/노선_기반정보 data/교통/경기도버스/노선_기반정보
-mc_bind_dataset data/교통/경기도버스/노선_기반정보 -dataset 교통/버스/경기도버스/노선_기반정보 -type csv
+bind_dataset data/교통/경기도버스/노선_기반정보 -dataset 교통/버스/경기도버스/노선_기반정보 -type csv
 # 노선_링크
 hadoop fs -rm -r -skipTrash data/교통/경기도버스/노선_링크
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/경기도버스/노선_링크 data/교통/경기도버스/노선_링크
-mc_bind_dataset data/교통/경기도버스/노선_링크 -dataset 교통/버스/경기도버스/노선_링크 -type csv
+bind_dataset data/교통/경기도버스/노선_링크 -dataset 교통/버스/경기도버스/노선_링크 -type csv
 # 노선_구간
 hadoop fs -rm -r -skipTrash data/교통/경기도버스/노선_구간
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/경기도버스/노선_구간 data/교통/경기도버스/노선_구간
-mc_bind_dataset -type csv data/교통/경기도버스/노선_구간 -dataset 교통/버스/경기도버스/노선_구간  -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/교통/경기도버스/노선_구간 -dataset 교통/버스/경기도버스/노선_구간  -geom_col the_geom -srid EPSG:5186
 ##### 나비콜 택시 운행 로그
 hadoop fs -rm -r -skipTrash data/로그/나비콜
 hadoop fs -mkdir data/로그
 hadoop fs -copyFromLocal $MARMOT_DATA/나비콜-택시 data/로그/나비콜
-mc_bind_dataset data/로그/나비콜 -dataset 로그/나비콜/택시로그 -type csv -srid EPSG:5186 -geom_col the_geom
+bind_dataset data/로그/나비콜 -dataset 로그/나비콜/택시로그 -type csv -srid EPSG:5186 -geom_col the_geom
 cluster_dataset 로그/나비콜/택시로그 -workers 21
 mc_run_module carloc.FilterOnOffTaxiLogs
 mc_run_module carloc.BuildTrajectory
@@ -234,49 +234,49 @@ import_shapefile $MARMOT_DATA/행자부/민원행정기관 -dataset POI/민원�
 ##### 전국 CCTV 설치장소
 hadoop fs -rm -r data/POI/전국cctv
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국cctv data/POI
-mc_bind_dataset -type csv data/POI/전국cctv -dataset POI/전국cctv  -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/전국cctv -dataset POI/전국cctv  -geom_col the_geom -srid EPSG:5186
 ##### 전국 은행
 import_shapefile $MARMOT_DATA/BizGis/은행_POI_5181 -dataset POI/은행 -srid EPSG:5186 -charset euc-kr
 ##### 주유소
 hadoop fs -rm -r data/POI/주유소
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/주유소 data/POI
-mc_bind_dataset -type csv data/POI/주유소 -dataset POI/주유소  -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/주유소 -dataset POI/주유소  -geom_col the_geom -srid EPSG:5186
 ##### 주유소 가격
 hadoop fs -rm -r data/POI/주유소 가격
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/주유소_가격 data/POI
-mc_bind_dataset -type csv data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
 ##### 상가업소
 hadoop fs -rm -r data/POI/상가업소
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/상가업소정보_201703 data/POI/상가업소
-mc_bind_dataset -type csv data/POI/상가업소 -dataset POI/상가업소 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/상가업소 -dataset POI/상가업소 -geom_col the_geom -srid EPSG:5186
 ##### 공중화장실
 hadoop fs -rm -r data/POI/공중화장실
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/공중화장실 data/POI
-mc_bind_dataset -type csv data/POI/공중화장실 -dataset POI/공중화장실 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/공중화장실 -dataset POI/공중화장실 -geom_col the_geom -srid EPSG:5186
 ##### 전국도서관
 hadoop fs -rm -r data/POI/전국도서관
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국도서관 data/POI
-mc_bind_dataset -type csv data/POI/전국도서관 -dataset POI/전국도서관 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/전국도서관 -dataset POI/전국도서관 -geom_col the_geom -srid EPSG:5186
 ##### 전국도시공원
 hadoop fs -rm -r data/POI/전국도시공원
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국도시공원 data/POI
-mc_bind_dataset -type csv data/POI/전국도시공원 -dataset POI/전국도시공원 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/전국도시공원 -dataset POI/전국도시공원 -geom_col the_geom -srid EPSG:5186
 ##### 전국초중등학교
 hadoop fs -rm -r data/POI/전국초중등학교
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국초중등학교 data/POI
-mc_bind_dataset -type csv data/POI/전국초중등학교 -dataset POI/전국초중등학교 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/전국초중등학교 -dataset POI/전국초중등학교 -geom_col the_geom -srid EPSG:5186
 ##### 전국어린이집
 hadoop fs -rm -r data/POI/전국어린이집
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국어린이집 data/POI
-mc_bind_dataset -type csv data/POI/전국어린이집 -dataset POI/전국어린이집 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/전국어린이집 -dataset POI/전국어린이집 -geom_col the_geom -srid EPSG:5186
 ##### 병원
 hadoop fs -rm -r data/POI/병원
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/병원 data/POI
-mc_bind_dataset -type csv data/POI/병원 -dataset POI/병원 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/병원 -dataset POI/병원 -geom_col the_geom -srid EPSG:5186
 ##### 서울공공와이파이위치
 hadoop fs -rm -r data/POI/서울공공와이파이위치
 hadoop fs -copyFromLocal $MARMOT_DATA/기타/서울공공와이파이위치 data/POI
-mc_bind_dataset -type csv data/POI/서울공공와이파이위치 -dataset POI/서울공공와이파이위치 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/서울공공와이파이위치 -dataset POI/서울공공와이파이위치 -geom_col the_geom -srid EPSG:5186
 ##### 대규모점포
 import_shapefile $MARMOT_DATA/사업단자료/대규모점포 -dataset POI/대규모점포 -srid EPSG:5186 -charset euc-kr
 ##### 지진대피소
@@ -286,7 +286,7 @@ import_shapefile $MARMOT_DATA/사업단자료/지진발생_위치정보 -dataset
 ##### 지구대_파출소
 hadoop fs -rm -r data/POI/지구대_파출소
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/지구대_파출소 data/POI
-mc_bind_dataset data/POI/지구대_파출소 -dataset POI/지구대_파출소 -type csv -geom_col the_geom -srid EPSG:5186
+bind_dataset data/POI/지구대_파출소 -dataset POI/지구대_파출소 -type csv -geom_col the_geom -srid EPSG:5186
 ##### 사회보장시설
 import_shapefile $MARMOT_DATA/사업단자료/사회보장시설 -dataset POI/사회보장시설 -srid EPSG:5186
 ##### 어린이보호구역
@@ -320,10 +320,11 @@ import_shapefile $MARMOT_DATA/BizGis/코스닥상장기업_100M_5181 -dataset Gr
 ############################################################################################
 ##### 소셜미디어 로그
 ############################################################################################
+hadoop fs -rm -r -skipTrash data/로그/social
 hadoop fs -mkdir data/로그/social
 ##### Twitter
 hadoop fs -copyFromLocal $MARMOT_DATA/social/twitter_raw data/로그/social
-mc_bind_dataset data/로그/social/twitter_raw -dataset 로그/social/twitter_raw -type custom -srid EPSG:4326 -geom_col the_geom
+bind_dataset data/로그/social/twitter_raw -dataset 로그/social/twitter_raw -type custom -srid EPSG:4326 -geom_col the_geom
 ##### Instagram
 #hadoop fs -copyFromLocal $MARMOT_DATA/social/instagram_raw data/로그/social
 
@@ -332,7 +333,7 @@ mc_bind_dataset data/로그/social/twitter_raw -dataset 로그/social/twitter_ra
 ##### VWorld 로그
 ############################################################################################
 hadoop fs -copyFromLocal $MARMOT_DATA/vworld/weblogfiles data/로그/vworld
-mc_bind_dataset data/로그/vworld -dataset 로그/vworld -type custom
+bind_dataset data/로그/vworld -dataset 로그/vworld -type custom
 
 
 ############################################################################################
@@ -349,7 +350,7 @@ import_shapefile $MARMOT_DATA/포스웨이브/대전공장_EPSG5174/tc7.shp -dat
 hadoop fs -rm -r -skipTrash data/연세대시연
 hadoop fs -mkdir data/연세대시연
 hadoop fs -copyFromLocal $MARMOT_DATA/기타/연세대시연/서울버스_승하차 data/연세대시연
-mc_bind_dataset data/연세대시연/서울버스_승하차 -dataset 연세대/서울버스_승하차 -type csv -geom_col the_geom -srid EPSG:5186
+bind_dataset data/연세대시연/서울버스_승하차 -dataset 연세대/서울버스_승하차 -type csv -geom_col the_geom -srid EPSG:5186
 import_shapefile $MARMOT_DATA/기타/연세대시연/강남구_버스 -dataset 연세대/강남구_버스 -charset utf-8 -srid EPSG:5186
 import_shapefile $MARMOT_DATA/기타/연세대시연/강남구_지하철 -dataset 연세대/강남구_지하철 -charset utf-8 -srid EPSG:5186
 import_shapefile $MARMOT_DATA/기타/연세대시연/강남구_지하철 -dataset 연세대/강남구_지하철 -charset utf-8 -srid EPSG:5186
