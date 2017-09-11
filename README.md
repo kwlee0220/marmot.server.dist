@@ -47,12 +47,15 @@ $ mv marmot.server.dist-master marmot.server.dist
 서버 구동에 필요한 환경변수를 아래와 같이 설정한다.
 로그인 때마다 동일한 작업을 반복하지 않기 위해 설정명령을 `.bash_profile` 또는 `.bashrc` 등에 기록할 수 있다.
 <pre><code>export MARMOT_HOME=$HOME/marmot/marmot.server.dist
+export MARMOT_PORT=[marmot 포트 번호]
 export PATH=$PATH:$MARMOT_HOME/bin
 </code></pre>
+여기서 `MARMOT_PORT` 환경변수는 Marmot 서버가 구동될 때 사용할 TCP 포트 번호를 의미한다.
+만일 `MARMOT_PORT` 환경변수가 지정되지 않은 경우는 포트번호로 8080이 사용된다
 
 '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
 <pre><code>$ cd $HOME/marmot/marmot.server.dist/bin
-$ ln -s marmot-1.1-all.jar marmot.jar
+$ ln -s marmot-[버전번호]-all.jar marmot.jar
 </code></pre>
 
 데이터베이스 포맷 및 시스템 내부 카다로그 생성한다.
@@ -63,8 +66,7 @@ $ ln -s marmot-1.1-all.jar marmot.jar
 
 ### 3. 샘플 공간 빅데이터 적재
 다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
-제공되는 테스트용 공간 데이터 목록이다. 아래 데이터들을 적재하기 위해서는 marmot 서버 뿐만 아니라
-[marmot client 배포판](https://github.com/kwlee0220/marmot.client.dist)도 설치되어야 한다.
+제공되는 테스트용 공간 데이터 목록이다.
 * [서울시내 지하철 역사](http://gofile.me/2wzSJ/2ODDNCSG8) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
 * [전국 주유소 유류 가격](http://gofile.me/2wzSJ/OyrZSdLR6) (출처: 공공데이터포털)
@@ -84,7 +86,7 @@ Marmot 서버를 시작시킨다.
 > `$ marmot_server`
 
 Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 내의 디렉토리 `data` 및 관련 하위 디렉토리들을 생성한다.
-> `$ hadoop fs -mkdir data`
+> `$ hadoop fs -mkdir data`</br>
 > `$ hadoop fs -mkdir data/POI`
 
 다운로드 받은 지도 정보를 다음과 같은 과정으로 marmot 서버에 적재시킨다.
@@ -93,14 +95,14 @@ Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 �
 cluster_dataset 교통/지하철/서울역사</code></pre>
 * 전국 주유소 유류 가격
 <pre><code>hadoop fs -copyFromLocal $MARMOT_DATA/주유소_가격 data/POI
-mc_bind_dataset -type csv data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
 </code></pre>
 * 서울시내 버스 정류소
 <pre><code>hadoop fs -mkdir data/교통
 hadoop fs -mkdir data/교통/버스
 hadoop fs -mkdir data/교통/버스/서울
 hadoop fs -copyFromLocal $MARMOT_DATA/정류소 data/교통/버스/서울/정류소
-mc_bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
 </code></pre>
 * 전국 법정구역
 <pre><code>import_shapefile $MARMOT_DATA/법정구역_5179/시도 -dataset 구역/시도 -charset euc-kr
@@ -115,9 +117,9 @@ import_shapefile $MARMOT_DATA/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -da
 * 전국 건물주소 및 위치
 <pre><code>hadoop fs -mkdir data/도로명주소
 hadoop fs -copyFromLocal $MARMOT_DATA/건물_위치정보 data/도로명주소
-mc_bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
+bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
 cluster_dataset 주소/건물POI
 </code></pre>
 
-Marmot client의 `mc_explorer' 명령을 수행시켜 적재된 데이터를 확인한다.
+[Marmot client 배포판](https://github.com/kwlee0220/marmot.client.dist)의 `mc_explorer' 명령을 수행시켜 적재된 데이터를 확인한다.
 > `$ mc_explorer`
