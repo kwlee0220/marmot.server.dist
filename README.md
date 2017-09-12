@@ -75,7 +75,7 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 	- 저장위치: $HOME/marmot/data/정류소
 * [전국 법정구역](http://gofile.me/2wzSJ/MJrdNKsNR) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/법정구역_5179
-* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/8hoT3yYPb)  (출처: 도로명 주소)
+* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/EFctBmLNI)  (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/건물_위치정보
 
 다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 환경변수 `$MARMOT_DATA`에
