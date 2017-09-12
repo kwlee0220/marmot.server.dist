@@ -51,7 +51,7 @@ export MARMOT_PORT=[marmot 포트 번호]
 export PATH=$PATH:$MARMOT_HOME/bin
 </code></pre>
 여기서 `MARMOT_PORT` 환경변수는 Marmot 서버가 구동될 때 사용할 TCP 포트 번호를 의미한다.
-만일 `MARMOT_PORT` 환경변수가 지정되지 않은 경우는 포트번호로 8080이 사용된다
+만일 `MARMOT_PORT` 환경변수가 지정되지 않은 경우는 포트번호로 12994가 사용된다
 
 '$HOME/marmot/marmot.server.dist/bin' 디렉토리로 이동하고, jar 파일에 대한 symbolic link를 생성한다.
 <pre><code>$ cd $HOME/marmot/marmot.server.dist/bin
