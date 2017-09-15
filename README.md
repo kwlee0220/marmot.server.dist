@@ -69,13 +69,13 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 제공되는 테스트용 공간 데이터 목록이다.
 * [서울시내 지하철 역사](http://gofile.me/2wzSJ/k1YtIGiPt) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
-* [전국 주유소 유류 가격](http://gofile.me/2wzSJ/OyrZSdLR6) (출처: 공공데이터포털)
+* [전국 주유소 유류 가격](http://gofile.me/2wzSJ/VKDIqW5d0) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
-* [서울시내 버스 정류소](http://gofile.me/2wzSJ/qyaAYuBiJ) (출처: 도로명 주소)
+* [서울시내 버스 정류소](http://gofile.me/2wzSJ/fqaqa4Fs7) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/정류소
-* [전국 법정구역](http://gofile.me/2wzSJ/MJrdNKsNR) (출처: 도로명 주소)
+* [전국 법정구역](http://gofile.me/2wzSJ/D3wV5AZce) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/법정구역_5179
-* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/EFctBmLNI)  (출처: 도로명 주소)
+* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/ywwXHFbsi)  (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/건물_위치정보
 
 다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 환경변수 `$MARMOT_DATA`에
