@@ -67,7 +67,7 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 ### 3. 샘플 공간 빅데이터 적재
 다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
 제공되는 테스트용 공간 데이터 목록이다.
-* [서울시내 지하철 역사](http://gofile.me/2wzSJ/2ODDNCSG8) (출처: 공공데이터포털)
+* [서울시내 지하철 역사](http://gofile.me/2wzSJ/k1YtIGiPt) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
 * [전국 주유소 유류 가격](http://gofile.me/2wzSJ/OyrZSdLR6) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
