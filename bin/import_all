@@ -80,6 +80,7 @@ hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/토지이용계획 d
 bind_dataset data/토지/토지이용계획 -dataset 토지/토지이용계획_누적 -type csv
 ##### 도시지역
 import_shapefile $MARMOT_DATA/포스웨이브/전국도시 -dataset 토지/도시지역 -srid EPSG:5186 -charset euc-kr
+cluster_dataset 토지/도시지역
 
 
 ############################################################################################
@@ -359,14 +360,12 @@ import_shapefile $MARMOT_DATA/기타/연세대시연/부산_70세인구수 -data
 
 
 ############################################################################################
-##### 포도데이터 import
+##### 성능평가용 데이터
 ############################################################################################
-import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도/1987 -dataset 토지/토지피복도/1987 -charset utf-8 -srid EPSG:5186
-cluster_dataset 토지/토지피복도/1987
-import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도/2007 -dataset 토지/토지피복도/2007 -charset utf-8 -srid EPSG:5186
-cluster_dataset 토지/토지피복도/2007
-
-
+import_shapefile $MARMOT_DATA/포스웨이브/서울_건물 -dataset 성능평가/서울_건물 -charset euc-kr -srid EPSG:5186
+cluster_dataset 성능평가/서울_건물
+import_shapefile $MARMOT_DATA/포스웨이브/서울_읍면동 -dataset 성능평가/서울_읍면동 -charset euc-kr -srid EPSG:5186
+cluster_dataset 성능평가/서울_읍면동
 
 
 ############################################################################################
@@ -379,10 +378,20 @@ cluster_dataset 토지/토지피복도/2007
 
 
 
-mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 0 -stop 1000000 -output ~/tmp/2007S_1.shp
+
+############################################################################################
+##### 토지피복도
+############################################################################################
+import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도_안양대제공/1987 -dataset 토지/토지피복도/1987 -charset euc-kr -srid EPSG:5186
+import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도_안양대제공/2007 -dataset 토지/토지피복도/2007 -charset euc-kr -srid EPSG:5186
+
+cluster_dataset 토지/토지피복도/1987S
+cluster_dataset 토지/토지피복도/2007S
+
+mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 0 -count 1000000 -output ~/tmp/2007S_1.shp
 mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 1000000 -output ~/tmp/2007S_2.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 0 -stop 1000000 -output ~/tmp/1987S_1.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 1000000 -stop 2000000 -output ~/tmp/1987S_2.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 2000000 -stop 3000000 -output ~/tmp/1987S_3.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 3000000 -stop 4000000 -output ~/tmp/1987S_4.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 0 -count 1000000 -output ~/tmp/1987S_1.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 1000000 -count 1000000 -output ~/tmp/1987S_2.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 2000000 -count 1000000 -output ~/tmp/1987S_3.shp
+mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 3000000 -count 1000000 -output ~/tmp/1987S_4.shp
 mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 4000000 -output ~/tmp/1987S_5.shp

@@ -1,12 +1,5 @@
 #!	/bin/bash
 
-#marmot_server [-port <port_no>]
-
-#export JAVA_HEAP_MAX=-Xmx4096m
-export JAVA_HEAP_MAX=-Xmx5g
-export YARN_HEAPSIZE=4096
-export HADOOP_HEAPSIZE=4096
-
 yarn jar $MARMOT_HOME/bin/marmot.jar marmot.remote.RemoteMarmotServer	\
 -hadoop	\
 -libjars $MARMOT_HOME/bin/marmot.module.jar	\
