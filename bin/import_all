@@ -57,7 +57,7 @@ bind_dataset -type csv data/도로명주소/건물 -dataset 주소/건물
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/건물_위치정보 data/도로명주소
 bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
 cluster_dataset 주소/건물POI
-mc_run_module address.BuildJibunPOI
+mc_run_module building.BuildJibunPOI
 
 
 
@@ -138,7 +138,6 @@ import_shapefile $MARMOT_DATA/사업단자료/지오비전/유동인구/2014 -da
 hadoop fs -mkdir data/주민/유동인구/2015/성연령
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/성연령 data/주민/유동인구/2015
 bind_dataset data/주민/유동인구/2015/성연령 -dataset 주민/유동인구/월별_성연령/2015 -type csv -geom_col the_geom -srid EPSG:5186
-mc_run_module people.AverageFlowPopByAge
 ##### 지오비전 카드매출
 hadoop fs -rm -r -skipTrash data/주민/카드매출
 hadoop fs -mkdir data/주민/카드매출
