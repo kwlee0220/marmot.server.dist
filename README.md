@@ -140,5 +140,8 @@ $ hadoop fs -copyFromLocal $MARMOT_DATA/전국초중등학교 data/POI
 $ bind_dataset -type csv data/POI/전국초중등학교 -dataset POI/전국초중등학교 -geom_col the_geom -srid EPSG:5186
 </code></pre>
 
+* 지오코드 데이터
+다운로드된 'geocode.db.zip' 파일을 unzip하여 `sbdata` 사용자의 홈디렉토리에 옮긴다.
+
 [Marmot client 배포판](https://github.com/kwlee0220/marmot.client.dist)의 `mc_explorer' 명령을 수행시켜 적재된 데이터를 확인한다.
 > `$ mc_explorer`
