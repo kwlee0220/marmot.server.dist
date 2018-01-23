@@ -1,7 +1,7 @@
 #!	/bin/bash
 
-yarn jar $MARMOT_HOME/bin/marmot.jar marmot.remote.RemoteMarmotServer	\
--hadoop	\
--libjars $MARMOT_HOME/bin/marmot.module.jar	\
--conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml	\
--module $MARMOT_HOME/bin/marmot.module.jar $@
+yarn jar $MARMOT_HOME/bin/marmot.jar marmot.remote.protobuf.PBMarmotServerMain	\
+	-hadoop	\
+	-libjars $MARMOT_HOME/bin/marmot.module.jar	\
+	-conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml	\
+	-module $MARMOT_HOME/bin/marmot.module.jar $@
