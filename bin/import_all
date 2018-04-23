@@ -1,5 +1,4 @@
-#!  /bin/bash
-
+#!  /bin/bash 
 estimate_quadkeys -dataset social/tweets/heap -output database/standard_qkeys
 
 hadoop fs -mkdir data
@@ -9,17 +8,17 @@ hadoop fs -mkdir data/POI
 ##### 주요 구역들
 ############################################################################################
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도 -dataset 구역/시도 -f -srid EPSG:5186 -charset euc-kr
-import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시군구 -dataset 구역/시군구 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시군구 -dataset 구역/시군구 -srid EPSG:5186 -charset euc-kr -f
 cluster_dataset 구역/시군구
-import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동 -dataset 구역/읍면동 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동 -dataset 구역/읍면동 -srid EPSG:5186 -charset euc-kr -f
 cluster_dataset 구역/읍면동
-import_shapefile $MARMOT_DATA/행자부/법정구역_5179/리 -dataset 구역/리 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/리 -dataset 구역/리 -srid EPSG:5186 -charset euc-kr -f
 mc_run_module region.ConcatPoliticals
 import_shapefile $MARMOT_DATA/행자부/기초구역_5179 -dataset 구역/기초구역 -srid EPSG:5186 -charset euc-kr
 cluster_dataset 구역/기초구역
-import_shapefile $MARMOT_DATA/사업단자료/통계청집계구 -dataset 구역/집계구 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/사업단자료/통계청집계구 -dataset 구역/집계구 -srid EPSG:5186 -charset euc-kr -f
 cluster_dataset 구역/집계구
-import_shapefile $MARMOT_DATA/사업단자료/지오비전/집계구 -dataset 구역/지오비전_집계구 -f -srid EPSG:5186
+import_shapefile $MARMOT_DATA/사업단자료/지오비전/집계구 -dataset 구역/지오비전_집계구 -f -shp_srid EPSG:5186 -srid EPSG:5186 -f
 cluster_dataset 구역/지오비전_집계구
 mc_run_module region.BuildGeoVisionRegionCenter
 ##### 연속지적도_2017
@@ -81,7 +80,6 @@ hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/개별공시지가 d
 bind_dataset data/토지/개별공시지가 -dataset 토지/개별공시지가 -type text
 ##### 용도지역지구
 import_shapefile $MARMOT_DATA/사업단자료/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -charset euc-kr
-#import_shapefile $MARMOT_DATA/공공데이터포털/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -charset euc-kr
 cluster_dataset 토지/용도지역지구
 ## 추진단제공
 import_shapefile $MARMOT_DATA/추진단제공/용도지역지구구역_2015 -dataset 토지/용도지역지구_추진단 -f -charset utf-8 -srid EPSG:5186 
@@ -181,7 +179,7 @@ import_shapefile $MARMOT_DATA/사업단자료/철도망_2013/철도중심선 -da
 import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/역사 -dataset 교통/지하철/역사 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/선로 -dataset 교통/지하철/선로 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/출입구 -dataset 교통/지하철/출입구 -srid EPSG:5186 -charset euc-kr
-import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 -dataset 교통/지하철/서울역사 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 -dataset 교통/지하철/서울역사 -srid EPSG:5186 -charset euc-kr -f
 cluster_dataset 교통/지하철/서울역사
 ##### 버스정류장
 hadoop fs -rm -r -skipTrash data/교통/버스
@@ -219,7 +217,7 @@ mc_run_module carloc.FilterOnOffTaxiLogs
 mc_run_module carloc.BuildTrajectory
 ##### 나비콜 택시 운행 로그 (short version)
 bind_dataset data/로그/나비콜S -dataset 로그/나비콜/택시로그S -type text -srid EPSG:5186 -geom_col the_geom
-cluster_dataset 로그/나비콜/택시로그S -workers 21
+cluster_dataset 로그/나비콜/택시로그S
 
 
 ############################################################################################
@@ -247,7 +245,7 @@ import_shapefile $MARMOT_DATA/사업단자료/교차로 -dataset 지형지물/�
 ############################################################################################
 ############################################################################################
 ##### 민원행정기관
-import_shapefile $MARMOT_DATA/행자부/민원행정기관 -dataset POI/민원행정기관 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/행자부/민원행정기관 -dataset POI/민원행정기관 -srid EPSG:5186 -charset euc-kr -f
 ##### 전국 CCTV 설치장소
 hadoop fs -rm -r data/POI/전국cctv
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국cctv data/POI
@@ -390,7 +388,7 @@ bind_dataset data/로그/vworld -dataset 로그/vworld -type custom
 import_shapefile $MARMOT_DATA/기타/사업단시연/서울_종합병원 -dataset 시연/hospitals -srid EPSG:5186 -charset utf-8
 import_shapefile $MARMOT_DATA/기타/사업단시연/화재사망자수_2015 -dataset 시연/fire_death -srid EPSG:5186 -charset utf-8
 import_shapefile $MARMOT_DATA/기타/사업단시연/시연용_서울특별시읍면동 -dataset 시연/demo_seoul -srid EPSG:5186 -charset utf-8
-import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -srid EPSG:5186 -charset euc-kr
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -srid EPSG:5186 -charset euc-kr -f
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동/TL_SCCO_EMD_11.shp -dataset 시연/서울_읍면동 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/포스웨이브/대전공장_EPSG5174/tc7.shp -dataset 시연/대전공장 -charset euc-kr -srid EPSG:5186
 
