@@ -71,7 +71,7 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 	- 저장위치: $HOME/marmot/data/서울지하철역사
 * [전국 주유소 유류 가격](http://gofile.me/2wzSJ/2VyMIi8sA) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
-* [서울시내 버스 정류소](http://gofile.me/2wzSJ/fqaqa4Fs7) (출처: 도로명 주소)
+* [서울시내 버스 정류소](http://gofile.me/2wzSJ/lXteHiEV2) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/정류소
 * [전국 법정구역](http://gofile.me/2wzSJ/D3wV5AZce) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/법정구역_5179
