@@ -69,17 +69,17 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 제공되는 테스트용 공간 데이터 목록이다.
 * [서울시내 지하철 역사](http://gofile.me/2wzSJ/k1YtIGiPt) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
-* [전국 주유소 유류 가격](http://gofile.me/2wzSJ/VKDIqW5d0) (출처: 공공데이터포털)
+* [전국 주유소 유류 가격](http://gofile.me/2wzSJ/2VyMIi8sA) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
-* [서울시내 버스 정류소](http://gofile.me/2wzSJ/fqaqa4Fs7) (출처: 도로명 주소)
+* [서울시내 버스 정류소](http://gofile.me/2wzSJ/lXteHiEV2) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/정류소
 * [전국 법정구역](http://gofile.me/2wzSJ/D3wV5AZce) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/법정구역_5179
-* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/ywwXHFbsi)  (출처: 도로명 주소)
+* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/fSh3I6AiG)  (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/건물_위치정보
-* [전국 아파트매매 실거래 정보](http://gofile.me/2wzSJ/h7wBcbuTk)  (출처: 공공데이터포털)
+* [전국 아파트매매 실거래 정보](http://gofile.me/2wzSJ/VdWdqySDy)  (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/아파트매매
-* [전국 초중등학교 위치 정보](http://gofile.me/2wzSJ/PuLBtfXCC)  (출처: 공공데이터포털)
+* [전국 초중등학교 위치 정보](http://gofile.me/2wzSJ/EjC2eLMJJ)  (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/전국초중등학교
 * [지오코드 데이터](http://gofile.me/2wzSJ/fPZvkbgVh)
 	- 저장위치: $HOME/geocode.db
@@ -102,14 +102,14 @@ $ cluster_dataset 교통/지하철/서울역사
 </code></pre>
 * 전국 주유소 유류 가격
 <pre><code>$ hadoop fs -copyFromLocal $MARMOT_DATA/주유소_가격 data/POI
-$ bind_dataset -type csv data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
+$ bind_dataset -type text data/POI/주유소_가격 -dataset POI/주유소_가격  -geom_col the_geom -srid EPSG:5186
 </code></pre>
 * 서울시내 버스 정류소
 <pre><code>$ hadoop fs -mkdir data/교통
 $ hadoop fs -mkdir data/교통/버스
 $ hadoop fs -mkdir data/교통/버스/서울
 $ hadoop fs -copyFromLocal $MARMOT_DATA/정류소 data/교통/버스/서울/정류소
-$ bind_dataset -type csv data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
+$ bind_dataset -type text data/교통/버스/서울/정류소 -dataset 교통/버스/서울/정류소 -geom_col the_geom -srid EPSG:5186
 </code></pre>
 * 전국 법정구역
 <pre><code>$ import_shapefile $MARMOT_DATA/법정구역_5179/시도 -dataset 구역/시도 -charset euc-kr -srid EPSG:5186
@@ -124,20 +124,20 @@ $ import_shapefile $MARMOT_DATA/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -
 * 전국 건물주소 및 위치
 <pre><code>$ hadoop fs -mkdir data/도로명주소
 $ hadoop fs -copyFromLocal $MARMOT_DATA/건물_위치정보 data/도로명주소
-$ bind_dataset -type csv data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
+$ bind_dataset -type text data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
 $ cluster_dataset 주소/건물POI
 </code></pre>
 
 * 전국 아파트매매 실거래
 <pre><code>$ hadoop fs -mkdir data/아파트매매
 $ hadoop fs -copyFromLocal $MARMOT_DATA/아파트매매 data
-$ bind_dataset -type csv data/아파트매매 -dataset 주택/실거래/아파트매매
+$ bind_dataset -type text data/아파트매매 -dataset 주택/실거래/아파트매매
 </code></pre>
 
 * 전국 초중등학교
 <pre><code>$ hadoop fs -mkdir data/전국초중등학교
 $ hadoop fs -copyFromLocal $MARMOT_DATA/전국초중등학교 data/POI
-$ bind_dataset -type csv data/POI/전국초중등학교 -dataset POI/전국초중등학교 -geom_col the_geom -srid EPSG:5186
+$ bind_dataset -type text data/POI/전국초중등학교 -dataset POI/전국초중등학교 -geom_col the_geom -srid EPSG:5186
 </code></pre>
 
 * 지오코드 데이터
