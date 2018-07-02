@@ -2,26 +2,30 @@
 <configuration>
 	<property>
 		<name>fs.defaultFS</name>
-		<value>hdfs://node00.gsbd.anyang.ac.kr:8020</value>
+		<value>hdfs://sbdata00.gsbd.etri.re.kr:8020</value>
+	</property>
+	<property>
+		<name>yarn.resourcemanager.address</name>
+		<value>sbdata00.gsbd.etri.re.kr:8050</value>
 	</property>
 	<property>
 		<name>yarn.resourcemanager.webapp.address</name>
-		<value>node00.gsbd.anyang.ac.kr:8088</value>
+		<value>sbdata00.gsbd.etri.re.kr:8088</value>
 	</property>
 
 	<property>
 		<name>marmot.catalog.jdbc.url</name>
-		<value>jdbc:postgresql://node00.gsbd.anyang.ac.kr:5432/YYY</value>
+		<value>jdbc:postgresql://129.254.82.95:5433/sbdata</value>
 	</property>
 
 	<property>
 		<name>marmot.catalog.jdbc.user</name>
-		<value>YYY</value>
+		<value>sbdata</value>
 	</property>
 
 	<property>
 		<name>marmot.catalog.jdbc.passwd</name>
-		<value>YYY1234</value>
+		<value>urc2004</value>
 	</property>
 
 	<property>
@@ -55,6 +59,11 @@
 	</property>
 
 	<property>
+		<name>marmot.default.cluster_cache_size</name>
+		<value>128mb</value>
+	</property>
+
+	<property>
 		<name>marmot.default.reducer_count</name>
 		<value>7</value>
 	</property>
@@ -62,5 +71,15 @@
 	<property>
 		<name>marmot.grid_cells_per_mapper</name>
 		<value>350000</value>
+	</property>
+
+	<property>
+		<name>marmot.optor.geo.geocode_db</name>
+		<value>/home/sbdata/geocode.db</value>
+	</property>
+
+	<property>
+		<name>marmot.spark.master</name>
+		<value>local</value>
 	</property>
 </configuration>
