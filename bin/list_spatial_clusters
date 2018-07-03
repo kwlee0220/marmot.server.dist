@@ -1,6 +1,0 @@
-#!	/bin/bash
-
-#list_spatial_clusters -layer <layer_name>
-
-yarn jar $MARMOT_HOME/bin/marmot.jar marmot.geo.command.ListSpatialClustersProcess	\
--hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml $@
