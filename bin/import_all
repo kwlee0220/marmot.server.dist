@@ -59,7 +59,8 @@ bind_dataset -type text data/도로명주소/부가정보 -dataset 주소/부가
 hadoop fs -copyFromLocal $MARMOT_DATA/행자부/도로명주소/건물 data/도로명주소
 bind_dataset -type text data/도로명주소/건물 -dataset 주소/건물
 
-import_csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 -delim '|' -header_first -null_string '' -point_col 'xpos|ypos' -wgs84 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186 -f
+import_csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 -delim '|' -header_first -null_string '' -point_col 'xpos|ypos' -wgs84	\
+	-dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186 -f
 cluster_dataset 주소/건물POI
 mc_run_module building.BuildJibunPOI
 ### 추진단제공 자료
@@ -80,7 +81,8 @@ bind_dataset data/토지/표준공시지가 -dataset 토지/표준공시지가 -
 ##### 개별공시지가
 mc_upload_files $MARMOT_DATA/공공데이터포털/개별공시지가/2012-2016 data/토지/개별공시지가/2012_2016 -glob '**/*.{csv,json}' -f
 import_csv $MARMOT_DATA/공공데이터포털/개별공시지가/2012-2016 -header_first -dataset 토지/개별공시지가_2012_2016 -f
-import_shapefile $MARMOT_DATA/공공데이터포털/개별공시지가/2017 -dataset 토지/개별공시지가_2017 -srid EPSG:5186 -charset euc-kr -f -block_size 128mb
+import_shapefile $MARMOT_DATA/공공데이터포털/개별공시지가/2017 -dataset 토지/개별공시지가_2017 -srid EPSG:5186 -charset euc-kr -f	\
+	-block_size 128mb
 ##### 용도지역지구
 import_shapefile $MARMOT_DATA/사업단자료/용도지역지구 -dataset 토지/용도지역지구 -srid EPSG:5186 -charset euc-kr
 cluster_dataset 토지/용도지역지구
@@ -111,13 +113,14 @@ cluster_dataset 건물/건축물대장/총괄표제부
 ##### 주택가격: 공동, 개별
 import_shapefile $MARMOT_DATA/공공데이터포털/공동주택가격 -dataset 주택/공동주택가격 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/공공데이터포털/개별주택가격 -dataset 주택/개별주택가격 -srid EPSG:5186 -charset euc-kr
-##### 부동산실거래
-hadoop fs -rm -r -skipTrash data/주택/실거래
-hadoop fs -mkdir data/주택/실거래
-hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트매매 data/주택/실거래
-bind_dataset -type text data/주택/실거래/아파트매매 -dataset 주택/실거래/아파트매매
-hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/부동산실거래/아파트전월세 data/주택/실거래
-bind_dataset -type text data/주택/실거래/아파트전월세 -dataset 주택/실거래/아파트전월세
+##### 부동산실거래 (아파트 매매)
+upload_files $MARMOT_DATA/공공데이터포털/부동산실거래/아파트매매 data/건물_주택/실거래/아파트매매 -glob '**/*.json' -f
+upload_files $MARMOT_DATA/공공데이터포털/부동산실거래/아파트매매 data/건물_주택/실거래/아파트매매 -glob '**/*.csv' -f
+bind_dataset data/건물_주택/실거래/아파트매매 -dataset 주택/실거래/아파트매매 -type text
+##### 부동산실거래 (아파트 전월세)
+upload_files $MARMOT_DATA/공공데이터포털/부동산실거래/아파트전월세 data/건물_주택/실거래/아파트전월세 -glob '**/*.json' -f
+upload_files $MARMOT_DATA/공공데이터포털/부동산실거래/아파트전월세 data/건물_주택/실거래/아파트전월세 -glob '**/*.csv' -f
+bind_dataset data/건물_주택/실거래/아파트전월세 -dataset 주택/실거래/아파트전월세 -type text
 mc_run_module apttrx.GeocodeApartments
 
 
@@ -287,7 +290,8 @@ import_textfile $MARMOT_DATA/공공데이터포털/전국초중등학교 -datase
 ##### 전국어린이집
 import_textfile $MARMOT_DATA/공공데이터포털/전국어린이집 -dataset POI/전국어린이집 -geom_col the_geom -srid EPSG:5186 -comment '#' -f
 ##### 병원
-import_textfile $MARMOT_DATA/공공데이터포털/병원 -dataset POI/병원 -geom_col the_geom -srid EPSG:5186 -f -comment '#'
+import_csv $MARMOT_DATA/공공데이터포털/병원 -header_first -point_col '경도,위도' -wgs84 -dataset POI/병원 -geom_col the_geom	\
+			-srid EPSG:5186 -f
 ##### 서울공공와이파이위치
 hadoop fs -rm -r data/POI/서울공공와이파이위치
 hadoop fs -copyFromLocal $MARMOT_DATA/기타/서울공공와이파이위치 data/POI
@@ -500,5 +504,31 @@ mc_bind_dataset data/gas -dataset gas -type text
 mc_import_geojson $MARMOT_DATA/기타/유엔진/읍면동 -src_srid EPSG:4326 -dataset tmp/uengine/emd -srid EPSG:5186 -f
 mc_import_geojson $MARMOT_DATA/기타/유엔진/시도 -src_srid EPSG:4326 -dataset tmp/uengine/sido -srid EPSG:5186 -f
 mc_import_geojson $MARMOT_DATA/기타/유엔진/시군구 -src_srid EPSG:4326 -dataset tmp/uengine/sgg -srid EPSG:5186 -f
+mc_import_csv $MARMOT_DATA/기타/유엔진/time -header_first -dataset tmp/uengine/time -f
+mc_import_csv $MARMOT_DATA/기타/유엔진/estate -header_first -dataset tmp/uengine/estate -f
+mc_import_csv $MARMOT_DATA/기타/유엔진/deal -header_first -dataset tmp/uengine/deal -f
+
+
+
+import_csv /home/kwlee/tmp/DTG -header 'date,owner,car_no,time,dist,dist_accum,velo,rpm,brake,xpos,ypos,heading,xacc,yacc'	\
+	-point_col 'xpos,ypos' -wgs84 -dataset tmp/dtg1 -geom_col the_geom -srid EPSG:5186 -f -block_size 128mb
+upload_files /home/kwlee/tmp/DTG2 data/tmp/dtg -glob '**/*.json' -f
+upload_files /home/kwlee/tmp/DTG2 data/tmp/dtg -glob '**/*.csv' -f
+bind_dataset data/tmp/dtg -dataset tmp/dtg2 -type text
+
+import_csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 -delim '|' -header_first -null_string '' -point_col 'xpos|ypos'	\
+	-csv_srid EPSG:5179 -dataset tmp/building1 -geom_col the_geom -srid EPSG:5186 -f
+upload_files /home/kwlee/tmp/건물 data/tmp/building2 -glob '**/*.json' -f
+upload_files /home/kwlee/tmp/건물 data/tmp/building2 -glob '**/*.csv' -f
+bind_dataset data/tmp/building2 -dataset tmp/building2 -geom_col the_geom -srid EPSG:5186 -type text
+
+import_csv $MARMOT_DATA/공공데이터포털/병원 -header_first -point_col '경도,위도' -wgs84 -dataset tmp/hospital1 -geom_col the_geom	\
+			-srid EPSG:5186 -f
+upload_files /home/kwlee/tmp/병원 data/tmp/hospital2 -glob '**/*.json' -f
+upload_files /home/kwlee/tmp/병원 data/tmp/hospital2 -glob '**/*.csv' -f
+bind_dataset data/tmp/hospital2 -dataset tmp/hospital2 -type text
+
 
 import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 -dataset 서울역사 -srid EPSG:5186 -charset euc-kr -f
+
+mc_import_shapefile $HOME/tmp/새주소건물 -dataset tmp/result -charset euc-kr -srid EPSG:5186 -f
