@@ -148,11 +148,9 @@ import_shapefile $MARMOT_DATA/BizGis/추정소득분위_100M_5181 -dataset 주�
 hadoop fs -rm -r -skipTrash data/주민/유동인구
 hadoop fs -mkdir data/주민/유동인구
 # 2015
-hadoop fs -mkdir data/주민/유동인구/2015
-hadoop fs -mkdir data/주민/유동인구/2015/시간대
-hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015
+upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.{json}' -f
+upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.{txt,json}' -f
 bind_dataset data/주민/유동인구/2015/시간대 -dataset 주민/유동인구/월별_시간대/2015 -type text -geom_col the_geom -srid EPSG:5186
-import_textfile $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 주민/유동인구/월별_시간대/2015 -geom_col the_geom -srid EPSG:5186	-comment '#' -block_size 128mb -f
 cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
 # 2014
 import_shapefile $MARMOT_DATA/사업단자료/지오비전/유동인구/2014 -dataset 주민/유동인구/월별_시간대/2014 -srid EPSG:5186 -charset euc-kr
@@ -227,10 +225,9 @@ hadoop fs -rm -r -skipTrash data/교통/경기도버스/노선_구간
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/경기도버스/노선_구간 data/교통/경기도버스/노선_구간
 bind_dataset -type text data/교통/경기도버스/노선_구간 -dataset 교통/버스/경기도버스/노선_구간  -geom_col the_geom -srid EPSG:5186
 ##### 나비콜 택시 운행 로그
-hadoop fs -rm -r -skipTrash data/로그/나비콜
-hadoop fs -mkdir data/로그
-hadoop fs -copyFromLocal $MARMOT_DATA/나비콜-택시 data/로그/나비콜
-bind_dataset data/로그/나비콜 -dataset 로그/나비콜/택시로그 -type text -srid EPSG:5186 -geom_col the_geom
+upload_files $MARMOT_DATA/나비콜-택시 data/로그/나비콜 data/로그/나비콜 -glob '**/*.{json}' -f
+upload_files $MARMOT_DATA/나비콜-택시 data/로그/나비콜 data/로그/나비콜 -glob '**/*.{dat,json}' -f
+bind_dataset data/로그/나비콜 -dataset 로그/나비콜/택시로그 -type text -geom_col the_geom -srid EPSG:5186
 cluster_dataset 로그/나비콜/택시로그 -workers 17
 mc_run_module carloc.FilterOnOffTaxiLogs
 mc_run_module carloc.BuildTrajectory
@@ -425,7 +422,7 @@ bind_dataset data/로그/vworld -dataset 로그/vworld -type custom
 import_shapefile $MARMOT_DATA/기타/사업단시연/서울_종합병원 -dataset 시연/hospitals -srid EPSG:5186 -charset utf-8
 import_shapefile $MARMOT_DATA/기타/사업단시연/화재사망자수_2015 -dataset 시연/fire_death -srid EPSG:5186 -charset utf-8
 import_shapefile $MARMOT_DATA/기타/사업단시연/시연용_서울특별시읍면동 -dataset 시연/demo_seoul -srid EPSG:5186 -charset utf-8
-import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -srid EPSG:5186 -charset euc-kr -f
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr -f
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동/TL_SCCO_EMD_11.shp -dataset 시연/서울_읍면동 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/포스웨이브/대전공장_EPSG5174/tc7.shp -dataset 시연/대전공장 -charset euc-kr -srid EPSG:5186
 
