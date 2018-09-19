@@ -23,8 +23,10 @@ $ mkdir marmot
 $ cd marmot
 </code></pre>
 
-GitHub에서 Marmot server 배포판을 download한다.
-* URL 주소: `https://github.com/kwlee0220/marmot.server.dist`
+GitHub에서 Marmot server 배포판을 clone한다. 배포한을 이미 clone한 상태에서,
+새로운 update를 반영시키는 경우에는 git pull 명령을 사용한다.
+<pre><code>$ git clone https://github.com/kwlee0220/marmot.server.dist.git
+</code></pre>
 
 Download받은 zip 파일 (`marmot.server.dist-master.zip`)의 압축을 `$HOME/marmot` 디렉토리에 풀고,
 생성된 디렉토리 이름을 `marmot.server.dist`로 변경한다.
