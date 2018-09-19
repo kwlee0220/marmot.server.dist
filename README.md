@@ -72,14 +72,12 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 	- 저장위치: $HOME/marmot/data/정류소
 * [전국 법정구역](https://www.dropbox.com/s/171bqzaolo4lt2k/%EB%B2%95%EC%A0%95%EA%B5%AC%EC%97%AD_5179.zip?dl=0) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/법정구역_5179
-* [전국 건물주소 및 위치](http://gofile.me/2wzSJ/fSh3I6AiG)  (출처: 도로명 주소)
+* [전국 건물주소 및 위치](https://www.dropbox.com/s/g5bj5z4h7ozv8o5/%EA%B1%B4%EB%AC%BC_%EC%9C%84%EC%B9%98%EC%A0%95%EB%B3%B4.zip?dl=0)  (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/건물_위치정보
-* [전국 아파트매매 실거래 정보](http://gofile.me/2wzSJ/VdWdqySDy)  (출처: 공공데이터포털)
+* [전국 아파트매매 실거래 정보](https://www.dropbox.com/sh/fq8p7ms1d4ly09c/AAA4P7xtBAr0uVHVBdza6DpTa?dl=0)  (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/아파트매매
 * [전국 초중등학교 위치 정보](https://www.dropbox.com/s/1874g3t383w54u3/%EC%A0%84%EA%B5%AD%EC%B4%88%EC%A4%91%EB%93%B1%ED%95%99%EA%B5%90.zip?dl=0)  (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/전국초중등학교
-* [지오코드 데이터](http://gofile.me/2wzSJ/fPZvkbgVh)
-	- 저장위치: $HOME/geocode.db
 
 다운로드 받은 샘플 공간 빅데이터를 저장할 디렉토리 `$HOME/marmot/data`를 만들고, 환경변수 `$MARMOT_DATA`에
 해당 디렉토리를 설정한다.
@@ -95,7 +93,7 @@ Shapefile이 아닌 일반 텍스트 파일이 저장될 HDFS 파일시스템 �
 다운로드 받은 지도 정보를 다음과 같은 과정으로 marmot 서버에 적재시킨다.
 * 서울시내 지하철 역사
 <pre><code>$ import_shapefile $MARMOT_DATA/서울지하철역사 -dataset 교통/지하철/서울역사 -srid EPSG:5186 -charset euc-kr -f
-cluster_dataset 교통/지하철/서울역사
+$ cluster_dataset 교통/지하철/서울역사
 </code></pre>
 * 전국 주유소 유류 가격
 <pre><code>$ import_csv $MARMOT_DATA/주유소_가격 -delim '|' -header_first -point_col '경도|위도' -wgs84 -dataset POI/주유소_가격 -geom_col the_geom -srid EPSG:5186 -f
@@ -104,36 +102,31 @@ cluster_dataset 교통/지하철/서울역사
 <pre><code>$ import_csv $MARMOT_DATA/정류소 -dataset 교통/버스/서울/정류소 -header_first -point_col 'X좌표,Y좌표' -geom_col the_geom -csv_srid EPSG:4326 -srid EPSG:5186 -f
 </code></pre>
 * 전국 법정구역
-<pre><code>$ import_shapefile $MARMOT_DATA/법정구역_5179/시도 -dataset 구역/시도 -charset euc-kr -srid EPSG:5186
-$ import_shapefile $MARMOT_DATA/법정구역_5179/시군구 -dataset 구역/시군구 -charset euc-kr -srid EPSG:5186
+<pre><code>$ import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도 -dataset 구역/시도 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr -f
+$ cluster_dataset 구역/시도
+$ import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시군구 -dataset 구역/시군구 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr -f
 $ cluster_dataset 구역/시군구
-$ import_shapefile $MARMOT_DATA/법정구역_5179/읍면동 -dataset 구역/읍면동 -charset euc-kr -srid EPSG:5186
+$ import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동 -dataset 구역/읍면동 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr -f
 $ cluster_dataset 구역/읍면동
-$ import_shapefile $MARMOT_DATA/법정구역_5179/리 -dataset 구역/리 -charset euc-kr -srid EPSG:5186
+$ import_shapefile $MARMOT_DATA/행자부/법정구역_5179/리 -dataset 구역/리 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr -f
 $ cluster_dataset 구역/리
-
-$ import_shapefile $MARMOT_DATA/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -charset euc-kr -srid EPSG:5186
 </code></pre>
 * 전국 건물주소 및 위치
-<pre><code>$ hadoop fs -mkdir data/도로명주소
-$ hadoop fs -copyFromLocal $MARMOT_DATA/건물_위치정보 data/도로명주소
-$ bind_dataset -type text data/도로명주소/건물_위치정보 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186
+<pre><code>$ import_csv $MARMOT_DATA/건물_위치정보 -delim '|' -header_first -null_string '' -point_col 'xpos|ypos' -wgs84 -dataset 주소/건물POI -geom_col the_geom -srid EPSG:5186 -f
 $ cluster_dataset 주소/건물POI
 </code></pre>
 
 * 전국 아파트매매 실거래
-<pre><code>$ hadoop fs -mkdir data/아파트매매
-$ hadoop fs -copyFromLocal $MARMOT_DATA/아파트매매 data
-$ bind_dataset -type text data/아파트매매 -dataset 주택/실거래/아파트매매
+<pre><code>$ upload_files $MARMOT_DATA/아파트매매 data/건물_주택/실거래/아파트매매 -glob '**/*.json' -f
+$ upload_files $MARMOT_DATA/아파트매매 data/건물_주택/실거래/아파트매매 -glob '**/*.csv' -f
+$ bind_dataset -type text data/건물_주택/실거래/아파트매매 -dataset 주택/실거래/아파트매매
 </code></pre>
 
 * 전국 초중등학교
 <pre><code>$ import_csv $MARMOT_DATA/공공데이터포털/전국초중등학교 -dataset POI/전국초중등학교 -delim '|' -header_first -point_col '경도|위도' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
+$ cluster_dataset POI/전국초중등학교
 </code></pre>
 
-* 지오코드 데이터
-
-다운로드된 'geocode.db.zip' 파일을 unzip하여 `sbdata` 사용자의 홈디렉토리에 옮긴다.
 
 [Marmot client 배포판](https://github.com/kwlee0220/marmot.client.dist)의 `mc_explorer' 명령을 수행시켜 적재된 데이터를 확인한다.
 > `$ mc_explorer`
