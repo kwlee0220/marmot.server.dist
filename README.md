@@ -28,14 +28,9 @@ GitHub에서 Marmot server 배포판을 clone한다. 배포한을 이미 clone�
 <pre><code>$ git clone https://github.com/kwlee0220/marmot.server.dist.git
 </code></pre>
 
-Download받은 zip 파일 (`marmot.server.dist-master.zip`)의 압축을 `$HOME/marmot` 디렉토리에 풀고,
-생성된 디렉토리 이름을 `marmot.server.dist`로 변경한다.
-<pre><code>$ unzip marmot.server.dist-master.zip
-$ mv marmot.server.dist-master marmot.server.dist
-</code></pre>
-
-`hadoop-conf` 디렉토리(전체 경로명: `$HOME/marmot/marmot.server.dist/hadoo-conf`)로 이동하여
-`hadoop-cluster.xml`을 수정한다.
+Clone된 marmot.server.dist 폴더로 이동한다.
+폴더 있는 hadoop-conf.tar 파일을 untar 시켜 `hadoop-conf` 폴더를 생성시키고, 이 폴더로 이동하여
+`hadoop-cluster.xml`파일을 수정한다.
 * 'fs.defaultFS' 속성 값에, HDFS name server의 URL을 기록한다.
 * `yarn.resourcemanager.address`과 `yarn.resourcemanager.webapp.address` 각각의 속성 값을 설정한다.
 	일반적으로 YARN 서버가 운용되는 서버 IP주소에 각각 8050 포트와 8088 포트를 설정한다.
@@ -69,7 +64,7 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 ### 3. 샘플 공간 빅데이터 적재
 다음 목록은 Marmot 서버 테스트 및 [marmot.sample](https://github.com/kwlee0220/marmot.sample) 수행을 위해
 제공되는 테스트용 공간 데이터 목록이다.
-* [서울시내 지하철 역사](http://gofile.me/2wzSJ/k1YtIGiPt) (출처: 공공데이터포털)
+* [서울시내 지하철 역사](http://gofile.me/2wzSJ/ECVWXRk68) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
 * [전국 주유소 유류 가격](http://gofile.me/2wzSJ/2VyMIi8sA) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
