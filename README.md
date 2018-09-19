@@ -66,7 +66,7 @@ $ ln -s marmot-[버전번호]-all.jar marmot.jar
 제공되는 테스트용 공간 데이터 목록이다.
 * [서울시내 지하철 역사](https://www.dropbox.com/s/35ba2y236kcymhs/%EC%84%9C%EC%9A%B8%EC%A7%80%ED%95%98%EC%B2%A0%EC%97%AD%EC%82%AC.zip?dl=0) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/서울지하철역사
-* [전국 주유소 유류 가격](http://gofile.me/2wzSJ/2VyMIi8sA) (출처: 공공데이터포털)
+* [전국 주유소 유류 가격](https://www.dropbox.com/s/1z44nyfputmbmpa/%EC%A3%BC%EC%9C%A0%EC%86%8C_%EA%B0%80%EA%B2%A9.zip?dl=0) (출처: 공공데이터포털)
 	- 저장위치: $HOME/marmot/data/주유소_가격
 * [서울시내 버스 정류소](http://gofile.me/2wzSJ/lXteHiEV2) (출처: 도로명 주소)
 	- 저장위치: $HOME/marmot/data/정류소
