@@ -1,0 +1,5 @@
+#!	/bin/bash
+
+yarn jar $MARMOT_HOME/bin/marmot.jar	\
+marmot.command.HadoopUploadFilesMain	\
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml "$@"
