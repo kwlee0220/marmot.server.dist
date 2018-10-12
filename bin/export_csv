@@ -1,0 +1,4 @@
+#!	/bin/bash
+
+yarn jar $MARMOT_HOME/bin/marmot.jar marmot.command.HadoopExportAsCsvMain	\
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml $@
