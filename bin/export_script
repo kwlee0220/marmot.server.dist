@@ -1,8 +1,9 @@
 mc_export_csv -dataset POI/주유소_가격 -output ~/tmp/result -print_header -quote '"' -point_col "경도:위도" -wgs84
 mc_export_csv -dataset 주소/주소 -delim '|' -print_header -point_col "경도:위도" -wgs84
 mc_export_geojson -dataset POI/주유소_가격 
-mc_export_shapefile -dataset POI/주유소_가격 -dir ~/tmp/xxx
-mc_export_shapefile -dataset 주소/주소 -dir ~/tmp/xxx -f
+mc_export_shapefile POI/주유소_가격 -output_dir ~/tmp/xxx
+mc_export_shapefile 교통/지하철/서울역사 -output_dir ~/tmp/xxx -f
+mc_export_shapefile 주소/주소 -output_dir ~/tmp/xxx -f
 
 
 

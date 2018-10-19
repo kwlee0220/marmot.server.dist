@@ -1,6 +1,5 @@
 #!	/bin/bash
 
-#estimate_quadkeys -layer <layer_name> -output <index_name> [-sample_ratio <ratio>]
-#					[-fill_ratio <fill_ratio>] [-block_size <block_size>]
-yarn jar $MARMOT_HOME/bin/marmot.jar marmot.geo.command.EstimateQuadKeys	\
--hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml $@
+yarn jar $MARMOT_HOME/bin/marmot.jar	\
+marmot.geo.command.EstimateQuadKeys	\
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml "$@"

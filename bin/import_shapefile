@@ -2,4 +2,4 @@
 
 yarn jar $MARMOT_HOME/bin/marmot.jar	\
 marmot.geo.command.HadoopImportShapefileMain	\
--hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml $@
+-hadoop -conf $MARMOT_HOME/hadoop-conf/hadoop-cluster.xml "$@"
