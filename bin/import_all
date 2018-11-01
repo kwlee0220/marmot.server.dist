@@ -173,7 +173,8 @@ hadoop fs -mkdir data/주민/유동인구/2015/성연령
 hadoop fs -copyFromLocal $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/성연령 data/주민/유동인구/2015
 bind_dataset data/주민/유동인구/2015/성연령 -dataset 주민/유동인구/월별_성연령/2015 -type text -geom_col the_geom -srid EPSG:5186
 ##### 지오비전 카드매출
-upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.{txt,json}' -f
+upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.json' -f
+upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.txt' -f
 bind_dataset data/주민/카드매출/2015/시간대 -dataset 주민/카드매출/월별_시간대/2015 -type text
 
 ##### 진료내역정보
@@ -287,11 +288,10 @@ mc_cluster_dataset POI/주유소_가격
 import_textfile $MARMOT_DATA/공공데이터포털/상가업소정보_201712 -dataset POI/상가업소 -geom_col the_geom -srid EPSG:5186 -f
 ##### 공중화장실
 mc_import_csv $MARMOT_DATA/공공데이터포털/공중화장실 -dataset POI/공중화장실 -delim '|' -header_first -null_string ''	\
-				-point_col '경도|위도' -wgs84 -geom_col the_geom -srid EPSG:5186 -f
+				-point_col '경도|위도' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 ##### 전국도서관
-hadoop fs -rm -r data/POI/전국도서관
-hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국도서관 data/POI
-bind_dataset -type text data/POI/전국도서관 -dataset POI/전국도서관 -geom_col the_geom -srid EPSG:5186
+mc_import_csv $MARMOT_DATA/공공데이터포털/전국도서관 -dataset POI/전국도서관 -delim '|' -header_first -null_string ''	\
+				-point_col 'LAT|LON' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 ##### 전국도시공원
 hadoop fs -rm -r data/POI/전국도시공원
 hadoop fs -copyFromLocal $MARMOT_DATA/공공데이터포털/전국도시공원 data/POI
@@ -301,9 +301,10 @@ import_csv $MARMOT_DATA/공공데이터포털/전국초중등학교 -dataset POI
 			-csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 cluster_dataset POI/전국초중등학교
 ##### 전국어린이집
-import_textfile $MARMOT_DATA/공공데이터포털/전국어린이집 -dataset POI/전국어린이집 -geom_col the_geom -srid EPSG:5186 -comment '#' -f
+mc_import_csv $MARMOT_DATA/공공데이터포털/전국어린이집 -dataset POI/전국어린이집 -delim '|' -header_first -point_col '경도|위도'	\
+			-csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 ##### 병원
-import_csv $MARMOT_DATA/공공데이터포털/병원 -dataset POI/병원 -header_first -point_col '경도,위도' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
+import_csv $MARMOT_DATA/공공데이터포털/병원 -dataset POI/병원 -quote '"' -header_first -point_col '경도,위도' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 mc_cluster_dataset POI/병원
 ##### 서울공공와이파이위치
 hadoop fs -rm -r data/POI/서울공공와이파이위치
@@ -403,6 +404,8 @@ bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물_
 ############################################################################################
 ##### DTG 데이터 (교통안전공단)
 ############################################################################################
+#### 운송사 코드
+mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 -header_first -null_string '' -dataset 교통/dtg_companies -f
 ##### (2016.09)
 hadoop fs -rm -r data/로그/dtg
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/*.json' -f
@@ -411,13 +414,20 @@ upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016092?.csv' -f
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016093?.csv' -f
 bind_dataset data/로그/dtg -dataset 교통/dtg -type text -geom_col the_geom -srid EPSG:4326
-
-##### (2016.09)
+##### tiny
+hadoop fs -rm -r data/로그/dtg_t
+upload_files $MARMOT_DATA/도로교통안전공단/DTG_S data/로그/dtg_t -glob '**/*.{csv,json}' -f
+bind_dataset data/로그/dtg_s -dataset 교통/dtg_t -type text -geom_col the_geom -srid EPSG:4326
+##### small
 hadoop fs -rm -r data/로그/dtg_s
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_S data/로그/dtg_s -glob '**/*.{csv,json}' -f
+upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_s -glob '**/*.json' -f
+upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_s -glob '**/20160915.csv' -f
 bind_dataset data/로그/dtg_s -dataset 교통/dtg_s -type text -geom_col the_geom -srid EPSG:4326
-#### 운송사 코드
-mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 -header_first -null_string '' -dataset 교통/dtg_companies -f
+##### medium
+hadoop fs -rm -r data/로그/dtg_m
+upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_m -glob '**/*.json' -f
+upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg)m -glob '**/2016090?.csv' -f
+bind_dataset data/로그/dtg_s -dataset 교통/dtg_m -type text -geom_col the_geom -srid EPSG:4326
 
 
 
@@ -477,7 +487,7 @@ import_shapefile $MARMOT_DATA/사업단자료_2018/우량자료_10분_2017 -data
 import_shapefile $MARMOT_DATA/기타/사업단시연/서울_종합병원 -dataset 시연/hospitals -srid EPSG:5186 -charset utf-8 -f
 import_shapefile $MARMOT_DATA/기타/사업단시연/화재사망자수_2015 -dataset 시연/fire_death -srid EPSG:5186 -charset utf-8 -f
 import_shapefile $MARMOT_DATA/기타/사업단시연/시연용_서울특별시읍면동 -dataset 시연/demo_seoul -srid EPSG:5186 -charset utf-8 -f
-import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -srid EPSG:5186 -charset euc-kr -
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도/TL_SCCO_CTPRVN_11.shp -dataset 시연/서울특별시 -shp_srid EPSG:5179 -srid EPSG:5186 -charset euc-kr -f
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동/TL_SCCO_EMD_11.shp -dataset 시연/서울_읍면동 -srid EPSG:5186 -charset euc-kr
 import_shapefile $MARMOT_DATA/포스웨이브/대전공장_EPSG5174/tc7.shp -dataset 시연/대전공장 -charset euc-kr -srid EPSG:5186
 
@@ -560,3 +570,12 @@ mc_import_geojson $MARMOT_DATA/기타/유엔진/시군구 -src_srid EPSG:4326 -d
 import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 -dataset 서울역사 -srid EPSG:5186 -charset euc-kr -f
 
 import_shapefile /home/kwlee/tmp/테스트 -dataset test -shp_srid EPSG:5174 -srid EPSG:5186 -f
+
+
+################################################################
+##### 5차년도 연령별 인구밀도 핫스팟 분석 결과
+################################################################
+import_shapefile $MARMOT_DATA/포스웨이브/연령별_인구핫스팟_분석결과/2000 -dataset 분석결과/인구밀도/핫스팟/2000 -srid EPSG:5186
+import_shapefile $MARMOT_DATA/포스웨이브/연령별_인구핫스팟_분석결과/2005 -dataset 분석결과/인구밀도/핫스팟/2005 -srid EPSG:5186
+import_shapefile $MARMOT_DATA/포스웨이브/연령별_인구핫스팟_분석결과/2010 -dataset 분석결과/인구밀도/핫스팟/2010 -srid EPSG:5186
+import_shapefile $MARMOT_DATA/포스웨이브/연령별_인구핫스팟_분석결과/2015 -dataset 분석결과/인구밀도/핫스팟/2015 -srid EPSG:5186
