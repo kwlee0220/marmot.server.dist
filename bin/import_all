@@ -372,7 +372,7 @@ import_csv $MARMOT_DATA/기타/안양대제공/교통사고/사망교통사고 -
 			-point_col '경도,위도' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 cluster_dataset 교통/교통사고/사망사고
 ##### 무단횡단사고
-import_csv $MARMOT_DATA/기타/안양대제공/교통사고/무단횡단사고 -dataset 교통/교통사고/무단횡단사고 -quote "'" -header_first	\
+import_csv $MARMOT_DATA/기타/안양대제공/교통사고/무단횡단사고 -dataset 교통/교통사고/무단횡단사고 -quote "\"" -header_first	\
 			-point_col '경도,위도' -csv_srid EPSG:4326 -geom_col the_geom -srid EPSG:5186 -f
 ##### 보행어린이사고
 import_csv $MARMOT_DATA/기타/안양대제공/교통사고/보행어린이사고 -dataset 교통/교통사고/보행어린이사고 -quote "'" -header_first	\
@@ -394,11 +394,11 @@ import_csv $MARMOT_DATA/기타/안양대제공/교통사고/보행노인사고 -
 ##### 건물별 가스 사용 (2011-2017)
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.json' -f
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.txt' -f
-bind_dataset data/건물_주택/건물에너지/가스사용량 -dataset 건물_주택/건물에너지/가스사용량 -type text
+bind_dataset data/건물_주택/건물에너지/가스사용량 -dataset 건물/건물에너지/가스사용량 -type text
 ##### 건물별 전기 사용 (2011-2017)
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.json' -f
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.txt' -f
-bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물_주택/건물에너지/전기사용량 -type text
+bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물/건물에너지/전기사용량 -type text
 
 
 ############################################################################################
@@ -407,7 +407,6 @@ bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물_
 #### 운송사 코드
 mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 -header_first -null_string '' -dataset 교통/dtg_companies -f
 ##### (2016.09)
-hadoop fs -rm -r data/로그/dtg
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/*.json' -f
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016090?.csv' -f
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016091?.csv' -f
@@ -424,9 +423,8 @@ upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_s -glob '
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_s -glob '**/20160915.csv' -f
 bind_dataset data/로그/dtg_s -dataset 교통/dtg_s -type text -geom_col the_geom -srid EPSG:4326
 ##### medium
-hadoop fs -rm -r data/로그/dtg_m
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_m -glob '**/*.json' -f
-upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg)m -glob '**/2016090?.csv' -f
+upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_m -glob '**/2016090?.csv' -f
 bind_dataset data/로그/dtg_s -dataset 교통/dtg_m -type text -geom_col the_geom -srid EPSG:4326
 
 
@@ -549,14 +547,6 @@ import_shapefile $MARMOT_DATA/기타/포도데이터/토지피복도_안양대�
 
 cluster_dataset 토지/토지피복도/1987S
 cluster_dataset 토지/토지피복도/2007S
-
-mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 0 -count 1000000 -output ~/tmp/2007S_1.shp
-mc_export_shapefile 토지/토지피복도/2007S -use_seq_col -charset euc-kr -start 1000000 -output ~/tmp/2007S_2.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 0 -count 1000000 -output ~/tmp/1987S_1.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 1000000 -count 1000000 -output ~/tmp/1987S_2.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 2000000 -count 1000000 -output ~/tmp/1987S_3.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 3000000 -count 1000000 -output ~/tmp/1987S_4.shp
-mc_export_shapefile 토지/토지피복도/1987S -use_seq_col -charset euc-kr -start 4000000 -output ~/tmp/1987S_5.shp
 
 mc_upload_files $HOME/tmp/gas  data/gas -glob '**/*.{txt,json}' -f
 mc_upload_files $HOME/tmp/gas  data/gas -glob '**/*.{json}' -f
