@@ -552,9 +552,9 @@ mc_upload_files $HOME/tmp/gas  data/gas -glob '**/*.{json}' -f
 mc_bind_dataset data/gas -dataset gas -type text
 
 
-mc_import_geojson $MARMOT_DATA/기타/유엔진/읍면동 -src_srid EPSG:4326 -dataset tmp/uengine/emd -srid EPSG:5186 -f
-mc_import_geojson $MARMOT_DATA/기타/유엔진/시도 -src_srid EPSG:4326 -dataset tmp/uengine/sido -srid EPSG:5186 -f
-mc_import_geojson $MARMOT_DATA/기타/유엔진/시군구 -src_srid EPSG:4326 -dataset tmp/uengine/sgg -srid EPSG:5186 -f
+mc_import_geojson $MARMOT_DATA/기타/유엔진/읍면동 -geojson_srid EPSG:4326 -dataset tmp/uengine/emd -geom_col 'the_geom(EPSG:5186)' -f
+mc_import_geojson $MARMOT_DATA/기타/유엔진/시도 -geojson_srid EPSG:4326 -dataset tmp/uengine/sido -geom_col 'the_geom(EPSG:5186)' -f
+mc_import_geojson $MARMOT_DATA/기타/유엔진/시군구 -geojson_srid EPSG:4326 -dataset tmp/uengine/sgg -geom_col 'the_geom(EPSG:5186)' -f
 
 import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 -dataset 서울역사 -srid EPSG:5186 -charset euc-kr -f
 

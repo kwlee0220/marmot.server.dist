@@ -1,0 +1,4 @@
+#!	/bin/bash
+
+yarn jar $MARMOT_HOME/bin/marmot.jar marmot.command.HadoopRunPlanMain	\
+	-module_jar $MARMOT_HOME/bin/marmot.module.jar "$@"

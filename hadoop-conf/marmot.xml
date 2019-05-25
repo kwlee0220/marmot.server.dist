@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<configuration>
+<!--
+	JDBC 연결 관련 설정 속성들
+-->
+
+<!--
+	<property>
+		<name>marmot.catalog.jdbc.url</name>
+		<value>jdbc:h2:tcp://localhost/~/etc/marmot/marmot.db/h2.db</value>
+	</property>
+	<property>
+		<name>marmot.catalog.jdbc.driver</name>
+		<value>org.h2.Driver</value>
+	</property>
+-->
+	<property>
+		<name>marmot.catalog.jdbc.url</name>
+		<value>jdbc:postgresql://129.254.82.95:5433/sbdata</value>
+	</property>
+	<property>
+		<name>marmot.catalog.jdbc.driver</name>
+		<value>org.postgresql.Driver</value>
+	</property>
+	<property>
+		<name>marmot.catalog.jdbc.user</name>
+		<value>sbdata</value>
+	</property>
+	<property>
+		<name>marmot.catalog.jdbc.passwd</name>
+		<value>urc2004</value>
+	</property>
+
+	<property>
+		<name>marmot.catalog.heap.dir</name>
+		<value>database/heap</value>
+	</property>
+
+	<property>
+		<name>marmot.catalog.spatial_indexes.dir</name>
+		<value>database/spatial_indexes</value>
+	</property>
+
+	<property>
+		<name>marmot.default.block_size</name>
+		<value>64mb</value>
+	</property>
+
+	<property>
+		<name>marmot.default.text_block_size</name>
+		<value>64mb</value>
+	</property>
+
+	<property>
+		<name>marmot.default.cluster_size</name>
+		<value>64mb</value>
+	</property>
+
+	<property>
+		<name>marmot.default.cluster_cache_size</name>
+		<value>320mb</value>
+<!--
+		<value>256mb</value>
+		<value>320mb</value>
+		<value>384mb</value>
+		<value>512mb</value>
+		<value>640mb</value>
+-->
+	</property>
+
+	<property>
+		<name>marmot.default.reducer_count</name>
+		<value>7</value>
+	</property>
+
+	<property>
+		<name>marmot.default.progress_report_interval</name>
+		<value>2m</value>
+	</property>
+
+	<property>
+		<name>marmot.grid_cells_per_mapper</name>
+		<value>350000</value>
+	</property>
+
+	<property>
+		<name>mapreduce.map.output.compress</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>mapreduce.map.output.compress.codec</name>
+		<value>org.apache.hadoop.io.compress.SnappyCodec</value>
+	</property>
+	<property>
+		<name>marmot.output.compress</name>
+		<value>false</value>
+	</property>
+	<property>
+		<name>marmot.output.compress.codec</name>
+		<value>org.apache.hadoop.io.compress.SnappyCodec</value>
+	</property>
+
+	<property>
+		<name>marmot.optor.geo.geocode_db</name>
+		<value>/home/sbdata/geocode.db</value>
+	</property>
+
+	<property>
+		<name>marmot.spark.master</name>
+		<value>yarn-client</value>
+	</property>
+
+	<property>
+		<name>marmot.zookeeper.hosts</name>
+		<value>sbdata00.gsbd.etri.re.kr:2181</value>
+	</property>
+
+	<property>
+		<name>marmot.kafka.brokers</name>
+		<value>sbdata00.gsbd.etri.re.kr:6667</value>
+	</property>
+</configuration>

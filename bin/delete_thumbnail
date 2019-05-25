@@ -1,0 +1,3 @@
+#!	/bin/bash
+
+yarn jar $MARMOT_HOME/bin/marmot.jar marmot.geo.command.HadoopDeleteThumbnailMain "$@"
