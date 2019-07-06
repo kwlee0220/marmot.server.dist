@@ -1,7 +1,6 @@
 #!  /bin/bash 
 estimate_quadkeys -dataset social/tweets/heap -output database/standard_qkeys
 
-mc_create_thumbnail 구역/시도 500000
 
 ############################################################################################
 ##### 주요 구역들
@@ -56,7 +55,9 @@ cluster_dataset 건물/새주소건물 -workers 11
 ##### 표준공시지가
 import_csv $MARMOT_DATA/공공데이터포털/표준공시지가 -header_first -dataset 토지/표준공시지가 -quote '"' -f
 ##### 개별공시지가
-import_csv $MARMOT_DATA/공공데이터포털/개별공시지가/2012-2016 -header_first -dataset 토지/개별공시지가_2012_2016 -f
+import_csv $MARMOT_DATA/공공데이터포털/개별공시지가/2012-2017 -header_first -dataset 토지/개별공시지가 -f -charset euc-kr
+import_shapefile $MARMOT_DATA/공공데이터포털/개별공시지가/2018 -dataset 토지/개별공시지가_2018 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_copy 토지/개별공시지가_2018 토지/개별공시지가 -project '*-{the_geom}' -a
 import_shapefile $MARMOT_DATA/공공데이터포털/개별공시지가/2017 -dataset 토지/개별공시지가_2017 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 ##### 용도지역지구
 import_shapefile $MARMOT_DATA/사업단자료/용도지역지구 -dataset 토지/용도지역지구 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr
@@ -137,7 +138,7 @@ cluster_dataset 로그/나비콜/택시로그 -workers 17
 ##### 나비콜 택시 운행 로그 (short version)
 upload_files $MARMOT_DATA/나비콜-택시S data/로그/나비콜S -glob '**/*.st'
 upload_files $MARMOT_DATA/나비콜-택시S data/로그/나비콜S -glob '**/*.dat'
-bind_dataset data/로그/나비콜S -dataset 로그/나비콜/택시로그S -type text -geom_col 'the_geom(EPSG:5186)'
+bind_dataset data/로그/나비콜S -dataset 로그/나비콜/택시로그S -type text -geom_col 'the_geom(EPSG:5186)' -f
 cluster_dataset 로그/나비콜/택시로그S
 ##### 사망사고
 import_csv $MARMOT_DATA/기타/교통사고정보/사망교통사고 -dataset 교통/교통사고/사망사고 -quote '"' -header_first	\
@@ -173,19 +174,19 @@ mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 -head
 bind_dataset data/로그/dtg -dataset 교통/dtg -type text -geom_col 'the_geom(EPSG:4326)'
 ##### tiny
 #hadoop fs -rm -r data/로그/dtg_t
-#upload_files $MARMOT_DATA/도로교통안전공단/DTG_S data/로그/dtg_t -glob '**/*.st'
-#upload_files $MARMOT_DATA/도로교통안전공단/DTG_S data/로그/dtg_t -glob '**/*.{csv}'
+#upload_files $MARMOT_DATA/도로교통안전공단/dtg_t data/로그/dtg_t -glob '**/*.st'
+#upload_files $MARMOT_DATA/도로교통안전공단/dtg_t data/로그/dtg_t -glob '**/*.{csv}'
 bind_dataset data/로그/dtg_t -dataset 교통/dtg_t -type text -geom_col 'the_geom(EPSG:4326)'
 ##### small
 #hadoop fs -rm -r data/로그/dtg_s
-#upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_s -glob '**/*.st'
-#upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_s -glob '**/20160915.csv'
+#upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.st'
+#upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.csv'
 bind_dataset data/로그/dtg_s -dataset 교통/dtg_s -type text -geom_col 'the_geom(EPSG:4326)'
 ##### medium
 #hadoop fs -rm -r data/로그/dtg_m
 hadoop fs -copyFromLocal $MARMOT_DATA/도로교통안전공단/DTG_M data/로그/dtg_m
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_M data/로그/dtg_m -glob '**/*.st'
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_M data/로그/dtg_m -glob '**/2016090?.csv'
+upload_files $MARMOT_DATA/도로교통안전공단/dtg_m data/로그/dtg_m -glob '**/*.st'
+upload_files $MARMOT_DATA/도로교통안전공단/dtg_m data/로그/dtg_m -glob '**/2016090?.csv'
 bind_dataset data/로그/dtg_m -dataset 교통/dtg_m -type text -geom_col 'the_geom(EPSG:5186)'
 #bind_dataset data/로그/dtg_m -dataset 교통/dtg_m -type text
 #import_csv $MARMOT_DATA/도로교통안전공단/DTG_Local -delim ',' -point_cols 'X좌표,Y좌표' -header	\
@@ -256,18 +257,21 @@ mc_cluster_dataset POI/노인복지시설
 ##### 어린이보호구역
 mc_import_csv $MARMOT_DATA/사업단자료/전국어린이보호구역 -dataset POI/어린이보호구역 -quote '"' -header_first	\
 				-geom_col 'the_geom(EPSG:5186)' -f
+##### 주요상권
+import_shapefile $MARMOT_DATA/사업단자료/주요상권 -dataset POI/주요상권 -geom_col 'the_geom(EPSG:5186)' -f
+cluster_dataset POI/주요상권
 
 
 ############################################################################################
 ##### 건물 에너지 사용
 ############################################################################################
-##### 건물별 가스 사용 (2011-2017)
+##### 건물별 가스 사용 (2011-2018)
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.st'
-#upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.txt'
+upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.txt'
 bind_dataset data/건물_주택/건물에너지/가스사용량 -dataset 건물/건물에너지/가스사용량 -type text
-##### 건물별 전기 사용 (2011-2017)
+##### 건물별 전기 사용 (2011-2018)
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.st'
-#upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.txt'
+upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.txt'
 bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물/건물에너지/전기사용량 -type text
 
 
@@ -305,6 +309,19 @@ mc_import_excel $MARMOT_DATA/기타/안양대제공/도봉구/공원_감성분�
 ##### 도봉구 100미터 격자
 import_shapefile $MARMOT_DATA/기타/안양대제공/도봉구/GRID_100 -dataset 기타/안양대/도봉구/GRID_100 -shp_srid EPSG:5179	\
 				-geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
+
+##### 비정형데이터 (민원)
+import_csv $MARMOT_DATA/기타/안양대제공/비정형데이터/TXT -dataset 기타/안양대/비정형/민원 -quote '"' -escape '\' -charset 'euc-kr' -f -header_first
+##### 비정형데이터 (전국격자데이터)
+import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/ALL_Grid1KM -dataset 기타/안양대/비정형/격자 -shp_srid EPSG:5179	\
+				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+##### 비정형데이터 (전국공원데이터)
+import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/Fi_All_Park -dataset 기타/안양대/비정형/정원공원 -shp_srid EPSG:5179	\
+				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+##### 비정형데이터 (전국병원인허가 데이터)
+import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/Fi_ClassLevel_병원 -dataset 기타/안양대/비정형/인허가_병원 -shp_srid EPSG:5179	\
+				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+
 
 
 ############################################################################################
