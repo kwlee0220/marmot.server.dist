@@ -217,16 +217,16 @@ import_shapefile $MARMOT_DATA/사업단자료/교차로 -dataset 지형지물/�
 ##### 민원행정기관
 import_shapefile $MARMOT_DATA/행자부/민원행정기관 -dataset POI/민원행정기관 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 ##### 전국 CCTV 설치장소
-import_csv $MARMOT_DATA/공공데이터포털/전국cctv -delim '|' -header_first -point_cols '경도|위도'	\
+import_csv $MARMOT_DATA/공공데이터포털/전국cctv -delim '|' -header_first -null_value '0' -point_cols '경도|위도'	\
 			-csv_srid EPSG:4326  -dataset POI/전국cctv -geom_col 'the_geom(EPSG:5186)' -f
 ##### 주유소 가격
 mc_import_csv $MARMOT_DATA/공공데이터포털/주유소_가격 -dataset POI/주유소_가격 -delim '|' -header_first -point_cols '경도|위도'	\
 				-csv_srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 mc_cluster_dataset POI/주유소_가격
 ##### 상가업소
-import_textfile $MARMOT_DATA/공공데이터포털/상가업소정보_201712 -dataset POI/상가업소 -geom_col 'the_geom(EPSG:5186)' -f
+mc_import_csv $MARMOT_DATA/공공데이터포털/상가업소정보_201712 -dataset POI/상가업소 -delim ',' -header_first -point_cols '경도,위도' -csv_srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 ##### 공중화장실
-mc_import_csv $MARMOT_DATA/공공데이터포털/공중화장실 -dataset POI/공중화장실 -delim '|' -header_first	\
+mc_import_csv $MARMOT_DATA/공공데이터포털/공중화장실 -dataset POI/공중화장실 -delim '|' -header_first -null_value '0'	\
 				-point_cols '경도|위도' -csv_srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 ##### 전국도서관
 mc_import_csv $MARMOT_DATA/공공데이터포털/전국도서관 -dataset POI/전국도서관 -delim '|' -header_first	\
@@ -242,7 +242,7 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/전국어린이집 -dataset POI
 mc_import_csv $MARMOT_DATA/공공데이터포털/병원 -dataset POI/병원 -quote '"' -header_first -point_cols '경도,위도' -csv_srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 mc_cluster_dataset POI/병원
 ##### 서울공공와이파이위치
-mc_import_csv $MARMOT_DATA/기타/서울공공와이파이위치 -dataset POI/서울공공와이파이위치 -quote '"' -header_first	\
+mc_import_csv $MARMOT_DATA/기타/서울공공와이파이위치 -dataset POI/서울공공와이파이위치 -quote '"' -header_first -trim_columns	\
 				-point_cols 'x좌표,y좌표' -csv_srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 ##### 대규모점포
 import_shapefile $MARMOT_DATA/사업단자료/대규모점포 -dataset POI/대규모점포 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
@@ -268,11 +268,11 @@ cluster_dataset POI/주요상권
 ##### 건물별 가스 사용 (2011-2018)
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.st'
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.txt'
-bind_dataset data/건물_주택/건물에너지/가스사용량 -dataset 건물/건물에너지/가스사용량 -type text
+bind_dataset data/건물_주택/건물에너지/가스사용량 -dataset 건물/건물에너지/가스사용량 -type text -f
 ##### 건물별 전기 사용 (2011-2018)
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.st'
 upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.txt'
-bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물/건물에너지/전기사용량 -type text
+bind_dataset data/건물_주택/건물에너지/전기사용량 -dataset 건물/건물에너지/전기사용량 -type text -f
 
 
 ############################################################################################
