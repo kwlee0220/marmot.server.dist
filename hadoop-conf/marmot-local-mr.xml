@@ -2,7 +2,7 @@
 <configuration>
 	<property>
 		<name>fs.defaultFS</name>
-		<value>hdfs://sbdata00.gsbd.etri.re.kr:8020</value>
+		<value>hdfs://node00.sbdata.etri.re.kr:8020</value>
 	</property>
 	<property>
 		<name>mapreduce.framework.name</name>
@@ -10,10 +10,10 @@
 	</property>
 	<property>
 		<name>yarn.resourcemanager.address</name>
-		<value>sbdata00.gsbd.etri.re.kr:8050</value>
+		<value>node00.sbdata.etri.re.kr:8050</value>
 	</property>
 	<property>
 		<name>yarn.resourcemanager.webapp.address</name>
-		<value>sbdata00.gsbd.etri.re.kr:8088</value>
+		<value>node00.sbdata.etri.re.kr:8088</value>
 	</property>
 </configuration>
