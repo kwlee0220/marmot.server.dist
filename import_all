@@ -55,7 +55,7 @@ create_thumbnail 구역/연속지적도_2019 1000000
 ##### GIS건물통합정보(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -c lz4 -f
-cluster_dataset 건물/GIS건물통합정보_2019 -workers 17
+cluster_dataset 건물/GIS건물통합정보_2019 -workers 23
 create_thumbnail 건물/GIS건물통합정보_2019 500000
 ##### 법정구역정보-시군구(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/법정구역정보/2019.07/SIG 구역/시군구_2019 -charset euc-kr	\
@@ -257,7 +257,7 @@ bind_dataset data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EPSG:
 ##### DTG 데이터 (교통안전공단, 2018년도)
 ############################################################################################
 #### 테스트 데이터
-hadoop fs -rm -r data/로그/dtg_test
+hadoop fs -rm -r -skipTrash data/로그/dtg_test
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/*.st'
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/*.gz'
 bind_dataset data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)'
