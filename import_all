@@ -425,7 +425,7 @@ import_csv $MARMOT_DATA/기타/유엔진/2017gas-export gas_2017 -header_first -
 import_csv $MARMOT_DATA/기타/유엔진/2018gas-export gas_2018 -header_first -quote '"' -report_interval 10000000 -f
 import_csv $MARMOT_DATA/기타/유엔진/2017electro-export electro_2017 -header_first -quote '"' -report_interval 10000000 -f
 import_csv $MARMOT_DATA/기타/유엔진/2018electro-export electro_2018 -header_first -quote '"' -report_interval 10000000 -f
-import_csv $MARMOT_DATA/기타/유엔진/sd sdgeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
+mc_import_csv $MARMOT_DATA/기타/유엔진/sd sdgeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
 import_csv $MARMOT_DATA/기타/유엔진/sig siggeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
 import_csv $MARMOT_DATA/기타/유엔진/emd emdgeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
 import_csv $MARMOT_DATA/기타/유엔진/time time -header_first -f
