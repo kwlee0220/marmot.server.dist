@@ -76,7 +76,7 @@ cluster_dataset 구역/읍면동_2019 -workers 3
 ##### 도로명/지번 주소 관련 정보
 ############################################################################################
 import_csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 주소/건물POI -delim '|' -header_first	\
-			-point_cols 'xpos|ypos'	-srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -c lz4 -f
+			-point_cols 'xpos|ypos'	-srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -f
 cluster_dataset 주소/건물POI
 mc_create_thumbnail 주소/건물POI 500000
 ## 새주소건물
@@ -128,8 +128,7 @@ import_shapefile $MARMOT_DATA/사업단자료/인구밀도_2000 주민/인구밀
 cluster_dataset 주민/인구밀도_2000
 ##### 지오비전 유동인구 (2015)
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.st'
-upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.txt'	\
-			-c snappy
+upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.txt'
 mc_bind_dataset data/주민/유동인구/2015/시간대 주민/유동인구/월별_시간대/2015 -type text	\
 			-geom_col 'the_geom(EPSG:5186)'
 cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
@@ -257,10 +256,10 @@ bind_dataset data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EPSG:
 ##### DTG 데이터 (교통안전공단, 2018년도)
 ############################################################################################
 #### 테스트 데이터
-hadoop fs -rm -r -skipTrash data/로그/dtg_test
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/*.st'
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/*.gz'
-bind_dataset data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)'
+hadoop fs -rm -r -skipTrash data/로그/dtg_201809
+upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '_meta.st'
+upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
+bind_dataset data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)' -f
 
 
 ############################################################################################
