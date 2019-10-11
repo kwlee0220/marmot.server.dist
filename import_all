@@ -20,11 +20,11 @@ cluster_dataset 구역/리
 mc_run_module region.ConcatPoliticals
 ##### 연속지적도_2017
 import_shapefile $MARMOT_DATA/공공데이터포털/연속지적도_2017 구역/연속지적도 -geom_col 'the_geom(EPSG:5186)'	\
-				-charset euc-kr -c lz4 -f
+				-charset euc-kr -f
 cluster_dataset 구역/연속지적도 -workers 19
 ##### 연속지적도_2017 (사업단)
 import_shapefile $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8	\
-				-geom_col 'the_geom(EPSG:5186)' -c lz4 -f
+				-geom_col 'the_geom(EPSG:5186)' -f
 cluster_dataset 구역/연속지적도_2017 -workers 51
 create_thumbnail 구역/연속지적도_2017 1000000
 ##### 행정동코드
@@ -130,12 +130,12 @@ cluster_dataset 주민/인구밀도_2000
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.st'
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.txt'
 mc_bind_dataset data/주민/유동인구/2015/시간대 주민/유동인구/월별_시간대/2015 -type text	\
-			-geom_col 'the_geom(EPSG:5186)'
+			-geom_col 'the_geom(EPSG:5186)' -f
 cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
 ##### 지오비전 카드매출 (2015)
-#upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.st'
-#upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.txt'
-bind_dataset data/주민/카드매출/2015/시간대 주민/카드매출/월별_시간대/2015 -type text
+upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.st'
+upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.txt'
+bind_dataset data/주민/카드매출/2015/시간대 주민/카드매출/월별_시간대/2015 -type text -f
 
 
 ############################################################################################
@@ -257,7 +257,7 @@ bind_dataset data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EPSG:
 ############################################################################################
 #### 테스트 데이터
 hadoop fs -rm -r -skipTrash data/로그/dtg_201809
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '_meta.st'
+upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809/_meta_st data/로그/dtg_201809
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
 bind_dataset data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)' -f
 
