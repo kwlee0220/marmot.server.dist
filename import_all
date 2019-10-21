@@ -7,41 +7,44 @@ estimate_quadkeys social/tweets/heap -output database/standard_qkeys
 ############################################################################################
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 구역/시도
+dataset cluster create 구역/시도
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시군구 구역/시군구 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 구역/시군구
+dataset cluster create 구역/시군구
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동 구역/읍면동 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 구역/읍면동
+dataset cluster create 구역/읍면동
 import_shapefile $MARMOT_DATA/행자부/법정구역_5179/리 구역/리 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 구역/리
+dataset cluster create 구역/리
 mc_run_module region.ConcatPoliticals
 ##### 연속지적도_2017
 import_shapefile $MARMOT_DATA/공공데이터포털/연속지적도_2017 구역/연속지적도 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 구역/연속지적도 -workers 19
+dataset cluster create 구역/연속지적도 -workers 19
 ##### 연속지적도_2017 (사업단)
 import_shapefile $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8	\
 				-geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 구역/연속지적도_2017 -workers 51
+dataset cluster create 구역/연속지적도_2017 -workers 51
 create_thumbnail 구역/연속지적도_2017 1000000
 ##### 행정동코드
 import_shapefile $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-cluster_dataset 구역/행정동코드 #-block_size 32mb
+dataset cluster create 구역/행정동코드 #-block_size 32mb
 ##### 기초구역
 import_shapefile $MARMOT_DATA/행자부/기초구역_5179 구역/기초구역 -srid EPSG:5179 	\
 				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-cluster_dataset 구역/기초구역
+dataset cluster create 구역/기초구역
 ##### 통계청 집계구
 import_shapefile $MARMOT_DATA/사업단자료/통계청집계구 구역/집계구 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-cluster_dataset 구역/집계구
+dataset cluster create 구역/집계구
 ##### 지오비전 집계구
 import_shapefile $MARMOT_DATA/사업단자료/지오비전/집계구 구역/지오비전_집계구 -srid EPSG:5186	\
 				-geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 구역/지오비전_집계구
-mc_run_module region.BuildGeoVisionRegionCenter
+dataset cluster create 구역/지오비전_집계구
+##### 지오비전 집계구 (2018)
+dataset import shp  $MARMOT_DATA/사업단자료/지오비전/집계구_2018 구역/지오비전_집계구_2018 -srid EPSG:5186	\
+				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+dataset cluster create 구역/지오비전_집계구_2018
 
 
 ############################################################################################
@@ -50,26 +53,26 @@ mc_run_module region.BuildGeoVisionRegionCenter
 ##### 연속지적도형정보(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/연속지적도형정보/2019.07 구역/연속지적도_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -c lz4 -f
-cluster_dataset 구역/연속지적도_2019 -workers 51
+dataset cluster create 구역/연속지적도_2019 -workers 51
 create_thumbnail 구역/연속지적도_2019 1000000
 ##### GIS건물통합정보(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -c lz4 -f
-cluster_dataset 건물/GIS건물통합정보_2019 -workers 23
+dataset cluster create 건물/GIS건물통합정보_2019 -workers 23
 create_thumbnail 건물/GIS건물통합정보_2019 500000
 ##### 법정구역정보-시군구(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/법정구역정보/2019.07/SIG 구역/시군구_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -f
-cluster_dataset 구역/시군구_2019 -workers 1
+dataset cluster create 구역/시군구_2019 -workers 1
 ##### 법정구역정보-읍면동(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/법정구역정보/2019.07/EMD 구역/읍면동_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -f
-cluster_dataset 구역/읍면동_2019 -workers 1
+dataset cluster create 구역/읍면동_2019 -workers 1
 ##### 법정구역정보-리(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/법정구역정보/2019.07/LIO 구역/리_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -f
-cluster_dataset 구역/리_2019
-cluster_dataset 구역/읍면동_2019 -workers 3
+dataset cluster create 구역/리_2019
+dataset cluster create 구역/읍면동_2019 -workers 3
 
 
 ############################################################################################
@@ -77,12 +80,12 @@ cluster_dataset 구역/읍면동_2019 -workers 3
 ############################################################################################
 import_csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 주소/건물POI -delim '|' -header_first	\
 			-point_cols 'xpos|ypos'	-srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 주소/건물POI
+dataset cluster create 주소/건물POI
 mc_create_thumbnail 주소/건물POI 500000
 ## 새주소건물
 #import_shapefile $MARMOT_DATA/국가공간정보포털/새주소건물 건물/새주소건물 -srid EPSG:5181	\
 #				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-#cluster_dataset 건물/새주소건물 -workers 11
+#dataset cluster create 건물/새주소건물 -workers 11
 
 
 ############################################################################################
@@ -100,7 +103,7 @@ import_shapefile $MARMOT_DATA/공공데이터포털/개별공시지가/2017 토�
 ##### 용도지역지구
 import_shapefile $MARMOT_DATA/사업단자료/용도지역지구 토지/용도지역지구 -geom_col 'the_geom(EPSG:5186)'	\
 			-charset euc-kr
-cluster_dataset 토지/용도지역지구
+dataset cluster create 토지/용도지역지구
 
 
 ############################################################################################
@@ -108,11 +111,11 @@ cluster_dataset 토지/용도지역지구
 ############################################################################################
 #import_shapefile $MARMOT_DATA/공공데이터포털/건물통합정보 건물/통합정보 -f -geom_col 'the_geom(EPSG:5186)'	\
 #				-charset euc-kr
-#cluster_dataset 건물/통합정보 -workers 17
+#dataset cluster create 건물/통합정보 -workers 17
 ## 건물통합정보마스터
 #import_shapefile $MARMOT_DATA/국가공간정보포털/건물통합정보마스터/201809 건물/건물통합정보마스터/201809	\
 #				-srid EPSG:5174 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -c lz4 -f
-#cluster_dataset 건물/건물통합정보마스터/201809 -workers 11
+#dataset cluster create 건물/건물통합정보마스터/201809 -workers 11
 #create_thumbnail 건물/건물통합정보마스터/201809 500000
 
 
@@ -120,22 +123,28 @@ cluster_dataset 토지/용도지역지구
 ##### 주민 관련 정보
 ############################################################################################
 ##### 성연령별인구
-import_shapefile $MARMOT_DATA/사업단자료/성연령별인구 주민/성연령별인구 -f -geom_col 'the_geom(EPSG:5186)'	\
-				-charset utf-8
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2000년 주민/성연령별인구/2000년 -geom_col 'the_geom(EPSG:5186)'	\
+				-charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2005년 주민/성연령별인구/2005년 -geom_col 'the_geom(EPSG:5186)'	\
+				-charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2010년 주민/성연령별인구/2010년 -geom_col 'the_geom(EPSG:5186)'	\
+				-charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2015년 주민/성연령별인구/2015년 -geom_col 'the_geom(EPSG:5186)'	\
+				-charset utf-8 -f
 #### 인구밀도_2000 (2015년 기준)
 import_shapefile $MARMOT_DATA/사업단자료/인구밀도_2000 주민/인구밀도_2000 -f -geom_col 'the_geom(EPSG:5186)'	\
 				-charset utf-8
-cluster_dataset 주민/인구밀도_2000
+dataset cluster create 주민/인구밀도_2000
 ##### 지오비전 유동인구 (2015)
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.st'
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.txt'
-mc_bind_dataset data/주민/유동인구/2015/시간대 주민/유동인구/월별_시간대/2015 -type text	\
+mc_dataset bind data/주민/유동인구/2015/시간대 주민/유동인구/2015/월별_시간대 -type text	\
 			-geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 주민/유동인구/월별_시간대/2015 -workers 21
+dataset cluster create 주민/유동인구/월별_시간대/2015 -workers 21
 ##### 지오비전 카드매출 (2015)
 upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.st'
 upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.txt'
-bind_dataset data/주민/카드매출/2015/시간대 주민/카드매출/월별_시간대/2015 -type text -f
+bind_dataset data/주민/카드매출/2015/시간대 주민/카드매출/2015/월별_시간대 -type text -f
 
 
 ############################################################################################
@@ -144,7 +153,7 @@ bind_dataset data/주민/카드매출/2015/시간대 주민/카드매출/월별_
 ##### 도로망
 import_shapefile $MARMOT_DATA/기타/표준노드링크/20180531/LINK.shp 교통/도로/링크 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 교통/도로/링크 -workers 3 
+dataset cluster create 교통/도로/링크 -workers 3 
 #import_shapefile $MARMOT_DATA/사업단자료/도로망_2013/노드 교통/도로/노드 -geom_col 'the_geom(EPSG:5186)'	\
 #				-charset euc-kr
 #####  철도망_2013
@@ -155,7 +164,7 @@ import_shapefile $MARMOT_DATA/사업단자료/철도망_2013/철도중심선 교
 ##### 지하철
 mc_import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/역사 교통/지하철/역사 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-mc_cluster_dataset 교통/지하철/역사
+mc_dataset cluster create 교통/지하철/역사
 import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/선로 교통/지하철/선로 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr
 import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/출입구 교통/지하철/출입구 -geom_col 'the_geom(EPSG:5186)'	\
@@ -163,7 +172,7 @@ import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/출입구 교
 ##### 서울 지하철: 역사 (polygon)
 import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 교통/지하철/서울역사 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
-cluster_dataset 교통/지하철/서울역사
+dataset cluster create 교통/지하철/서울역사
 ##### 수도권 지하철: 역사위치 (point)
 mc_import_csv $MARMOT_DATA/공공데이터포털/서울시/지하철/역_위치 교통/지하철/서울/역위치 -quote '"' -header_first	\
 				-point_cols 'Y좌표_WGS_,X좌표_WGS_' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
@@ -173,7 +182,7 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/서울시/지하철/승하차_�
 ##### 버스정류장
 import_shapefile $MARMOT_DATA/BizGis/버스정류장_POI_5181 교통/버스/정류장 -srid EPSG:5181 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 교통/버스/정류장
+dataset cluster create 교통/버스/정류장
 ##### 서울시_버스_정류소_위치
 mc_import_csv $MARMOT_DATA/공공데이터포털/서울시/버스/정류소_위치 교통/버스/서울/정류소_위치 -quote '"'	\
 			-header_first -point_cols 'X좌표,Y좌표' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
@@ -185,17 +194,17 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/서울버스/정류소 교통/�
 ##### 나비콜 택시 운행 로그
 #upload_files $MARMOT_DATA/나비콜-택시 data/로그/나비콜 -glob '**/*.st' 
 #upload_files $MARMOT_DATA/나비콜-택시 data/로그/나비콜 -glob '**/*.dat'
-mc_bind_dataset data/로그/나비콜 로그/나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)'
-cluster_dataset 로그/나비콜/택시로그 -workers 17
+mc_dataset bind data/로그/나비콜 로그/나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)' -f
+dataset cluster create 로그/나비콜/택시로그 -workers 17
 ##### 나비콜 택시 운행 로그 (short version)
 upload_files $MARMOT_DATA/나비콜-택시S data/로그/나비콜S -glob '**/*.st'
 upload_files $MARMOT_DATA/나비콜-택시S data/로그/나비콜S -glob '**/*.dat'
 bind_dataset data/로그/나비콜S 로그/나비콜/택시로그S -type text -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 로그/나비콜/택시로그S
+dataset cluster create 로그/나비콜/택시로그S
 ##### 사망사고
 import_csv $MARMOT_DATA/기타/교통사고정보/사망교통사고 교통/교통사고/사망사고 -quote '"' -header_first	\
 			-point_cols '경도,위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 교통/교통사고/사망사고
+dataset cluster create 교통/교통사고/사망사고
 ##### 무단횡단사고
 import_csv $MARMOT_DATA/기타/교통사고정보/무단횡단사고 교통/교통사고/무단횡단사고 -quote "\"" -header_first	\
 			-point_cols '경도,위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
@@ -295,7 +304,7 @@ import_csv $MARMOT_DATA/공공데이터포털/전국cctv POI/전국cctv -delim '
 ##### 주유소 가격
 mc_import_csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
 			-point_cols '경도|위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
-mc_cluster_dataset POI/주유소_가격
+mc_dataset cluster create POI/주유소_가격
 ##### 상가업소
 mc_import_csv $MARMOT_DATA/공공데이터포털/상가업소정보_201712 POI/상가업소 -delim ',' -header_first	\
 			-point_cols '경도,위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
@@ -308,14 +317,14 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/전국도서관 POI/전국도�
 ##### 전국초중등학교
 import_csv $MARMOT_DATA/공공데이터포털/전국초중등학교 POI/전국초중등학교 -delim '|' -header_first	\
 			-point_cols '경도|위도'	-srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset POI/전국초중등학교
+dataset cluster create POI/전국초중등학교
 ##### 전국어린이집
 mc_import_csv $MARMOT_DATA/공공데이터포털/전국어린이집 POI/전국어린이집 -delim '|' -header_first	\
 			-point_cols '경도|위도'	-srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 ##### 병원
 mc_import_csv $MARMOT_DATA/공공데이터포털/병원 POI/병원 -quote '"' -header_first -point_cols '경도,위도'	\
 			-srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
-mc_cluster_dataset POI/병원
+mc_dataset cluster create POI/병원
 ##### 서울공공와이파이위치
 mc_import_csv $MARMOT_DATA/기타/서울공공와이파이위치 POI/서울공공와이파이위치 -quote '"' -header_first	\
 			-trim_columns -point_cols 'x좌표,y좌표' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
@@ -330,13 +339,13 @@ import_shapefile $MARMOT_DATA/사업단자료/사회보장시설 POI/사회보�
 ##### 노인복지시설
 import_shapefile $MARMOT_DATA/사업단자료/노인복지시설_통합 POI/노인복지시설 -f -geom_col 'the_geom(EPSG:5186)'	\
 			-charset utf-8
-mc_cluster_dataset POI/노인복지시설
+mc_dataset cluster create POI/노인복지시설
 ##### 어린이보호구역
 mc_import_csv $MARMOT_DATA/사업단자료/전국어린이보호구역 POI/어린이보호구역 -quote '"' -header_first	\
 				-geom_col 'the_geom(EPSG:5186)' -f
 ##### 주요상권
 import_shapefile $MARMOT_DATA/사업단자료/주요상권 POI/주요상권 -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset POI/주요상권
+dataset cluster create POI/주요상권
 
 
 ############################################################################################
@@ -364,22 +373,22 @@ import_shapefile $MARMOT_DATA/기타/안양대제공/도봉구/행정동_구역 
 ##### 도봉구 필지
 import_shapefile $MARMOT_DATA/기타/안양대제공/도봉구/필지 기타/안양대/도봉구/필지 -srid EPSG:5179	\
 				-geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
-cluster_dataset 기타/안양대/도봉구/필지
+dataset cluster create 기타/안양대/도봉구/필지
 ##### 도봉구 공원
 import_shapefile $MARMOT_DATA/기타/안양대제공/도봉구/공원 기타/안양대/도봉구/공원 -srid EPSG:5179	\
 				-geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
-cluster_dataset 기타/안양대/도봉구/공원
+dataset cluster create 기타/안양대/도봉구/공원
 ##### 도봉구 도로망
 import_shapefile $MARMOT_DATA/기타/안양대제공/도봉구/도로망 기타/안양대/도봉구/도로망 -srid EPSG:5179	\
 				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-cluster_dataset 기타/안양대/도봉구/도로망
+dataset cluster create 기타/안양대/도봉구/도로망
 ##### 도봉구 민원
 mc_import_excel $MARMOT_DATA/기타/안양대제공/도봉구/민원 기타/안양대/도봉구/민원 -header_first -point_cols 'x,y'	\
 				-excel_srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 기타/안양대/도봉구/민원
+dataset cluster create 기타/안양대/도봉구/민원
 mc_import_excel $MARMOT_DATA/기타/안양대제공/도봉구/공원_민원 기타/안양대/도봉구/공원_민원 -header_first	\
 				-point_cols 'x,y' -excel_srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-cluster_dataset 기타/안양대/도봉구/공원_민원
+dataset cluster create 기타/안양대/도봉구/공원_민원
 ##### 도봉구 공원 감성분석
 mc_import_excel $MARMOT_DATA/기타/안양대제공/도봉구/공원_감성분석 기타/안양대/도봉구/공원_감성분석 -header_first	\
 				-geom_col 'the_geom(EPSG:5186)' -f
@@ -407,14 +416,21 @@ import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/Fi_C
 ##### 연세대연동
 mc_import_csv $MARMOT_DATA/기타/연세대시연/서울버스_승하차 연세대/서울버스_승하차 -header_first	\
 			-point_cols 'x_coord,y_coord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-import_shapefile $MARMOT_DATA/기타/연세대시연/강남구_버스 연세대/강남구_버스 -charset utf-8 -srid EPSG:5181	\
+dataset import shp $MARMOT_DATA/기타/연세대시연/강남구_버스 연세대/강남구_버스 -charset utf-8 -srid EPSG:5181	\
 			-geom_col 'the_geom(EPSG:5186)' -f
-import_shapefile $MARMOT_DATA/기타/연세대시연/강남구_지하철 연세대/강남구_지하철 -charset utf-8	\
+dataset import shp $MARMOT_DATA/기타/연세대시연/강남구_지하철 연세대/강남구_지하철 -charset utf-8	\
 			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
 import_shapefile $MARMOT_DATA/기타/연세대시연/유동인구_부산_EPSG5681 연세대/유동인구_부산 -charset euc-kr	\
 			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
 import_shapefile $MARMOT_DATA/기타/연세대시연/부산_70세인구수 연세대/부산_70세인구수 -charset euc-kr	\
 			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+##### 연세대 사업단 실증
+mc_import_csv $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/bus_input.csv 연세대/사업단실증/E2SFCA/버스	\
+			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_import_csv $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/subway_input.csv 연세대/사업단실증/E2SFCA/지하철	\
+			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_import_csv $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/pop_input.csv 연세대/사업단실증/E2SFCA/유동인구	\
+			-header_first -point_cols 'x_coord,y_coord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
 
 
 ############################################################################################
@@ -430,6 +446,10 @@ import_csv $MARMOT_DATA/기타/유엔진/emd emdgeo -header_first -quote '"' -ge
 import_csv $MARMOT_DATA/기타/유엔진/time time -header_first -f
 import_csv $MARMOT_DATA/기타/유엔진/deal deal -header_first -quote '"' -f
 import_csv $MARMOT_DATA/기타/유엔진/estate estate -quote '"' -header_first -f
+
+dataset import shp  $MARMOT_DATA/기타/유엔진/집계구_2018 blockgeo_temp -charset euc-kr -geom_col 'the_geom(EPSG:5186)' -f
+mc_copy blockgeo_temp blockgeo -project '*-{the_geom}' -f
+mc_dataset delete blockgeo_temp
 
 
 ############################################################################################
@@ -447,10 +467,10 @@ import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/CLIP
 ##### Split 연산
 import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPLIT/Input 안양대/공간연산/split/input	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-cluster_dataset 안양대/공간연산/split/input
+dataset cluster create 안양대/공간연산/split/input
 import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPLIT/SplitFeature 안양대/공간연산/split/param	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-cluster_dataset 안양대/공간연산/split/param
+dataset cluster create 안양대/공간연산/split/param
 import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPLIT/Output 안양대/공간연산/split/output/안양동
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPLIT/Output 안양대/공간연산/split/output/박달동	\
@@ -541,7 +561,7 @@ import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELE
                 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT/Input2 안양대/공간연산/select/input2    \
                 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-cluster_dataset 안양대/공간연산/select/input2
+dataset cluster create 안양대/공간연산/select/input2
 import_shapefile $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT/Output 안양대/공간연산/select/output    \
                 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
