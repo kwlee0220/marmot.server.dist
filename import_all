@@ -138,8 +138,7 @@ dataset cluster create 주민/인구밀도_2000
 ##### 지오비전 유동인구 (2015)
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.st'
 upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/주민/유동인구/2015/시간대 -glob '**/*.txt'
-mc_dataset bind data/주민/유동인구/2015/시간대 주민/유동인구/2015/월별_시간대 -type text	\
-			-geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset bind data/주민/유동인구/2015/시간대 주민/유동인구/2015/월별_시간대 -type text -geom_col 'the_geom(EPSG:5186)' -f
 dataset cluster create 주민/유동인구/월별_시간대/2015 -workers 21
 ##### 지오비전 카드매출 (2015)
 upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/주민/카드매출/2015/시간대 -glob '**/*.st'
@@ -411,7 +410,7 @@ import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/Fi_C
 
 
 ############################################################################################
-##### 안양대 도봉구 분석 데이터
+##### 연세대 분석 데이터
 ############################################################################################
 ##### 연세대연동
 mc_import_csv $MARMOT_DATA/기타/연세대시연/서울버스_승하차 연세대/서울버스_승하차 -header_first	\
@@ -424,13 +423,16 @@ import_shapefile $MARMOT_DATA/기타/연세대시연/유동인구_부산_EPSG568
 			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
 import_shapefile $MARMOT_DATA/기타/연세대시연/부산_70세인구수 연세대/부산_70세인구수 -charset euc-kr	\
 			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+
 ##### 연세대 사업단 실증
-mc_import_csv $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/bus_input.csv 연세대/사업단실증/E2SFCA/버스	\
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/bus_input.csv 연세대/사업단실증/E2SFCA/버스	\
 			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-mc_import_csv $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/subway_input.csv 연세대/사업단실증/E2SFCA/지하철	\
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/subway_input.csv 연세대/사업단실증/E2SFCA/지하철	\
 			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-mc_import_csv $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/pop_input.csv 연세대/사업단실증/E2SFCA/유동인구	\
-			-header_first -point_cols 'x_coord,y_coord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import excel  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/pop_input.xlsx 연세대/사업단실증/E2SFCA/유동인구	\
+			-header_first -point_cols 'x_coord_1,y_coord_1' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/04_04_01_MapMatching_input.csv	\
+			연세대/사업단실증/MapMatching/택시로그 -header_first -point_cols 'x_wgs84,y_wgs84' -geom_col 'the_geom(EPSG:4326)' -f
 
 
 ############################################################################################
