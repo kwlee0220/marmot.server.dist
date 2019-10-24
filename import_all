@@ -431,6 +431,7 @@ mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SF
 			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset import excel  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/pop_input.xlsx 연세대/사업단실증/E2SFCA/유동인구	\
 			-header_first -point_cols 'x_coord_1,y_coord_1' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+
 mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/04_04_01_MapMatching_input.csv	\
 			연세대/사업단실증/MapMatching/택시로그 -header_first -point_cols 'x_wgs84,y_wgs84' -geom_col 'the_geom(EPSG:4326)' -f
 
@@ -448,10 +449,6 @@ import_csv $MARMOT_DATA/기타/유엔진/emd emdgeo -header_first -quote '"' -ge
 import_csv $MARMOT_DATA/기타/유엔진/time time -header_first -f
 import_csv $MARMOT_DATA/기타/유엔진/deal deal -header_first -quote '"' -f
 import_csv $MARMOT_DATA/기타/유엔진/estate estate -quote '"' -header_first -f
-
-dataset import shp  $MARMOT_DATA/기타/유엔진/집계구_2018 blockgeo_temp -charset euc-kr -geom_col 'the_geom(EPSG:5186)' -f
-mc_copy blockgeo_temp blockgeo -project '*-{the_geom}' -f
-mc_dataset delete blockgeo_temp
 
 
 ############################################################################################
