@@ -18,7 +18,7 @@ mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapM
 			연세대/사업단실증/MapMatching/link_mesh -header_first -f
 mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/04_04_01_MapMatching_input.csv	\
 			연세대/사업단실증/MapMatching/택시로그 -header_first -point_cols 'x_wgs84,y_wgs84' -geom_col 'the_geom(EPSG:4326)' -f
-mc_dataset import shp $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/link_wgs84 연세대/사업단실증/도로_링크 -srid EPSG:4326	\
+mc_dataset import shp $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/link_wgs84 연세대/사업단실증/MapMatching/도로_링크 -srid EPSG:4326	\
 					-charset euc-kr -geom_col 'the_geom(EPSG:5186)' -f
 #hadoop fs -rm -r -skipTrash tmp/taxi
 #run_sample demo.poc.map.AddTaxiRoad
