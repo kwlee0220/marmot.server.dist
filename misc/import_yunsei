@@ -1,0 +1,54 @@
+#!  /bin/bash 
+
+############################################################################################
+##### 연세대 사업단 실증 관련 데이터
+############################################################################################
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/bus_input.csv 연세대/사업단실증/E2SFCA/버스	\
+			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/subway_input.csv 연세대/사업단실증/E2SFCA/지하철	\
+			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import excel  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/pop_input.xlsx 연세대/사업단실증/E2SFCA/유동인구	\
+			-header_first -point_cols 'x_coord_1,y_coord_1' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+#hadoop fs -rm -r -skipTrash tmp/e2sfca
+#run_sample demo.poc.e2sfca.AddPublicAccess
+#mc_analysis run 대중교통_접근성
+#run_sample demo.poc.e2sfca.PublicAccess
+
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/link_mesh.csv	\
+			연세대/사업단실증/MapMatching/link_mesh -header_first -f
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/04_04_01_MapMatching_input.csv	\
+			연세대/사업단실증/MapMatching/택시로그 -header_first -point_cols 'x_wgs84,y_wgs84' -geom_col 'the_geom(EPSG:4326)' -f
+mc_dataset import shp $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/link_wgs84 연세대/사업단실증/도로_링크 -srid EPSG:4326	\
+					-charset euc-kr -geom_col 'the_geom(EPSG:5186)' -f
+#hadoop fs -rm -r -skipTrash tmp/taxi
+#run_sample demo.poc.map.AddTaxiRoad
+#mc_analysis run 택시승하차_분석
+#run_sample demo.poc.map.TaxiRoad
+
+mc_dataset import shp $MARMOT_DATA/기타/연세대시연/사업단_실증/DecisionTree/시군구 연세대/사업단실증/DecisionTree/시군구	\
+			-srid EPSG:5179	-charset euc-kr -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/DecisionTree/변수_면적계산전	\
+			연세대/사업단실증/DecisionTree/변수_면적계산전 -header_first -f
+mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/DecisionTree/타겟변수_폐기물	\
+			연세대/사업단실증/DecisionTree/타겟변수_폐기물 -header_first -f
+#hadoop fs -rm -r -skipTrash tmp/decision_tree
+#run_sample demo.poc.waste.AddBuildWasteDT
+#mc_analysis run 폐기물분석
+#run_sample demo.poc.waste.BuildWasteDT
+
+
+
+############################################################################################
+##### 연세대 관련 데이터
+############################################################################################
+
+mc_import_csv $MARMOT_DATA/기타/연세대시연/서울버스_승하차 연세대/서울버스_승하차 -header_first	\
+			-point_cols 'x_coord,y_coord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+dataset import shp $MARMOT_DATA/기타/연세대시연/강남구_버스 연세대/강남구_버스 -charset utf-8 -srid EPSG:5181	\
+			-geom_col 'the_geom(EPSG:5186)' -f
+dataset import shp $MARMOT_DATA/기타/연세대시연/강남구_지하철 연세대/강남구_지하철 -charset utf-8	\
+			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+import_shapefile $MARMOT_DATA/기타/연세대시연/유동인구_부산_EPSG5681 연세대/유동인구_부산 -charset euc-kr	\
+			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+import_shapefile $MARMOT_DATA/기타/연세대시연/부산_70세인구수 연세대/부산_70세인구수 -charset euc-kr	\
+			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f

@@ -1,0 +1,61 @@
+#!  /bin/bash 
+
+############################################################################################
+##### DTG 데이터 (교통안전공단)
+############################################################################################
+
+#### CSV import
+time import_csv $MARMOT_DATA/도로교통안전공단/DTG_201809/dps_438 교통/dtg_csv -delim '|'	\
+	-header 'trip_key|device|vin|car_type|trans_reg_num|carrier_code|driver_code|daily_mileage|accum_mileage|speed|rpm|brake|pos_x:int|pos_y:int|azimuth|accel_x|accel_y|comm_status|area_code|trans_loc_code|trans_code|ts'	\
+	-srid 'EPSG:4326' -geom_col 'the_geom(EPSG:4326)' -compress lz4 -glob '**/DTG-*.gz' -f
+
+#### ELT-D import
+upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809/_meta.st data/로그/dtg_201809_438
+upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809/dps_438 data/로그/dtg_201809_438 -glob '**/DTG-r-*.gz'
+bind_dataset data/로그/dtg_201809_438 교통/dtg_201809_438 -type text -geom_col 'the_geom(EPSG:4326)' -f
+
+
+###
+### 읍면동 데이터(EPSG:4326)  준비
+###
+time mc_copy 구역/읍면동 tmp/emd -transform_srid EPSG:4326 -geom_col 'the_geom(EPSG:4326)' -f
+mc_cluster_dataset tmp/emd
+
+###
+### 읍면동 식별자 추가
+###
+time mc_copy 교통/dtg_csv tmp/result -plan_name 'EMD 추가' -spatial_join 'the_geom:tmp/emd'	\
+		-join_output_cols '*,param.{EMD_CD,EMD_KOR_NM}' -f
+time mc_copy 교통/dtg_201809_438 tmp/result2 -plan_name 'EMD 추가' -spatial_join 'the_geom:tmp/emd'	\
+		-join_output_cols '*,param.{EMD_CD,EMD_KOR_NM}' -compress lz4 -f
+time mc_copy 교통/dtg_201809 분석결과/DTG/emd -plan_name 'EMD 추가' -spatial_join 'the_geom:tmp/emd'	\
+		-join_output_cols '*,param.{EMD_CD,EMD_KOR_NM}' -compress lz4 -f
+
+###
+### 그리드 파일 생성
+###
+time mc_build_square_grid 구역/읍면동 tmp/grid -grid 'dataset=구역/읍면동;cell=1kmx1km; margin=100m' -overlap	\
+		-transform_srid EPSG:4326 -geom_col 'the_geom(EPSG:4326)' -f
+mc_cluster_dataset tmp/grid
+
+###
+### 그리드 파일과 negated-semi join을 통한 위치 오류 데이터 추출
+###
+time mc_copy 교통/dtg_csv tmp/bad1 -plan_name '이상위치 검색' -spatial_join the_geom:tmp/grid	\
+		-join_type semi_negated	-geom_col 'the_geom(EPSG:4326)' -compress lz4 -f
+time mc_copy 교통/dtg_201809_438 tmp/bad2 -plan_name '이상위치 검색' -spatial_join the_geom:tmp/grid	\
+		-join_type semi_negated -geom_col 'the_geom(EPSG:4326)' -compress lz4 -f
+time mc_copy 교통/dtg_201809 분석결과/DTG/bad -plan_name '이상위치 검색' -spatial_join the_geom:tmp/grid	\
+		-join_type semi_negated -geom_col 'the_geom(EPSG:4326)' -compress lz4 -f
+
+
+###
+### 1km 격자 (읍면동 데이터 기준 격자) 정보 추가
+###
+time mc_build_square_grid 교통/dtg_csv tmp/grid_csv -grid 'dataset=tmp/emd;cell=1kmx1km'	\
+		-overlap -geom_col 'the_geom(EPSG:4326)' -f
+time mc_build_square_grid 교통/dtg_201809_438 tmp/grid_dtg_438 -grid 'dataset=tmp/emd;cell=1kmx1km'	\
+		-overlap -geom_col 'the_geom(EPSG:4326)' -f
+time mc_build_square_grid 교통/dtg_201809 분석결과/DTG/grid_dtg -grid 'dataset=tmp/emd;cell=1kmx1km'	\
+		-overlap -geom_col 'the_geom(EPSG:4326)' -f
+

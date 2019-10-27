@@ -1,0 +1,24 @@
+#!  /bin/bash 
+
+############################################################################################
+##### 유엔진 관련 데이터
+############################################################################################
+
+mc_copy 구역/시도 sdgeo -project 'the_geom,CTPRVN_CD as sdcode,CTP_KOR_NM as name' -geom_col 'the_geom(EPSG:5186)' -f
+mc_copy sdgeo sd -project 'sdcode,name' -f
+mc_copy 구역/시군구 siggeo -define_column 'string sdcode = SIG_CD.substring(0,2)'	\
+		-project 'the_geom,SIG_CD as sigcode,SIG_KOR_NM as name,sdcode' -geom_col 'the_geom(EPSG:5186)' -f
+mc_copy siggeo sig -project 'sigcode,name,sdcode' -f
+mc_copy 구역/읍면동 emdgeo -define_column 'string sdcode = EMD_CD.substring(0,2)'	\
+		-define_column 'string sigcode = EMD_CD.substring(0,5)'	\
+		-project 'the_geom,EMD_CD as emdcode,EMD_KOR_NM as name,sdcode,sigcode' -geom_col 'the_geom(EPSG:5186)' -f
+mc_copy emdgeo emd -project 'emdcode,name,sdcode,sigcode' -f
+
+mc_dataset import shp $MARMOT_DATA/기타/유엔진/집계구_2018 blockgeo_temp -charset euc-kr -geom_col 'the_geom(EPSG:5186)' -f
+mc_copy blockgeo_temp blockgeo -project '*-{the_geom}' -f
+mc_dataset delete blockgeo_temp
+
+mc_upload_files $MARMOT_DATA/기타/유엔진/유동인구_2015 data/주민/유동인구/2015/시간대 -glob '**/*.st'
+mc_dataset bind data/주민/유동인구/2015/시간대 flow_pop_time -type text -geom_col 'the_geom(EPSG:5179)' -f
+
+#dataset import csv $MARMOT_DATA/기타/유엔진/resultData resultData -header_first -quote '"' -report_interval 10000000 -f
