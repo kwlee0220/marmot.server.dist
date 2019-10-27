@@ -4,6 +4,13 @@
 ##### 유엔진 관련 데이터
 ############################################################################################
 
+dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
+mc_dataset cluster create 구역/시도
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/시군구 구역/시군구 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 구역/시군구
+import_shapefile $MARMOT_DATA/행자부/법정구역_5179/읍면동 구역/읍면동 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 구역/읍면동
+
 mc_copy 구역/시도 sdgeo -project 'the_geom,CTPRVN_CD as sdcode,CTP_KOR_NM as name' -geom_col 'the_geom(EPSG:5186)' -f
 mc_copy sdgeo sd -project 'sdcode,name' -f
 mc_copy 구역/시군구 siggeo -define_column 'string sdcode = SIG_CD.substring(0,2)'	\

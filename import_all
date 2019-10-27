@@ -22,12 +22,11 @@ import_shapefile $MARMOT_DATA/공공데이터포털/연속지적도_2017 구역/
 				-charset euc-kr -f
 dataset cluster create 구역/연속지적도 -workers 19
 ##### 연속지적도_2017 (사업단)
-import_shapefile $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8	\
-				-geom_col 'the_geom(EPSG:5186)' -f
+dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8 -geom_col 'the_geom(EPSG:5186)' -f
 dataset cluster create 구역/연속지적도_2017 -workers 51
 create_thumbnail 구역/연속지적도_2017 1000000
 ##### 행정동코드
-import_shapefile $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 dataset cluster create 구역/행정동코드 #-block_size 32mb
 ##### 기초구역
 import_shapefile $MARMOT_DATA/행자부/기초구역_5179 구역/기초구역 -srid EPSG:5179 	\
@@ -42,15 +41,13 @@ dataset cluster create 구역/집계구
 ##### 국가공간정보포털 - 국가중점데이터
 ############################################################################################
 ##### 연속지적도형정보(국가중점데이터)
-import_shapefile $MARMOT_DATA/국가공간정보포털/연속지적도형정보/2019.07 구역/연속지적도_2019 -charset euc-kr	\
-				-geom_col 'the_geom(EPSG:5174)' -c lz4 -f
+import_shapefile $MARMOT_DATA/국가공간정보포털/연속지적도형정보/2019.07 구역/연속지적도_2019 -charset euc-kr -geom_col 'the_geom(EPSG:5174)' -f
 dataset cluster create 구역/연속지적도_2019 -workers 51
 create_thumbnail 구역/연속지적도_2019 1000000
 ##### GIS건물통합정보(국가중점데이터)
-import_shapefile $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr	\
-				-geom_col 'the_geom(EPSG:5174)' -c lz4 -f
-dataset cluster create 건물/GIS건물통합정보_2019 -workers 23
-create_thumbnail 건물/GIS건물통합정보_2019 500000
+dataset import shp  $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr -geom_col 'the_geom(EPSG:5174)' -f
+mc_dataset cluster create 건물/GIS건물통합정보_2019 -workers 23
+mc_dataset thumbnail create 건물/GIS건물통합정보_2019 500000
 ##### 법정구역정보-시군구(국가중점데이터)
 import_shapefile $MARMOT_DATA/국가공간정보포털/법정구역정보/2019.07/SIG 구역/시군구_2019 -charset euc-kr	\
 				-geom_col 'the_geom(EPSG:5174)' -f
@@ -302,7 +299,7 @@ import_shapefile $MARMOT_DATA/행자부/민원행정기관 POI/민원행정기�
 import_csv $MARMOT_DATA/공공데이터포털/전국cctv POI/전국cctv -delim '|' -header_first -null_value '0'	\
 			-point_cols '경도|위도' -srid EPSG:4326  -geom_col 'the_geom(EPSG:5186)' -f
 ##### 주유소 가격
-mc_import_csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
+mc_datasset import csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
 			-point_cols '경도|위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create POI/주유소_가격
 ##### 상가업소
@@ -322,8 +319,8 @@ dataset cluster create POI/전국초중등학교
 mc_import_csv $MARMOT_DATA/공공데이터포털/전국어린이집 POI/전국어린이집 -delim '|' -header_first	\
 			-point_cols '경도|위도'	-srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 ##### 병원
-mc_import_csv $MARMOT_DATA/공공데이터포털/병원 POI/병원 -quote '"' -header_first -point_cols '경도,위도'	\
-			-srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset improt csv $MARMOT_DATA/공공데이터포털/병원 POI/병원 -quote '"' -header_first -point_cols '경도,위도'	\
+		-srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create POI/병원
 ##### 서울공공와이파이위치
 mc_import_csv $MARMOT_DATA/기타/서울공공와이파이위치 POI/서울공공와이파이위치 -quote '"' -header_first	\
@@ -337,8 +334,7 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/지구대_파출소 POI/지구�
 import_shapefile $MARMOT_DATA/사업단자료/사회보장시설 POI/사회보장시설 -geom_col 'the_geom(EPSG:5186)'	\
 			-charset euc-kr -f
 ##### 노인복지시설
-import_shapefile $MARMOT_DATA/사업단자료/노인복지시설_통합 POI/노인복지시설 -f -geom_col 'the_geom(EPSG:5186)'	\
-			-charset utf-8
+dataset import shp  $MARMOT_DATA/사업단자료/노인복지시설_통합 POI/노인복지시설 -f -geom_col 'the_geom(EPSG:5186)' -charset utf-8
 mc_dataset cluster create POI/노인복지시설
 ##### 어린이보호구역
 mc_import_csv $MARMOT_DATA/사업단자료/전국어린이보호구역 POI/어린이보호구역 -quote '"' -header_first	\
@@ -408,48 +404,6 @@ import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/Fi_A
 ##### 비정형데이터 (전국병원인허가 데이터)
 import_shapefile $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP/Fi_ClassLevel_병원 기타/안양대/비정형/인허가_병원	\
 			-srid EPSG:5179	-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-
-
-############################################################################################
-##### 연세대 분석 데이터
-############################################################################################
-##### 연세대연동
-mc_import_csv $MARMOT_DATA/기타/연세대시연/서울버스_승하차 연세대/서울버스_승하차 -header_first	\
-			-point_cols 'x_coord,y_coord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-dataset import shp $MARMOT_DATA/기타/연세대시연/강남구_버스 연세대/강남구_버스 -charset utf-8 -srid EPSG:5181	\
-			-geom_col 'the_geom(EPSG:5186)' -f
-dataset import shp $MARMOT_DATA/기타/연세대시연/강남구_지하철 연세대/강남구_지하철 -charset utf-8	\
-			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-import_shapefile $MARMOT_DATA/기타/연세대시연/유동인구_부산_EPSG5681 연세대/유동인구_부산 -charset euc-kr	\
-			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-import_shapefile $MARMOT_DATA/기타/연세대시연/부산_70세인구수 연세대/부산_70세인구수 -charset euc-kr	\
-			-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-
-##### 연세대 사업단 실증
-mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/bus_input.csv 연세대/사업단실증/E2SFCA/버스	\
-			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/subway_input.csv 연세대/사업단실증/E2SFCA/지하철	\
-			-header_first -point_cols 'xcoord,ycoord' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset import excel  $MARMOT_DATA/기타/연세대시연/사업단_실증/E2SFCA/pop_input.xlsx 연세대/사업단실증/E2SFCA/유동인구	\
-			-header_first -point_cols 'x_coord_1,y_coord_1' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
-
-mc_dataset import csv  $MARMOT_DATA/기타/연세대시연/사업단_실증/MapMatching/04_04_01_MapMatching_input.csv	\
-			연세대/사업단실증/MapMatching/택시로그 -header_first -point_cols 'x_wgs84,y_wgs84' -geom_col 'the_geom(EPSG:4326)' -f
-
-
-############################################################################################
-##### 유엔진 데이터 
-############################################################################################
-import_csv $MARMOT_DATA/기타/유엔진/2017gas-export gas_2017 -header_first -quote '"' -report_interval 10000000 -f
-import_csv $MARMOT_DATA/기타/유엔진/2018gas-export gas_2018 -header_first -quote '"' -report_interval 10000000 -f
-import_csv $MARMOT_DATA/기타/유엔진/2017electro-export electro_2017 -header_first -quote '"' -report_interval 10000000 -f
-import_csv $MARMOT_DATA/기타/유엔진/2018electro-export electro_2018 -header_first -quote '"' -report_interval 10000000 -f
-mc_import_csv $MARMOT_DATA/기타/유엔진/sd sdgeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
-import_csv $MARMOT_DATA/기타/유엔진/sig siggeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
-import_csv $MARMOT_DATA/기타/유엔진/emd emdgeo -header_first -quote '"' -geom_col 'geom(EPSG:5186)' -f
-import_csv $MARMOT_DATA/기타/유엔진/time time -header_first -f
-import_csv $MARMOT_DATA/기타/유엔진/deal deal -header_first -quote '"' -f
-import_csv $MARMOT_DATA/기타/유엔진/estate estate -quote '"' -header_first -f
 
 
 ############################################################################################
