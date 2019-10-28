@@ -191,12 +191,12 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/서울버스/정류소 교통/�
 #upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.st' 
 #upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.dat'
 mc_dataset bind data/나비콜/택시로그 나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)' -f
-dataset cluster create 나비콜/택시로그 -workers 17
+#dataset cluster create 나비콜/택시로그 -workers 17
 ##### 나비콜 택시 운행 로그 (short version)
 upload_files $MARMOT_DATA/나비콜-택시S data/로그/나비콜S -glob '**/*.st'
 upload_files $MARMOT_DATA/나비콜-택시S data/로그/나비콜S -glob '**/*.dat'
-bind_dataset data/로그/나비콜S 로그/나비콜/택시로그S -type text -geom_col 'the_geom(EPSG:5186)' -f
-dataset cluster create 로그/나비콜/택시로그S
+mc_dataset bind data/로그/나비콜S 나비콜/택시로그S -type text -geom_col 'the_geom(EPSG:5186)' -f
+#dataset cluster create 로그/나비콜/택시로그S
 
 ##### 사망사고
 import_csv $MARMOT_DATA/기타/교통사고정보/사망교통사고 교통/교통사고/사망사고 -quote '"' -header_first	\

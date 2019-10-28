@@ -47,17 +47,18 @@ mc_dataset bind data/나비콜/택시로그 나비콜/택시로그 -type text -g
 ###############################################################################################################################################
 
 ##### GIS건물통합정보(국가중점데이터)
-dataset import shp  $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr -geom_col 'the_geom(EPSG:5174)' -f
+dataset import shp $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr -geom_col 'the_geom(EPSG:5174)' -f
 mc_dataset cluster create 건물/GIS건물통합정보_2019 -workers 23
 mc_dataset thumbnail create 건물/GIS건물통합정보_2019 500000
 
 ##### 연속지적도_2017 (사업단)
 dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create 구역/연속지적도_2017 -workers 51
-mc_create_thumbnail 구역/연속지적도_2017 1000000
+mc_dataset thumbnail create  구역/연속지적도_2017 1000000
 
 ##### 행정동코드
 mc_dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset cluster create 구역/행정동코드
 
 ##### 성연령별인구
 dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2000년 주민/성연령별인구/2000년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
@@ -75,10 +76,10 @@ mc_dataset improt csv $MARMOT_DATA/공공데이터포털/병원 POI/병원 -quot
 mc_dataset cluster create POI/병원
 
 ##### 노인복지시설
-dataset import shp  $MARMOT_DATA/사업단자료/노인복지시설_통합 POI/노인복지시설 -f -geom_col 'the_geom(EPSG:5186)' -charset utf-8
+dataset import shp $MARMOT_DATA/사업단자료/노인복지시설_통합 POI/노인복지시설 -f -geom_col 'the_geom(EPSG:5186)' -charset utf-8
 mc_dataset cluster create POI/노인복지시설
 
 ##### 주유소 가격
-mc_datasset import csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
+mc_dataset import csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
 			-point_cols '경도|위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create POI/주유소_가격
