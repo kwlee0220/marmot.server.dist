@@ -60,12 +60,6 @@ mc_dataset thumbnail create  구역/연속지적도_2017 1000000
 mc_dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 mc_dataset cluster create 구역/행정동코드
 
-##### 성연령별인구
-dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2000년 주민/성연령별인구/2000년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2005년 주민/성연령별인구/2005년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2010년 주민/성연령별인구/2010년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2015년 주민/성연령별인구/2015년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-
 ##### 도로망
 dataset import shapefile $MARMOT_DATA/기타/표준노드링크/20180531/LINK.shp 교통/도로/링크 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 mc_dataset cluster create 교통/도로/링크 -workers 3
@@ -83,3 +77,17 @@ mc_dataset cluster create POI/노인복지시설
 mc_dataset import csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
 			-point_cols '경도|위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create POI/주유소_가격
+
+###############################################################################################################################################
+###############################################################################################################################################
+###############################################################################################################################################
+
+##### 성연령별인구
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2000년 주민/성연령별인구/2000년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2005년 주민/성연령별인구/2005년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2010년 주민/성연령별인구/2010년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2015년 주민/성연령별인구/2015년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+
+dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_20a_5186 -type gwave -f
+dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_30a_5186 -type gwave -f
+dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_40a_5186 -type gwave -f
