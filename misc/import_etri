@@ -88,6 +88,7 @@ dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2005년 
 dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2010년 주민/성연령별인구/2010년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2015년 주민/성연령별인구/2015년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
-dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_20a_5186 -type gwave -f
-dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_30a_5186 -type gwave -f
-dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_40a_5186 -type gwave -f
+mc_dataset bind pop_age_interval_2000 tmp/result -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_20a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_30a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_40a_5186 -type gwave -f
