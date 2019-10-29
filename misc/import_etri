@@ -89,19 +89,19 @@ dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2010년 
 dataset import shp $MARMOT_DATA/사업단자료_2018/성연령별인구/2015년 주민/성연령별인구/2015년 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 mc_dataset bind pop_age_interval_2000 tmp/result -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_20a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_30a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_40a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2000y_50a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2005y_20a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2005y_30a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2005y_40a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2005y_50a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2010y_20a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2010y_30a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2010y_40a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2010y_50a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2015y_20a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2015y_30a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2015y_40a_5186 -type gwave -f
-mc_dataset bind etri_demo_2000y_20a_5186 tmp/etri_demo_2015y_50a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2000y_20a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2000y_30a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2000y_40a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2000y_50a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2005y_20a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2005y_30a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2005y_40a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2005y_50a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2010y_20a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2010y_30a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2010y_40a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2010y_50a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_20a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_30a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_40a_5186 -type gwave -f
+mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_50a_5186 -type gwave -f
