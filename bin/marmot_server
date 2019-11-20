@@ -1,6 +1,3 @@
 #!	/bin/bash
 
-yarn jar $MARMOT_HOME/bin/marmot.jar marmot.remote.protobuf.PBMarmotServerMain	\
-	-libjars $MARMOT_HOME/bin/marmot.module.jar	\
-	-runner mr \
-	-module_jar $MARMOT_HOME/bin/marmot.module.jar "$@"
+yarn jar $MARMOT_HOME/bin/marmot.jar marmot.remote.protobuf.PBMarmotServerMain -runner mr "$@"

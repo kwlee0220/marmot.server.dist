@@ -5,60 +5,83 @@
 #run_sample demo.poc.subway.BestSubway
 
 ##### 법정구역/시도
-dataset import shapefile $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
 mc_dataset cluster create 구역/시도
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시군구 구역/시군구 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 구역/시군구
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/읍면동 구역/읍면동 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 구역/읍면동
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/리 구역/리 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 구역/리
 
+##### 행정동코드
+mc_dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset cluster create 구역/행정동코드
 
-############################################################################################
-##### 지오비전 데이터
-############################################################################################
-##### 집계구
-dataset import shp $MARMOT_DATA/사업단자료/지오비전/집계구/2015 지오비전/집계구/2015 -srid EPSG:5186 -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset cluster create 지오비전/집계구/2015
-dataset import shp $MARMOT_DATA/사업단자료/지오비전/집계구/2018 지오비전/집계구/2018 -srid EPSG:5186 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-mc_dataset cluster create 지오비전/집계구/2018
-
-##### 유동인구 (2015)
-upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/지오비전/유동인구/2015/시간대 -glob '**/*.st'
-#upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/지오비전/유동인구/2015/시간대 -glob '**/*.txt'
-mc_dataset bind data/지오비전/유동인구/2015/시간대 지오비전/유동인구/2015/월별_시간대 -type text -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset bind data/지오비전/유동인구/2015/시간대 지오비전/유동인구/2016/월별_시간대 -type text -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset bind data/지오비전/유동인구/2015/시간대 지오비전/유동인구/2017/월별_시간대 -type text -geom_col 'the_geom(EPSG:5186)' -f
-
-##### 지오비전 카드매출 (2015)
-upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.st'
-#upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.txt'
-mc_dataset bind data/지오비전/카드매출/2015/시간대 지오비전/카드매출/2015/일별_시간대 -type text -f
-mc_dataset bind data/지오비전/카드매출/2015/시간대 지오비전/카드매출/2016/일별_시간대 -type text -f
-mc_dataset bind data/지오비전/카드매출/2015/시간대 지오비전/카드매출/2017/일별_시간대 -type text -f
-
-
-##### 지하철
-dataset import shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/역사 교통/지하철/역사 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-mc_dataset cluster create 교통/지하철/역사
-
-##### 나비콜 택시 운행 로그
-upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.st' 
-#upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.dat'
-mc_dataset bind data/나비콜/택시로그 나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)' -f
-
-###############################################################################################################################################
-###############################################################################################################################################
-###############################################################################################################################################
-
-##### GIS건물통합정보(국가중점데이터)
-dataset import shp $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr -geom_col 'the_geom(EPSG:5174)' -f
-mc_dataset cluster create 건물/GIS건물통합정보_2019 -workers 23
-mc_dataset thumbnail create 건물/GIS건물통합정보_2019 500000
+##### 통계청 집계구
+mc_dataset import shp $MARMOT_DATA/사업단자료/통계청집계구 구역/집계구 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 구역/집계구
 
 ##### 연속지적도_2017 (사업단)
 dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create 구역/연속지적도_2017 -workers 51
 mc_dataset thumbnail create  구역/연속지적도_2017 1000000
 
-##### 행정동코드
-mc_dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-mc_dataset cluster create 구역/행정동코드
+# 건물통합정보마스터
+mc_dataset import shp $MARMOT_DATA/국가공간정보포털/건물통합정보마스터/201809 건물/건물통합정보마스터	\
+				-srid EPSG:5174 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -c lz4 -f
+mc_dataset cluster create 건물/건물통합정보마스터 -workers 11
+mc_dataset thumbnail create 건물/건물통합정보마스터 500000
+
+##### GIS건물통합정보(국가중점데이터)
+dataset import shp $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -charset euc-kr -geom_col 'the_geom(EPSG:5174)' -f
+mc_dataset cluster create 건물/GIS건물통합정보_2019 -workers 23
+mc_dataset thumbnail create 건물/GIS건물통합정보_2019 500000
+
+##### 지하철
+mc_dataset import shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/역사 교통/지하철/역사 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 교통/지하철/역사
+##### 민원행정기관
+mc_dataset import shp $MARMOT_DATA/행자부/민원행정기관 POI/민원행정기관 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create POI/민원행정기관
+##### 주유소 가격
+mc_dataset import csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
+			-point_cols '경도|위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset cluster create POI/주유소_가격
+##### 전국 CCTV 설치장소
+mc_dataset import csv $MARMOT_DATA/공공데이터포털/전국cctv POI/전국cctv -delim '|' -header_first -null_value '0'	\
+			-point_cols '경도|위도' -srid EPSG:4326  -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset cluster create POI/전국cctv
+
+##### 나비콜 택시 운행 로그
+mc_upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.st' 
+#upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.dat'
+mc_dataset bind data/나비콜/택시로그 나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)' -f
+
+############
+##### 지오비전 데이터
+############################################################################################
+##### 집계구
+mc_dataset import shp $MARMOT_DATA/사업단자료/지오비전/집계구/2015 지오비전/집계구/2015 -srid EPSG:5186 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset cluster create 지오비전/집계구/2015
+mc_dataset import shp $MARMOT_DATA/사업단자료/지오비전/집계구/2018 지오비전/집계구/2018 -srid EPSG:5186 -geom_col 'the_geom(EPSG:5186)'	\
+			-charset euc-kr -f
+mc_dataset cluster create 지오비전/집계구/2018
+
+##### 유동인구 (2015)
+mc_upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/지오비전/유동인구/2015/시간대 -glob '**/*.st'
+#upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/지오비전/유동인구/2015/시간대 -glob '**/*.txt'
+mc_dataset bind data/지오비전/유동인구/2015/시간대 지오비전/유동인구/2015/월별_시간대 -type text -geom_col 'the_geom(EPSG:5186)' -f
+
+##### 지오비전 카드매출 (2015)
+mc_upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.st'
+#upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.txt'
+mc_dataset bind data/지오비전/카드매출/2015/시간대 지오비전/카드매출/2015/일별_시간대 -type text -f
+
+
+#############################################################################################################################################
+#############################################################################################################################################
+#############################################################################################################################################
 
 ##### 도로망
 dataset import shapefile $MARMOT_DATA/기타/표준노드링크/20180531/LINK.shp 교통/도로/링크 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
@@ -72,11 +95,6 @@ mc_dataset cluster create POI/병원
 ##### 노인복지시설
 dataset import shp $MARMOT_DATA/사업단자료/노인복지시설_통합 POI/노인복지시설 -f -geom_col 'the_geom(EPSG:5186)' -charset utf-8
 mc_dataset cluster create POI/노인복지시설
-
-##### 주유소 가격
-mc_dataset import csv $MARMOT_DATA/공공데이터포털/주유소_가격 POI/주유소_가격 -delim '|' -header_first	\
-			-point_cols '경도|위도' -srid EPSG:4326 -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset cluster create POI/주유소_가격
 
 ###############################################################################################################################################
 ###############################################################################################################################################
@@ -105,3 +123,24 @@ mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_20a_5186 -type gw
 mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_30a_5186 -type gwave -f
 mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_40a_5186 -type gwave -f
 mc_dataset bind etri_demo_2000y_20a_5186 gwave/etri_demo_2015y_50a_5186 -type gwave -f
+
+
+############################################################################################
+##### 안양대 도봉구 분석 데이터
+############################################################################################
+##### 도봉구 민원
+mc_dataset import excel $MARMOT_DATA/기타/안양대제공/도봉구/민원 기타/안양대/도봉구/민원 -header_first -point_cols 'x,y'    \
+				-srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+dataset cluster create 기타/안양대/도봉구/민원
+mc_dataset import excel $MARMOT_DATA/기타/안양대제공/도봉구/공원_민원 기타/안양대/도봉구/공원_민원 -header_first    \
+				-point_cols 'x,y' -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset cluster create 기타/안양대/도봉구/공원_민원
+
+
+############################################################################################
+##### 도로명/지번 주소 관련 정보
+############################################################################################
+dataset import csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 주소/건물POI -delim '|' -header_first	\
+			-point_cols 'xpos|ypos'	-srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset cluster create 주소/건물POI
+mc_dataset thumbnail create 주소/건물POI 500000

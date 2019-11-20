@@ -1,0 +1,31 @@
+#!/bin/sh
+
+export MARMOT_HOST=localhost
+export MARMOT_PORT=12985
+export MARMOT_HOME=/opt/marmot.server.dist
+export MARMOT_CLIENT_HOME=/opt/marmot-server
+
+RETVAL=0
+case $1 in
+	start)
+		nohup $MARMOT_HOME/bin/marmot_server > /dev/null 2>&1 &
+#		$MARMOT_HOME/bin/marmot_server
+		;;
+	stop)
+		nohup $MARMOT_HOME/bin/shutdown_marmot > /dev/null 2>&1 &
+#		$MARMOT_HOME/bin/shutdown_marmot
+		;;
+	restart)
+		nohup $MARMOT_HOME/bin/marmot_server > /dev/null 2>&1 &
+		sleep 1
+		nohup $MARMOT_HOME/bin/shutdown_marmot > /dev/null 2>&1 &
+		;;
+	status)
+		;;
+	*)
+		echo "Usage: $0 {star|stop|restart|status}"
+		RETVAL=2
+		;;
+esac
+
+exit $RETVAL
