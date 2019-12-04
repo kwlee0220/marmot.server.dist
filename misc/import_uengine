@@ -25,7 +25,9 @@ mc_dataset import shp $MARMOT_DATA/기타/유엔진/집계구_2018 blockgeo_temp
 mc_copy blockgeo_temp blockgeo -project '*-{the_geom}' -f
 mc_dataset delete blockgeo_temp
 
-mc_upload_files $MARMOT_DATA/기타/유엔진/유동인구_2015 data/주민/유동인구/2015/시간대 -glob '**/*.st'
-mc_dataset bind data/주민/유동인구/2015/시간대 flow_pop_time -type text -geom_col 'the_geom(EPSG:5179)' -f
+mc_upload_files $MARMOT_DATA/기타/유엔진/유동인구_2015 data/지오비전/유동인구/2015/시간대 -glob '**/*.st'
+#upload_files $MARMOT_DATA/기타/유엔진/유동인구_2015 data/지오비전/유동인구/2015/시간대 -glob '**/*.txt'
+#mc_dataset bind data/주민/유동인구/2015/시간대 flow_pop_time -type text -geom_col 'the_geom(EPSG:5179)' -f
+mc_dataset bind data/지오비전/유동인구/2015/시간대 flow_pop_time -type text -f
 
 #dataset import csv $MARMOT_DATA/기타/유엔진/resultData resultData -header_first -quote '"' -report_interval 10000000 -f

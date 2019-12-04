@@ -102,8 +102,8 @@ dataset cluster create 토지/용도지역지구
 # 건물통합정보마스터
 mc_dataset import shp $MARMOT_DATA/국가공간정보포털/건물통합정보마스터/201809 건물/건물통합정보마스터	\
 				-srid EPSG:5174 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -c lz4 -f
-mc_dataset cluster create 건물/건물통합정보마스터/201809 -workers 11
-mc_dataset thumbnail create 건물/건물통합정보마스터/201809 500000
+mc_dataset cluster create 건물/건물통합정보마스터 -workers 11
+mc_dataset thumbnail create 건물/건물통합정보마스터 500000
 
 
 ############################################################################################
