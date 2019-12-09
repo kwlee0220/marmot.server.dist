@@ -1,0 +1,9 @@
+#!  /bin/bash 
+
+############################################################################################
+##### 씨터스 관련 데이터
+############################################################################################
+
+mc_dataset import jdbc tb_naver_blog tb_naver_blog	^
+	-system mysql -host localhost -port 3306 -user kwlee -passwd urc2004 -database sbdata	^
+	-plan C:\development\marmot\marmot\misc\_citus_plan.st -f

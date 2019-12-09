@@ -21,7 +21,7 @@ import_shapefile $MARMOT_DATA/공공데이터포털/연속지적도_2017 구역/
 mc_dataset cluster create 구역/연속지적도 -workers 19
 ##### 연속지적도_2017 (사업단)
 dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8 -geom_col 'the_geom(EPSG:5186)' -f
-mc_dataset cluster create 구역/연속지적도_2017 -workers 31
+mc_dataset cluster create 구역/연속지적도_2017 -workers 27
 mc_dataset thumbnail create 구역/연속지적도_2017 1000000
 ##### 행정동코드
 dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
@@ -103,7 +103,7 @@ dataset cluster create 토지/용도지역지구
 mc_dataset import shp $MARMOT_DATA/국가공간정보포털/건물통합정보마스터/201809 건물/건물통합정보마스터	\
 				-srid EPSG:5174 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -c lz4 -f
 mc_dataset cluster create 건물/건물통합정보마스터 -workers 11
-mc_dataset thumbnail create 건물/건물통합정보마스터 500000
+mc_dataset thumbnail create 건물/건물통합정보마스터 700000
 
 
 ############################################################################################
