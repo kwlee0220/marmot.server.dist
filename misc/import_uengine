@@ -25,5 +25,5 @@ mc_dataset import shp $MARMOT_DATA/기타/유엔진/집계구_2018 blockgeo_temp
 mc_copy blockgeo_temp blockgeo -project '*-{the_geom}' -f
 mc_dataset delete blockgeo_temp
 
-mc_dataset import csv $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 flow_pop_time	\
+mc_dataset import csv $MARMOT_DATA/기타/유엔진/유동인구_2015 flow_pop_time	\
 		-delim '|' -header_first -point_cols 'X_COORD|Y_COORD' -srid 'EPSG:5179' -geom_col 'the_geom(EPSG:5186)' -f

@@ -4,9 +4,9 @@
 ##### 씨터스 관련 데이터
 ############################################################################################
 
-mc_dataset import jdbc tb_naver_blog tb_naver_blog	^
-	-system mysql -host localhost -port 3306 -user sbdata -passwd urc2004 -database sbdata	^
-	-jdbc_jar lib/mysql-connector-java-5.1.48.jar -f
-mc_dataset import jdbc tb_twitter_content tb_twitter_content	^
-	-system mysql -host localhost -port 3306 -user sbdata -passwd urc2004 -database sbdata	^
-	-jdbc_jar lib/mysql-connector-java-5.1.48.jar -f
+mc_dataset import jdbc tb_naver_blog tb_naver_blog -jdbc_loc mysql:localhost:3306:sbdata:urc2004:sbdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -report_interval 10000 -f
+mc_dataset import jdbc tb_sp_analyze tb_sp_analyze -jdbc_loc mysql:localhost:3306:sbdata:urc2004:sbdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -report_interval 10000 -f
+mc_dataset import jdbc tb_twitter_content tb_twitter_content -jdbc_loc mysql:localhost:3306:sbdata:urc2004:sbdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -report_interval 10000 -f
+
+
+mc_dataset import jdbc raw_building_master tmp/result -jdbc_loc postgresql:129.254.221.88:9005:postgres:postgres:RGI -report_interval 1000000 -f

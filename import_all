@@ -134,9 +134,8 @@ mc_dataset import shp $MARMOT_DATA/사업단자료/지오비전/집계구/2018 �
 			-charset euc-kr -f
 mc_dataset cluster create 지오비전/집계구/2018
 ##### 유동인구 (2015)
-mc_upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/지오비전/유동인구/2015/시간대 -glob '**/*.st'
-#upload_files $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 data/지오비전/유동인구/2015/시간대 -glob '**/*.txt'
-mc_dataset bind data/지오비전/유동인구/2015/시간대 지오비전/유동인구/2015/월별_시간대 -type text -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import csv $MARMOT_DATA/사업단자료/지오비전/유동인구/2015/시간대 지오비전/유동인구/2015/월별_시간대	\
+		-delim '|' -header_first -point_cols 'X_COORD|Y_COORD' -srid 'EPSG:5179' -geom_col 'the_geom(EPSG:5186)' -f
 ##### 지오비전 카드매출 (2015)
 mc_upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.st'
 #upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.txt'
