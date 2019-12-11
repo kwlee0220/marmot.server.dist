@@ -5,5 +5,8 @@
 ############################################################################################
 
 mc_dataset import jdbc tb_naver_blog tb_naver_blog	^
-	-system mysql -host localhost -port 3306 -user kwlee -passwd urc2004 -database sbdata	^
-	-plan C:\development\marmot\marmot\misc\_citus_plan.st -f
+	-system mysql -host localhost -port 3306 -user sbdata -passwd urc2004 -database sbdata	^
+	-jdbc_jar lib/mysql-connector-java-5.1.48.jar -f
+mc_dataset import jdbc tb_twitter_content tb_twitter_content	^
+	-system mysql -host localhost -port 3306 -user sbdata -passwd urc2004 -database sbdata	^
+	-jdbc_jar lib/mysql-connector-java-5.1.48.jar -f

@@ -65,7 +65,7 @@ dataset cluster create 구역/읍면동_2019 -workers 3
 ############################################################################################
 ##### 도로명/지번 주소 관련 정보
 ############################################################################################
-dataset import csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 주소/건물POI -delim '|' -header_first	\
+mc_dataset import csv $MARMOT_DATA/행자부/도로명주소/건물_위치정보 주소/건물POI -delim '|' -header_first	\
 			-point_cols 'xpos|ypos'	-srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create 주소/건물POI
 mc_dataset thumbnail create 주소/건물POI 500000
