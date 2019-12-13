@@ -5,17 +5,16 @@
 ############################################################################################
 
 mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
-mc_dataset cluster create 구역/시도
 mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시군구 구역/시군구 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-mc_dataset cluster create 구역/시군구
 mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/읍면동 구역/읍면동 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-mc_dataset cluster create 구역/읍면동
 
 mc_copy 구역/시도 sdgeo -project 'the_geom as geom,CTPRVN_CD as sdcode,CTP_KOR_NM as name' -geom_col 'geom(EPSG:5186)' -shard 1 -f
 mc_copy sdgeo sd -project 'sdcode,name' -f
+
 mc_copy 구역/시군구 siggeo -define_column 'string sdcode = SIG_CD.substring(0,2)' -shard 1	\
 		-project 'the_geom as geom,SIG_CD as sigcode,SIG_KOR_NM as name,sdcode' -geom_col 'geom(EPSG:5186)' -f
 mc_copy siggeo sig -project 'sigcode,name,sdcode' -shard 1 -f
+
 mc_copy 구역/읍면동 emdgeo -define_column 'string sdcode = EMD_CD.substring(0,2)' -shard 1	\
 		-define_column 'string sigcode = EMD_CD.substring(0,5)'	\
 		-project 'the_geom as geom,EMD_CD as emdcode,EMD_KOR_NM as name,sdcode,sigcode' -geom_col 'geom(EPSG:5186)' -f
@@ -25,5 +24,4 @@ mc_dataset import shp $MARMOT_DATA/기타/유엔진/집계구_2018 blockgeo_temp
 mc_copy blockgeo_temp blockgeo -project '*-{the_geom}' -f
 mc_dataset delete blockgeo_temp
 
-mc_dataset import csv $MARMOT_DATA/기타/유엔진/유동인구_2015 flow_pop_time	\
-		-delim '|' -header_first -point_cols 'X_COORD|Y_COORD' -srid 'EPSG:5179' -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import csv $MARMOT_DATA/기타/유엔진/유동인구_2015 flow_pop_time -delim '|' -header_first -point_cols 'X_COORD|Y_COORD' -srid 'EPSG:5179' -geom_col 'the_geom(EPSG:5186)' -null_value 0 -c lz4 -f
