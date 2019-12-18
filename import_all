@@ -164,7 +164,7 @@ import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/선로 교통
 import_shapefile $MARMOT_DATA/사업단자료/전국지하철_2015/출입구 교통/지하철/출입구 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr
 ##### 서울 지하철: 역사 (polygon)
-import_shapefile $MARMOT_DATA/포스웨이브/서울지하철역사 교통/지하철/서울역사 -geom_col 'the_geom(EPSG:5186)'	\
+mc_dataset import shp $MARMOT_DATA/포스웨이브/서울지하철역사 교통/지하철/서울역사 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
 dataset cluster create 교통/지하철/서울역사
 ##### 수도권 지하철: 역사위치 (point)
