@@ -223,15 +223,15 @@ import_csv $MARMOT_DATA/기타/교통사고정보/보행노인사고 교통/교�
 #### 운송사 코드
 mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 교통/dtg_companies -header_first -quote '"' -f
 ##### (2016.09)
-upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/*.st'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/*.st'
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016090?.csv'
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016091?.csv'
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016092?.csv'
 upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016093?.csv'
-bind_dataset data/로그/dtg 교통/dtg -type text -geom_col 'the_geom(EPSG:4326)'
+mc_dataset bind data/로그/dtg 교통/dtg -type text -geom_col 'the_geom(EPSG:4326)'
 ##### (2018.09)
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
-bind_dataset data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)'
+mc_dataset bind data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)'
 ##### (2018.09) - test
 upload_files $MARMOT_DATA/도로교통안전공단/dtg_201809_test data/로그/dtg_test -glob '**/*.st'
 upload_files $MARMOT_DATA/도로교통안전공단/dtg_201809_test data/로그/dtg_test -glob '**/DTG-r-*.gz'
