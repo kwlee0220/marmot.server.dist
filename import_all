@@ -24,7 +24,7 @@ dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연�
 mc_dataset cluster create 구역/연속지적도_2017 -workers 27
 mc_dataset thumbnail create 구역/연속지적도_2017 1000000
 ##### 행정동코드
-dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset import shp $MARMOT_DATA/사업단자료/행정동코드 구역/행정동코드 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 mc_dataset cluster create 구역/행정동코드
 ##### 기초구역
 mc_dataset import shp $MARMOT_DATA/행자부/기초구역_5179 구역/기초구역 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
@@ -38,9 +38,9 @@ mc_dataset cluster create 구역/집계구
 ##### 국가공간정보포털 - 국가중점데이터
 ############################################################################################
 ##### 연속지적도형정보(국가중점데이터)
-dataset import shp $MARMOT_DATA/국가공간정보포털/연속지적도형정보/2019.07 구역/연속지적도_2019 -srid EPSG:5174 -charset euc-kr	\
+mc_dataset import shp $MARMOT_DATA/국가공간정보포털/연속지적도형정보/2019.07 구역/연속지적도_2019 -srid EPSG:5174 -charset euc-kr	\
 		-geom_col 'the_geom(EPSG:5186)' -f
-dataset cluster create 구역/연속지적도_2019 -workers 31
+mc_dataset cluster create 구역/연속지적도_2019 -workers 31
 mc_dataset thumbnail create 구역/연속지적도_2019 1000000
 ##### GIS건물통합정보(국가중점데이터)
 dataset import shp  $MARMOT_DATA/국가공간정보포털/GIS건물통합정보/2019.07 건물/GIS건물통합정보_2019 -srid EPSG:5174 -charset euc-kr	\
@@ -101,7 +101,7 @@ dataset cluster create 토지/용도지역지구
 #dataset cluster create 건물/통합정보 -workers 17
 # 건물통합정보마스터
 mc_dataset import shp $MARMOT_DATA/국가공간정보포털/건물통합정보마스터/201809 건물/건물통합정보마스터	\
-				-srid EPSG:5174 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -c lz4 -f
+				-srid EPSG:5174 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 mc_dataset cluster create 건물/건물통합정보마스터 -workers 11
 mc_dataset thumbnail create 건물/건물통합정보마스터 700000
 
@@ -187,7 +187,7 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/서울버스/정류소 교통/�
 			-point_cols 'X좌표,Y좌표' -geom_col 'the_geom(EPSG:5186)' -srid EPSG:4326 -f
 
 ##### 나비콜 택시 운행 로그
-upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.st' 
+mc_upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.st' 
 #upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.dat'
 mc_dataset bind data/나비콜/택시로그 나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)' -f
 #dataset cluster create 나비콜/택시로그 -workers 17
@@ -243,9 +243,9 @@ bind_dataset data/로그/dtg_test 교통/dtg_test -type text -geom_col 'the_geom
 bind_dataset data/로그/dtg_t 교통/dtg_t -type text -geom_col 'the_geom(EPSG:4326)'
 ##### small
 #hadoop fs -rm -r data/로그/dtg_s
-#upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.st'
-#upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.csv'
-bind_dataset data/로그/dtg_s 교통/dtg_s -type text -geom_col 'the_geom(EPSG:4326)'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.st'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.csv'
+mc_dataset bind data/로그/dtg_s 교통/dtg_s -type text -geom_col 'the_geom(EPSG:4326)'
 ##### medium
 #hadoop fs -rm -r data/로그/dtg_m
 hadoop fs -copyFromLocal $MARMOT_DATA/도로교통안전공단/DTG_M data/로그/dtg_m
