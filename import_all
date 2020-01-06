@@ -5,22 +5,22 @@ estimate_quadkeys social/tweets/heap -output database/standard_qkeys
 ############################################################################################
 ##### 주요 구역들
 ############################################################################################
-dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시도 구역/시도 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	-charset euc-kr -f
 mc_dataset cluster create 구역/시도
-dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시군구 구역/시군구 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/시군구 구역/시군구 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
 mc_dataset cluster create 구역/시군구
-dataset import shp $MARMOT_DATA/행자부/법정구역_5179/읍면동 구역/읍면동 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/읍면동 구역/읍면동 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)'	\
 				-charset euc-kr -f
 mc_dataset cluster create 구역/읍면동
-dataset import shp $MARMOT_DATA/행자부/법정구역_5179/리 구역/리 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset import shp $MARMOT_DATA/행자부/법정구역_5179/리 구역/리 -srid EPSG:5179 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 mc_dataset cluster create 구역/리
 mc_run_module region.ConcatPoliticals
 ##### 연속지적도_2017
-import_shapefile $MARMOT_DATA/공공데이터포털/연속지적도_2017 구역/연속지적도 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset shp $MARMOT_DATA/공공데이터포털/연속지적도_2017 구역/연속지적도 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 mc_dataset cluster create 구역/연속지적도 -workers 19
 ##### 연속지적도_2017 (사업단)
-dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8 -geom_col 'the_geom(EPSG:5186)' -f
+mc_dataset import shp $MARMOT_DATA/사업단자료/연속지적도_2017 구역/연속지적도_2017 -charset utf-8 -geom_col 'the_geom(EPSG:5186)' -f
 mc_dataset cluster create 구역/연속지적도_2017 -workers 27
 mc_dataset thumbnail create 구역/연속지적도_2017 1000000
 ##### 행정동코드
