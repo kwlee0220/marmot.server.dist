@@ -4,6 +4,14 @@
 ##### 씨터스 관련 데이터
 ############################################################################################
 
+mc_dataset import jdbc tb_naver_blog tb_naver_blog -jdbc_loc mysql:211.106.178.61:3306:bigdata:citus!!:bigdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -f -report_interval 1000
+
+mc_dataset import jdbc tb_sp_analyze tb_sp_analyze -jdbc_loc mysql:211.106.178.61:3306:bigdata:citus!!:bigdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -f -report_interval 1000 
+
+mc_dataset import jdbc tb_twitter_content tb_twitter_content -jdbc_loc mysql:211.106.178.61:3306:bigdata:citus!!:bigdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -f -report_interval 1000
+
+
+
 mc_dataset import jdbc tb_naver_blog tb_naver_blog -jdbc_loc mysql:localhost:3306:sbdata:urc2004:sbdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -report_interval 10000 -f
 mc_dataset import jdbc tb_sp_analyze tb_sp_analyze -jdbc_loc mysql:localhost:3306:sbdata:urc2004:sbdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -report_interval 10000 -f
 mc_dataset import jdbc tb_twitter_content tb_twitter_content -jdbc_loc mysql:localhost:3306:sbdata:urc2004:sbdata -jdbc_jar lib/mysql-connector-java-5.1.48.jar -report_interval 10000 -f
