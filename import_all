@@ -32,6 +32,7 @@ mc_dataset cluster create 구역/기초구역
 ##### 통계청 집계구
 mc_dataset import shp $MARMOT_DATA/사업단자료/통계청집계구 구역/집계구 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 mc_dataset cluster create 구역/집계구
+mc_dataset thumbnail create 구역/집계구 1000
 
 
 ############################################################################################
@@ -344,6 +345,13 @@ mc_dataset cluster create POI/주요상권
 
 
 ############################################################################################
+##### 사업단 초기 시연
+############################################################################################
+##### 서울 종합병원
+mc_dataset import shp $MARMOT_DATA/기타/사업단시연/서울_종합병원 POI/서울_종합병원 -geom_col 'the_geom(EPSG:5186)' -f
+
+
+############################################################################################
 ##### 건물 에너지 사용
 ############################################################################################
 ##### 건물별 가스 사용 (2011-2018)
@@ -412,8 +420,10 @@ mc_dataset import shp $MARMOT_DATA/기타/안양대제공/비정형데이터/SHP
 ##### Clip 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/CLIP/Input 안양대/공간연산/clip/input	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset cluster create 안양대/공간연산/clip/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/CLIP/ClipFeature 안양대/공간연산/clip/param	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset cluster create 안양대/공간연산/clip/param
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/CLIP/Output 안양대/공간연산/clip/output	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
@@ -442,52 +452,64 @@ mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트
 ##### Intersect 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/INTERSECT/Input 안양대/공간연산/intersect/input	\
 			-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/intersect/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/INTERSECT/IntersectFeature	\
 			안양대/공간연산/intersect/param -srid EPSG:5181 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/intersect/param
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/INTERSECT/Output 안양대/공간연산/intersect/output	\
 			-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### SpatialJoin 연산
-mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPATIAL_JOIN/TargetFeature
+mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPATIAL_JOIN/TargetFeature	\
 				안양대/공간연산/spatial_join/input	-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
-mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPATIAL_JOIN/JoinFeature
+mc_dataset cluster create 안양대/공간연산/spatial_join/input
+mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPATIAL_JOIN/JoinFeature	\
 			안양대/공간연산/spatial_join/param	-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset cluster create 안양대/공간연산/spatial_join/param
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SPATIAL_JOIN/Output	\
 			안양대/공간연산/spatial_join/output -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### Union 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/UNION/Input1 안양대/공간연산/union/input	\
 				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/union/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/UNION/Input2 안양대/공간연산/union/param	\
 				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/union/param
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/UNION/Output 안양대/공간연산/union/output	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### Buffer 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/BUFFER/Input 안양대/공간연산/buffer/input	\
 			-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/buffer/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/BUFFER/Output_None	\
 			안양대/공간연산/buffer/output_none -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
+mc_dataset cluster create 안양대/공간연산/buffer/output_none
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/BUFFER/Output_Dissolve	\
 			안양대/공간연산/buffer/output_dissolve	-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### FeatureToPoint 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/FEATURE_TO_POINT/Input	\
 				안양대/공간연산/feature_to_point/input	-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/feature_to_point/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/FEATURE_TO_POINT/Output	\
 				안양대/공간연산/feature_to_point/output -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### MultipartToSinglepart 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/MULTIPART_TO_SINGLEPART/Input	\
 				안양대/공간연산/multipart_to_singlepart/input -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/multipart_to_singlepart/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/MULTIPART_TO_SINGLEPART/Output	\
 				안양대/공간연산/multipart_to_singlepart/output	-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### Merge 연산
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/MERGE/Input1 안양대/공간연산/merge/input	\
 				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/merge/input
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/MERGE/Input2 안양대/공간연산/merge/input2	\
 				-geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
+mc_dataset cluster create 안양대/공간연산/merge/input2
 mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/MERGE/Output 안양대/공간연산/merge/output	\
 				-geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
@@ -510,11 +532,12 @@ mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트
                 안양대/공간연산/project/output -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
 ##### SelectByLocation 연산
-mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT/Input1 안양대/공간연산/select/input1 \
+mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT_BY_LOCATION/Building 안양대/공간연산/select/building \
                 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT/Input2 안양대/공간연산/select/input2    \
+mc_dataset cluster create 안양대/공간연산/select/building
+mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT_BY_LOCATION/River 안양대/공간연산/select/river \
                 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
-mc_dataset cluster create 안양대/공간연산/select/input2
-mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT/Output 안양대/공간연산/select/output    \
+mc_dataset cluster create 안양대/공간연산/select/river
+mc_dataset import shp $MARMOT_DATA/기타/안양대제공/공간연산_테스트/SELECT_BY_LOCATION/Output 안양대/공간연산/select/output    \
                 -geom_col 'the_geom(EPSG:5186)' -charset utf-8 -f
 
