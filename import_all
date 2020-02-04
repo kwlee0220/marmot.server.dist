@@ -139,7 +139,7 @@ mc_dataset import csv $MARMOT_DATA/사업단자료/지오비전/유동인구/201
 		-delim '|' -header_first -point_cols 'X_COORD|Y_COORD' -srid 'EPSG:5179' -geom_col 'the_geom(EPSG:5186)' -f
 ##### 지오비전 카드매출 (2015)
 mc_upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.st'
-#upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.txt'
+#mc_upload_files $MARMOT_DATA/사업단자료/지오비전/카드매출/2015/시간대 data/지오비전/카드매출/2015/시간대 -glob '**/*.txt'
 mc_dataset bind data/지오비전/카드매출/2015/시간대 지오비전/카드매출/2015/일별_시간대 -type text -f
 
 
@@ -224,24 +224,24 @@ import_csv $MARMOT_DATA/기타/교통사고정보/보행노인사고 교통/교�
 #### 운송사 코드
 mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 교통/dtg_companies -header_first -quote '"' -f
 ##### (2016.09)
-mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/*.st'
-upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016090?.csv'
-upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016091?.csv'
-upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016092?.csv'
-upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg -glob '**/2016093?.csv'
-mc_dataset bind data/로그/dtg 교통/dtg -type text -geom_col 'the_geom(EPSG:4326)'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/*.st'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016090?.csv'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016091?.csv'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016092?.csv'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016093?.csv'
+mc_dataset bind data/로그/dtg_201609 교통/dtg -type text -geom_col 'the_geom(EPSG:5186)'
 ##### (2018.09)
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
 mc_dataset bind data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)'
 ##### (2018.09) - test
 upload_files $MARMOT_DATA/도로교통안전공단/dtg_201809_test data/로그/dtg_test -glob '**/*.st'
 upload_files $MARMOT_DATA/도로교통안전공단/dtg_201809_test data/로그/dtg_test -glob '**/DTG-r-*.gz'
-bind_dataset data/로그/dtg_test 교통/dtg_test -type text -geom_col 'the_geom(EPSG:4326)'
+mc_dataset bind data/로그/dtg_test 교통/dtg_test -type text -geom_col 'the_geom(EPSG:4326)'
 ##### tiny
 #hadoop fs -rm -r data/로그/dtg_t
 #upload_files $MARMOT_DATA/도로교통안전공단/dtg_t data/로그/dtg_t -glob '**/*.st'
 #upload_files $MARMOT_DATA/도로교통안전공단/dtg_t data/로그/dtg_t -glob '**/*.{csv}'
-bind_dataset data/로그/dtg_t 교통/dtg_t -type text -geom_col 'the_geom(EPSG:4326)'
+mc_dataset bind data/로그/dtg_t 교통/dtg_t -type text -geom_col 'the_geom(EPSG:4326)'
 ##### small
 #hadoop fs -rm -r data/로그/dtg_s
 mc_upload_files $MARMOT_DATA/도로교통안전공단/dtg_s data/로그/dtg_s -glob '**/*.st'
@@ -252,8 +252,8 @@ mc_dataset bind data/로그/dtg_s 교통/dtg_s -type text -geom_col 'the_geom(EP
 hadoop fs -copyFromLocal $MARMOT_DATA/도로교통안전공단/DTG_M data/로그/dtg_m
 upload_files $MARMOT_DATA/도로교통안전공단/dtg_m data/로그/dtg_m -glob '**/*.st'
 upload_files $MARMOT_DATA/도로교통안전공단/dtg_m data/로그/dtg_m -glob '**/2016090?.csv'
-bind_dataset data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EPSG:5186)'
-#bind_dataset data/로그/dtg_m 교통/dtg_m -type text
+mc_dataset bind data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EPSG:5186)'
+#mc_dataset bind data/로그/dtg_m 교통/dtg_m -type text
 #import_csv $MARMOT_DATA/도로교통안전공단/DTG_Local -delim ',' -point_cols 'X좌표,Y좌표' -header	\
 #'운행일자,운송사코드,차량번호,운행시분초,일일주행거리,누적주행거리,운행속도,RPM,브레이크신호,X좌표,Y좌표,방위각,가속도X,가속도Y'	\
 #교통/dtg_m2 -geom_col 'the_geom(EPSG:5186)' -f -b 128mb
@@ -265,7 +265,7 @@ bind_dataset data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EPSG:
 hadoop fs -rm -r -skipTrash data/로그/dtg_201809
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809/_meta_st data/로그/dtg_201809
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
-bind_dataset data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)' -f
+mc_dataset bind data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)' -f
 
 
 ############################################################################################
@@ -355,13 +355,13 @@ mc_dataset import shp $MARMOT_DATA/기타/사업단시연/서울_종합병원 PO
 ##### 건물 에너지 사용
 ############################################################################################
 ##### 건물별 가스 사용 (2011-2018)
-upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.st'
-upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.txt'
-bind_dataset data/건물_주택/건물에너지/가스사용량 건물/건물에너지/가스사용량 -type text -f
+mc_upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.st'
+mc_upload_files $MARMOT_DATA/공공데이터포털/건물에너지/가스사용량 data/건물_주택/건물에너지/가스사용량 -glob '**/*.txt'
+mc_dataset bind data/건물_주택/건물에너지/가스사용량 건물/건물에너지/가스사용량 -type text -f
 ##### 건물별 전기 사용 (2011-2018)
-upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.st'
-upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.txt'
-bind_dataset data/건물_주택/건물에너지/전기사용량 건물/건물에너지/전기사용량 -type text -f
+mc_upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.st'
+mc_upload_files $MARMOT_DATA/공공데이터포털/건물에너지/전기사용량 data/건물_주택/건물에너지/전기사용량 -glob '**/*.txt'
+mc_dataset bind data/건물_주택/건물에너지/전기사용량 건물/건물에너지/전기사용량 -type text -f
 
 
 ############################################################################################
