@@ -32,7 +32,6 @@ mc_dataset cluster create 구역/기초구역
 ##### 통계청 집계구
 mc_dataset import shp $MARMOT_DATA/사업단자료/통계청집계구 구역/집계구 -geom_col 'the_geom(EPSG:5186)' -charset euc-kr -f
 mc_dataset cluster create 구역/집계구
-mc_dataset thumbnail create 구역/집계구 1000
 
 
 ############################################################################################
@@ -189,7 +188,7 @@ mc_import_csv $MARMOT_DATA/공공데이터포털/서울버스/정류소 교통/�
 
 ##### 나비콜 택시 운행 로그
 mc_upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.st' 
-#upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.dat'
+#mc_upload_files $MARMOT_DATA/나비콜/201601 data/나비콜/택시로그 -glob '**/*.dat'
 mc_dataset bind data/나비콜/택시로그 나비콜/택시로그 -type text -geom_col 'the_geom(EPSG:5186)' -f
 #dataset cluster create 나비콜/택시로그 -workers 17
 ##### 나비콜 택시 운행 로그 (short version)
@@ -224,12 +223,13 @@ import_csv $MARMOT_DATA/기타/교통사고정보/보행노인사고 교통/교�
 #### 운송사 코드
 mc_import_csv $MARMOT_DATA/도로교통안전공단/운수회사별_업종 교통/dtg_companies -header_first -quote '"' -f
 ##### (2016.09)
-mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/*.st'
-mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016090?.csv'
-mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016091?.csv'
-mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016092?.csv'
-mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016093?.csv'
-mc_dataset bind data/로그/dtg_201609 교통/dtg -type text -geom_col 'the_geom(EPSG:5186)'
+time mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/*.st'
+time upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/201609??.csv.gz'
+time upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016090?.csv'
+time upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016091?.csv'
+time upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016092?.csv'
+time upload_files $MARMOT_DATA/도로교통안전공단/DTG data/로그/dtg_201609 -glob '**/2016093?.csv'
+time mc_dataset bind data/로그/dtg_201609 교통/dtg_201609 -type text -geom_col 'the_geom(EPSG:5186)' -f
 ##### (2018.09)
 upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
 mc_dataset bind data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)'
@@ -263,8 +263,8 @@ mc_dataset bind data/로그/dtg_m 교통/dtg_m -type text -geom_col 'the_geom(EP
 ############################################################################################
 #### 테스트 데이터
 hadoop fs -rm -r -skipTrash data/로그/dtg_201809
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809/_meta_st data/로그/dtg_201809
-upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
+mc_upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809/_meta_st data/로그/dtg_201809
+time upload_files $MARMOT_DATA/도로교통안전공단/DTG_201809 data/로그/dtg_201809 -glob '**/DTG-r-*.gz'
 mc_dataset bind data/로그/dtg_201809 교통/dtg_201809 -type text -geom_col 'the_geom(EPSG:4326)' -f
 
 
